@@ -11,27 +11,27 @@ export class Product {
   @Column('text')
   product_description!: string;
 
-  //   @Column({ length: 11 })
-  //   product_category!: string;
+  @Column({ length: 11 })
+  product_category!: string;
 
-  //   @Column('decimal', { precision: 9, scale: 2 })
-  //   product_price!: number;
+  @Column('decimal', { precision: 9, scale: 2 })
+  product_price!: number;
 
-  //   @Column('date')
-  //   release_date!: Date;
+  @Column('date')
+  release_date!: Date;
 
-  //   @Column({ length: 50 })
-  //   manufacturer!: string;
+  @Column({ length: 50 })
+  manufacturer!: string;
 
-  //   @Column('decimal', { precision: 2, scale: 1 })
-  //   product_rating!: number;
+  @Column('decimal', { precision: 2, scale: 1 })
+  product_rating!: number;
 
-  //   @Column('int')
-  //   customer_reviews!: number;
+  @Column('int')
+  customer_reviews!: number;
 
-  //   @Column({ length: 50 })
-  //   product_image_url!: string;
+  @Column({ length: 50 })
+  product_image_url!: string;
 
-  //   @Column({ length: 1000 })
-  //   product_website!: string;
+  @Column({ length: 1000 })
+  product_website!: string;
 }

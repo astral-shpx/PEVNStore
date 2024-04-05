@@ -6,6 +6,10 @@ import { Product } from './entities/Product';
 
 dotenv.config();
 
+// @jorgebodega/typeorm-seeding
+// SyntaxError: Cannot use import statement outside a module
+// https://github.com/jorgebodega/typeorm-seeding/issues/324
+
 const app: Express = express();
 const port = process.env.PORT || 3000;
 
