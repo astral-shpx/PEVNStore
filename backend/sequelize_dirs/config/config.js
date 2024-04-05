@@ -1,12 +1,14 @@
 // require('dotnev').config();
 
-let dbpass = process.env.POSTGRES_PASSWORD || null;
+const db = process.env.POSTGRES_DB || null;
+const dbuser = process.env.POSTGRES_USER || null;
+const dbpass = process.env.POSTGRES_PASSWORD || null;
 
 module.exports = {
   development: {
-    username: 'postgres',
+    username: dbuser,
     password: dbpass,
-    database: 'test',
+    database: db,
     host: '127.0.0.1',
     dialect: 'postgres'
   },
