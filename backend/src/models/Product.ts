@@ -1,7 +1,7 @@
 import sequelize from '../db_connection';
 import { Model, DataTypes, Optional } from 'sequelize';
 
-interface ProductAttributes {
+export interface ProductAttributes {
   product_name: string;
   product_description?: string;
   product_category?: string;

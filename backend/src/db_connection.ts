@@ -1,10 +1,6 @@
 import { Sequelize } from 'sequelize';
 require('dotenv').config();
 
-// function initSequelize() {}
-// const db = process.env.MYSQL_DB;
-// const dbuser = process.env.MYSQL_USER;
-// const dbpass = process.env.MYSQL_PASSWORD;
 const db = process.env.POSTGRES_DB;
 const dbuser = process.env.POSTGRES_USER;
 const dbpass = process.env.POSTGRES_PASSWORD;
@@ -18,7 +14,6 @@ sequelize = new Sequelize({
   password: dbpass,
   database: db
 });
-// console.log(dbpass);
 
 async function testConnection() {
   try {
