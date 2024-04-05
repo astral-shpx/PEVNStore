@@ -20,7 +20,7 @@ interface ProductModel
   extends Model<ProductAttributes, ProductUpdateAttributes>,
     ProductAttributes {}
 
-const Product = sequelize.define<ProductModel>('product', {
+const Product = sequelize.define<ProductModel>('Products', {
   product_name: {
     type: DataTypes.STRING(50)
   },
