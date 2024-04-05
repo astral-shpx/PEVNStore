@@ -1,22 +1,8 @@
-require('dotnev').config();
+// require('dotnev').config();
 
-interface DatabaseConfig {
-  username: string;
-  password: string | null;
-  database: string;
-  host: string;
-  dialect: string;
-}
+let dbpass = process.env.POSTGRES_PASSWORD || null;
 
-interface Config {
-  development: DatabaseConfig;
-  test: DatabaseConfig;
-  production: DatabaseConfig;
-}
-
-let dbpass: string | null = process.env.POSTGRES_PASSWORD || null;
-
-const config: Config = {
+module.exports = {
   development: {
     username: 'postgres',
     password: dbpass,
@@ -39,5 +25,3 @@ const config: Config = {
     dialect: 'postgres'
   }
 };
-
-export default config;
