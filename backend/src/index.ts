@@ -1,34 +1,30 @@
 import express, { Express, Request, Response } from 'express';
 import dotenv from 'dotenv';
-import sequelize from './db_connection';
-import Product, { ProductAttributes } from './models/Product';
+import 'reflect-metadata';
+import { AppDataSource } from './data-source';
+import { Product } from './entities/Product';
 
 dotenv.config();
 
 const app: Express = express();
 const port = process.env.PORT || 3000;
 
-sequelize
-  .sync({ force: true }) // This will drop existing tables and recreate them
-  .then(() => {
-    console.log('Database synced successfully');
-  })
-  .catch(err => {
-    console.error('Error syncing database:', err);
-  });
-
 app.get('/', async (req: Request, res: Response) => {
-  // await sequelize.sync({ force: true });
-  // await sequelize.sync(); // removes seeded data
-  // const productData: ProductAttributes = { product_name: 'the product name' };
-  // const product = await Product.create(productData);
-  // await product.save();
-  const product = await Product.findAll();
-  // console.log('All users:', JSON.stringify(product, null, 2));
+  const product = new Product();
+  product.product_name = 'Me and Bears';
+  product.product_description = 'I am near polar bears';
+
+  const productRepository = AppDataSource.getRepository(Product);
+
+  await productRepository.save(product);
+  console.log('Product has been saved');
+
+  const savedProducts = await productRepository.find();
+  console.log('All Products from the db: ', savedProducts);
 
   res.send(
     `Express + TypeScript Server. Data from sequelize: ${JSON.stringify(
-      product,
+      savedProducts,
       null,
       2
     )}`
