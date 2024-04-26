@@ -20,14 +20,14 @@ app.get('/', async (req: Request, res: Response) => {
 
   const productRepository = AppDataSource.getRepository(Product);
 
-  await productRepository.save(product);
-  console.log('Product has been saved');
+  // await productRepository.save(product);
+  // console.log('Product has been saved');
 
   const savedProducts = await productRepository.find();
   console.log('All Products from the db: ', savedProducts);
 
   res.send(
-    `Express + TypeScript Server. Data from sequelize: ${JSON.stringify(
+    `Express + TypeScript Server. Data from typeorm: ${JSON.stringify(
       savedProducts,
       null,
       2

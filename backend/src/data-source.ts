@@ -1,5 +1,7 @@
 import 'reflect-metadata';
-import { DataSource } from 'typeorm';
+import { DataSource, DataSourceOptions } from 'typeorm';
+import { SeederOptions } from 'typeorm-extension';
+import { runSeeders } from 'typeorm-extension';
 import { Product } from './entities/Product';
 require('dotenv').config();
 
@@ -7,7 +9,7 @@ const db = process.env.POSTGRES_DB;
 const dbuser = process.env.POSTGRES_USER;
 const dbpass = process.env.POSTGRES_PASSWORD;
 
-export const AppDataSource = new DataSource({
+const options: DataSourceOptions & SeederOptions = {
   type: 'postgres',
   host: 'localhost',
   port: 5432,
@@ -18,14 +20,19 @@ export const AppDataSource = new DataSource({
   logging: true,
   entities: [Product],
   subscribers: [],
-  migrations: []
-});
+  migrations: [],
+
+  seeds: ['src/seeders/**/*{.ts,.js}'],
+  factories: ['src/factories/**/*{.ts,.js}']
+};
+
+export const AppDataSource = new DataSource(options);
 
 // to initialize the initial connection with the database, register all entities
 // and "synchronize" database schema, call "initialize()" method of a newly created database
 // once in your application bootstrap
 AppDataSource.initialize()
-  .then(() => {
-    // here you can start to work with your database
+  .then(async dataSource => {
+    await runSeeders(dataSource);
   })
   .catch(error => console.log(error));
