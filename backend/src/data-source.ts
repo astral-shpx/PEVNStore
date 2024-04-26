@@ -1,7 +1,7 @@
 import 'reflect-metadata';
 import { DataSource, DataSourceOptions } from 'typeorm';
 import { SeederOptions } from 'typeorm-extension';
-import { runSeeders } from 'typeorm-extension';
+// import { runSeeders } from 'typeorm-extension';
 import { Product } from './entities/Product';
 require('dotenv').config();
 
@@ -33,6 +33,6 @@ export const AppDataSource = new DataSource(options);
 // once in your application bootstrap
 AppDataSource.initialize()
   .then(async dataSource => {
-    await runSeeders(dataSource);
+    // await runSeeders(dataSource);
   })
   .catch(error => console.log(error));
