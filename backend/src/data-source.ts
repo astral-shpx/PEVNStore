@@ -8,10 +8,11 @@ require('dotenv').config();
 const db = process.env.POSTGRES_DB;
 const dbuser = process.env.POSTGRES_USER;
 const dbpass = process.env.POSTGRES_PASSWORD;
+const dbhost = process.env.DB_HOST;
 
 const options: DataSourceOptions & SeederOptions = {
   type: 'postgres',
-  host: 'localhost',
+  host: dbhost,
   port: 5432,
   username: dbuser,
   password: dbpass,
