@@ -156,13 +156,10 @@ app.get('/', async (req: Request, res: Response) => {
 
   const user = req.user ? req.user : 'No user logged in';
 
-  res.send(
-    `Express + TypeScript Server. Data from typeorm: ${JSON.stringify(
-      savedProducts,
-      null,
-      2
-    )} AND THE USER: ${JSON.stringify(user, null, 2)}`
-  );
+  res.json({
+    loggedUser: user,
+    products: savedProducts
+  });
 });
 
 app.listen(port, '0.0.0.0', () => {
