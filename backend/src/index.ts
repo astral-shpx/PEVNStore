@@ -18,7 +18,7 @@ const session_secret = process.env.SESSION_SECRET!;
 const stripe_secret = process.env.STRIPE_API_KEY!;
 
 // TODO
-// Stripe
+// Stripe - integrate with db
 // shopping cart
 // Testing
 // AdminJS
