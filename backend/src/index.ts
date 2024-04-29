@@ -8,18 +8,25 @@ import passport from 'passport';
 import { Strategy as LocalStrategy } from 'passport-local';
 import argon2 from 'argon2';
 import session from 'express-session';
+import Stripe from 'stripe';
 
 dotenv.config();
 
 const app: Express = express();
 const port = parseInt(process.env.PORT!, 10) || 3001;
 const session_secret = process.env.SESSION_SECRET!;
+const stripe_secret = process.env.STRIPE_API_KEY!;
 
 // TODO
 // Stripe
 // shopping cart
-// AdminJS
 // Testing
+// AdminJS
+// frontend
+
+const stripe = new Stripe(stripe_secret, {
+  apiVersion: '2024-04-10'
+});
 
 app.use(express.json());
 
@@ -139,6 +146,27 @@ app.post('/signup', async (req, res, next) => {
     });
   } catch (err) {
     next(err);
+  }
+});
+
+app.post('/create-payment-intent', async (req: Request, res: Response) => {
+  try {
+    const { amount } = req.body;
+
+    const paymentIntent = await stripe.paymentIntents.create({
+      amount: amount,
+      currency: 'eur'
+    });
+
+    res.send({
+      clientSecret: paymentIntent.client_secret
+    });
+  } catch (error) {
+    res.status(400).send({
+      error: {
+        message: error.message
+      }
+    });
   }
 });
 

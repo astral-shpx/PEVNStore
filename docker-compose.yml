@@ -1,6 +1,5 @@
 version: "3"
 
-# doesnt work
 services:
   backend:
     ports:
@@ -21,8 +20,6 @@ services:
     container_name: my-postgres
     env_file:
       - backend/.env
-    # environment:
-    #   POSTGRES_PASSWORD: pass
     ports:
       - "5432:5432"
     volumes:
@@ -30,8 +27,3 @@ services:
 
 volumes:
   postgres-data:
-# networks:
-#   mynw:
-# volumes:
-#   pgdata:
-#     name: pgdata
