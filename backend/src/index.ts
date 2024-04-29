@@ -24,6 +24,7 @@ const stripe_secret = process.env.STRIPE_API_KEY!;
 // Testing
 // AdminJS
 // frontend
+// pagination with page number and offset params
 
 const stripe = new Stripe(stripe_secret, {
   apiVersion: '2024-04-10'
