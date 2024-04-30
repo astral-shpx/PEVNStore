@@ -12,10 +12,10 @@ const items = ref([
 <template>
   <!-- animate-pulse -->
   <div class="flex flex-wrap" role="status">
-    <div v-for="_ in items" class="flex flex-col w-1/2">
+    <div v-for="item in items" class="flex flex-col w-1/2">
       <div class="mb-4 mx-2">
         <LoadingProduct />
-        <!-- {{ item.message }} -->
+        {{ item.message }}
       </div>
     </div>
 
