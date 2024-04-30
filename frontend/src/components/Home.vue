@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import SearchBar from "./SearchBar.vue";
+import AllProducts from "./AllProducts.vue";
 </script>
 
 <template>
-  <h1>yes!</h1>
   <SearchBar />
+  <AllProducts />
 </template>
