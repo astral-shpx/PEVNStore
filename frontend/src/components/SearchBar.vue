@@ -1,0 +1,16 @@
+<script setup lang="ts"></script>
+
+<template>
+  <div class="flex w-full p-4">
+    <input
+      class="flex-grow w-1 p-2 border rounded-l-lg"
+      type="text"
+      placeholder="Search..."
+    />
+    <button class="flex-none text-white p-2 border rounded-r-lg" type="submit">
+      <img class="" src="/icons8-search-24.png" alt="search" srcset="" />
+    </button>
+  </div>
+</template>
+
+<style scoped></style>
