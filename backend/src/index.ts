@@ -10,6 +10,7 @@ import argon2 from 'argon2';
 import session from 'express-session';
 import Stripe from 'stripe';
 import cartRoutes from './routes/cartRoutes';
+import productsRoutes from './routes/productsRoutes';
 
 dotenv.config();
 
@@ -19,13 +20,13 @@ const session_secret = process.env.SESSION_SECRET!;
 const stripe_secret = process.env.STRIPE_API_KEY!;
 
 // TODO
-// shopping cart through session
+// product pagination with page number and offset params
 // favourites through session
+// user reviews
 // Stripe - integrate with db
 // Testing
 // AdminJS
 // frontend
-// pagination with page number and offset params
 
 const stripe = new Stripe(stripe_secret, {
   apiVersion: '2024-04-10'
@@ -46,6 +47,7 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 app.use('/cart', cartRoutes);
+app.use('/products', productsRoutes);
 
 passport.use(
   new LocalStrategy(async (username, password, done) => {
