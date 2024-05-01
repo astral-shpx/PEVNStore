@@ -1,6 +1,6 @@
 FROM node:18
 
-WORKDIR /app/backend
+WORKDIR /app/frontend
 
 COPY package*.json ./
 
@@ -10,6 +10,6 @@ COPY . .
 
 RUN npm run build
 
-EXPOSE 3001
+EXPOSE 4173
 
-CMD ["node", "./dist/index.js"]
+CMD ["npm", "run", "preview"]
