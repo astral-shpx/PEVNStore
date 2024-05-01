@@ -5,9 +5,18 @@ export class User {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ unique: true })
+  @Column({ unique: true, nullable: true })
   username!: string;
 
-  @Column()
+  @Column({ nullable: true })
   password_hash!: string;
+
+  @Column({ unique: true, nullable: true })
+  googleId?: string; // Google ID for users logging in via Google
+
+  @Column({ unique: true, nullable: true })
+  email?: string; // Email can be used for both Google and local accounts
+
+  @Column({ nullable: true })
+  displayName?: string; // Optional: for storing the user's display name
 }

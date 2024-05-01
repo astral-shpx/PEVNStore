@@ -70,4 +70,17 @@ router.post('/signup', async (req, res, next) => {
   }
 });
 
+router.get(
+  '/google',
+  passport.authenticate('google', { scope: ['email', 'profile'] })
+);
+
+router.get(
+  '/google/callback',
+  passport.authenticate('google', { failureRedirect: '/login' }),
+  (req, res) => {
+    return res.send(req.user);
+  }
+);
+
 export default router;
