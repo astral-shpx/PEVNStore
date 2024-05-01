@@ -17,6 +17,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/entities": "^2.0.0",
     "argon2": "^0.40.1",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",

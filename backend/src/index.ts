@@ -9,6 +9,7 @@ import { Strategy as LocalStrategy } from 'passport-local';
 import argon2 from 'argon2';
 import session from 'express-session';
 import Stripe from 'stripe';
+import cartRoutes from './routes/cartRoutes';
 
 dotenv.config();
 
@@ -44,6 +45,7 @@ app.use(
 
 app.use(passport.initialize());
 app.use(passport.session());
+app.use('/cart', cartRoutes);
 
 passport.use(
   new LocalStrategy(async (username, password, done) => {
