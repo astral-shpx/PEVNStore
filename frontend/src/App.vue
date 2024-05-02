@@ -2,6 +2,17 @@
 import SearchBar from "./components/SearchBar.vue";
 import { ref } from "vue";
 
+// todo
+// implement offset and take for products pagination
+// menu for categories
+// search
+// search error message and products
+// product page
+// login page
+// checkout page
+// favourites page
+// desktop styles
+
 const isMenuOpen = ref(false);
 
 const openMenu = () => {
