@@ -19,7 +19,7 @@ export default setSeederFactory(Product, faker => {
     min: 0,
     max: 1000
   });
-  product.product_image_url = faker.image.imageUrl();
+  product.product_image_url = faker.image.urlPicsumPhotos();
   product.product_website = faker.internet.url();
 
   return product;

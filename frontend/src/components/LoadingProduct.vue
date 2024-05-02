@@ -1,9 +1,7 @@
 <script setup lang="ts"></script>
 
 <template>
-  <div
-    class="flex flex-col items-center justify-center w-full h-48 bg-gray-300 rounded dark:bg-gray-700 mb-4"
-  >
+  <div class="flex flex-col items-center justify-center mb-4">
     <svg
       class="w-10 h-10 text-gray-200 dark:text-gray-600"
       aria-hidden="true"

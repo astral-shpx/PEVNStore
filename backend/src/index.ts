@@ -9,6 +9,7 @@ import Stripe from 'stripe';
 import cartRoutes from './routes/cartRoutes';
 import productsRoutes from './routes/productsRoutes';
 import authRoutes from './routes/authRoutes';
+import cors from 'cors';
 
 dotenv.config();
 
@@ -32,6 +33,12 @@ const stripe = new Stripe(stripe_secret, {
 });
 
 app.use(express.json());
+
+app.use(
+  cors({
+    origin: 'http://localhost:5173'
+  })
+);
 
 app.use(express.urlencoded({ extended: true }));
 

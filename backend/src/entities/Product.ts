@@ -29,7 +29,7 @@ export class Product {
   @Column('int')
   customer_reviews!: number;
 
-  @Column({ length: 50 })
+  @Column({ length: 250 })
   product_image_url!: string;
 
   @Column({ length: 1000 })
