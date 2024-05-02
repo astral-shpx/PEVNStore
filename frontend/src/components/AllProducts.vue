@@ -10,6 +10,11 @@ const items = ref([
 </script>
 
 <template>
+  <div
+    class="flex justify-center items-center mb-6 border sticky top-24 bg-slate-600"
+  >
+    filter
+  </div>
   <!-- animate-pulse -->
   <div class="flex flex-wrap" role="status">
     <div v-for="item in items" class="flex flex-col w-1/2">
