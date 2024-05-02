@@ -24,6 +24,7 @@ const stripe_secret = process.env.STRIPE_API_KEY!;
 // Testing
 // AdminJS
 // remove logging
+// econt integration
 // frontend
 
 const stripe = new Stripe(stripe_secret, {

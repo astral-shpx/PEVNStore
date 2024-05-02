@@ -8,7 +8,7 @@ router.get('/', (req: Request, res: Response) => {
   return res.json(cart);
 });
 
-router.put('/cart', (req: Request, res: Response) => {
+router.put('/', (req: Request, res: Response) => {
   const { product_id, quantity }: CartItem = req.body;
 
   if (!product_id || !quantity) {
