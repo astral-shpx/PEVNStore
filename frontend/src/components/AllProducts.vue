@@ -11,7 +11,7 @@ const items = ref([
 
 <template>
   <div
-    class="flex justify-center items-center mb-6 border sticky top-24 bg-slate-600"
+    class="flex justify-center items-center mb-6 border sticky top-36 bg-slate-600"
   >
     filter
   </div>

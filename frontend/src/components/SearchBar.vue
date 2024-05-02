@@ -11,7 +11,12 @@
       class="flex-none bg-lime-600 text-white p-2 border rounded-r-lg"
       type="submit"
     >
-      <img class="" src="/icons8-search-24.png" alt="search" srcset="" />
+      <img
+        class=""
+        src="../assets/icons8-search-24.png"
+        alt="search"
+        srcset=""
+      />
     </button>
   </div>
 </template>
