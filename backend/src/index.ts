@@ -18,12 +18,13 @@ const session_secret = process.env.SESSION_SECRET!;
 const stripe_secret = process.env.STRIPE_API_KEY!;
 
 // TODO
-// user reviews
+// product reviews
+// user favourites
 // Stripe - integrate with db
-// favourites through session
 // Testing
 // AdminJS
 // remove logging
+// econt integration
 // frontend
 
 const stripe = new Stripe(stripe_secret, {
