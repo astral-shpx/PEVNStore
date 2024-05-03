@@ -32,7 +32,7 @@ onMounted(fetchProducts);
 <template>
   <div class="mb-6">Search: ...</div>
   <div
-    class="flex justify-center items-center mb-6 border sticky top-32 bg-slate-600"
+    class="flex justify-center items-center mb-6 border sticky top-32 dark:bg-slate-600"
   >
     filter
   </div>
