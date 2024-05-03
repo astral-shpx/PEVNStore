@@ -4,6 +4,7 @@ import { Product } from '../entities/Product';
 
 const router = Router();
 
+// TODO add query params for searching by name description etc
 router.get('/', async (req: Request, res: Response) => {
   const offsetString = req.query.offset as string;
   const limitString = req.query.limit as string;
