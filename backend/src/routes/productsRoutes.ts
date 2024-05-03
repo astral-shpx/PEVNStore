@@ -5,9 +5,13 @@ import { Product } from '../entities/Product';
 const router = Router();
 
 router.get('/', async (req: Request, res: Response) => {
-  const { offset, limit } = req.body;
+  const offsetString = req.query.offset as string;
+  const limitString = req.query.limit as string;
 
-  if (!offset || !limit) {
+  const offset = parseInt(offsetString) || 0;
+  const limit = parseInt(limitString);
+
+  if (isNaN(offset) || isNaN(limit)) {
     return res
       .status(400)
       .send({ message: 'You must provide offset and limit' });

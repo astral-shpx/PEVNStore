@@ -13,7 +13,11 @@ const loading = ref(true);
 const fetchProducts = async () => {
   loading.value = true;
   try {
-    const resp = await axios.get("api/products/all");
+    const resp = await axios.get("api/products", {
+      params: {
+        limit: load_amount.value,
+      },
+    });
     allProducts.value = resp.data;
   } catch (error) {
     console.error("Failed to fetch products:", error);
