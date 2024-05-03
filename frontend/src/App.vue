@@ -47,10 +47,10 @@ const openMenu = () => {
   <main>
     <RouterView />
   </main>
-  <!-- TODO hide on search bar inactive, disable background scrolling, error when no results  -->
+  <!-- TODO hide on search bar inactive, error when no results  -->
   <div
     v-if="store.typingSearchQuery !== ''"
-    class="fixed top-32 left-4 right-4 z-50 bg-slate-200 rounded-lg text-black overflow-scroll h-4/5"
+    class="fixed top-32 left-4 right-4 z-50 bg-slate-200 rounded-lg text-black overflow-scroll overscroll-contain h-4/5"
   >
     <ProductsAutocompleteSearch :search-q="store.typingSearchQuery" />
   </div>
