@@ -1,4 +1,7 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { Product } from "../types/product";
+defineProps<{ product: Product }>();
+</script>
 
 <template>
   <div class="flex flex-col items-center justify-center mb-4">
@@ -10,14 +13,3 @@
   </div>
   <div class="w-full"></div>
 </template>
-
-<script>
-export default {
-  props: {
-    product: {
-      type: Object,
-      required: true,
-    },
-  },
-};
-</script>

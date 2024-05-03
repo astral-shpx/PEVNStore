@@ -1,44 +1,28 @@
-<script lang="ts">
-import { defineComponent } from "vue";
+<script setup lang="ts">
+import { onMounted, ref } from "vue";
+import axios from "axios";
 import LoadingProduct from "./LoadingProduct.vue";
 import Product from "./Product.vue";
-import type { AxiosInstance } from "axios";
+import { Product as ProductItem } from "../types/product";
 
-declare module "@vue/runtime-core" {
-  interface ComponentCustomProperties {
-    $axios: AxiosInstance;
-    catTags: string[];
+const load_amount = ref(10);
+
+const allProducts = ref<ProductItem[]>([]);
+const loading = ref(true);
+
+const fetchProducts = async () => {
+  loading.value = true;
+  try {
+    const resp = await axios.get("api/products/all");
+    allProducts.value = resp.data;
+  } catch (error) {
+    console.error("Failed to fetch products:", error);
+  } finally {
+    loading.value = false;
   }
-}
+};
 
-export default defineComponent({
-  components: { LoadingProduct, Product },
-  data() {
-    return {
-      items: [
-        { message: "Foo" },
-        { message: "Bar" },
-        { message: "Baz" },
-        { message: "Qux" },
-      ],
-      allproducts: [],
-      loading: true,
-    };
-  },
-  methods: {
-    async fetchProducts() {
-      const resp = await this.$axios.get("/products/all");
-      console.log(resp.data);
-
-      this.allproducts = resp.data;
-    },
-  },
-  async mounted() {
-    this.loading = true;
-    await this.fetchProducts();
-    this.loading = false;
-  },
-});
+onMounted(fetchProducts);
 </script>
 
 <template>
@@ -50,19 +34,18 @@ export default defineComponent({
   </div>
   <div class="flex flex-wrap px-2" role="status">
     <div
-      v-for="item in items"
+      v-for="_ in load_amount"
       class="flex flex-col w-1/2 bg-gray-300 rounded dark:bg-gray-700 animate-pulse"
-      :class="{ hidden: !loading, flex: loading }"
+      :class="{ hidden: !loading }"
     >
       <div class="mb-4 mx-2">
         <span class="">Loading...</span>
         <LoadingProduct />
-        {{ item.message }}
       </div>
     </div>
 
     <div
-      v-for="product in allproducts"
+      v-for="product in allProducts"
       class="flex flex-col w-1/2 bg-gray-300 rounded dark:bg-gray-700 mb-4"
       :class="{ hidden: loading, flex: !loading }"
     >
