@@ -1,7 +1,17 @@
 <script setup lang="ts">
-import AllProducts from "./AllProducts.vue";
+import ProductsList from "./ProductsList.vue";
+import { store } from "../store";
 </script>
 
 <template>
-  <AllProducts />
+  <div class="mb-6" v-if="store.searchQuery">
+    Search: {{ store.searchQuery }}
+  </div>
+  <div
+    class="flex justify-center items-center mb-6 border sticky top-[8.5rem] dark:bg-slate-600 z-10"
+  >
+    filter
+  </div>
+  <ProductsList />
+  <div v-if="store.searchQuery !== ''" class="">search</div>
 </template>

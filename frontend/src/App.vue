@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import SearchBar from "./components/SearchBar.vue";
+import OneProductSearchLine from "./components/OneProductSearchLine.vue";
 import { ref } from "vue";
+import { store } from "./store";
 
 // todo
 // implement offset and take for products pagination
@@ -45,6 +47,12 @@ const openMenu = () => {
   <main>
     <RouterView />
   </main>
+  <div
+    v-if="store.typingSearchQuery !== ''"
+    class="fixed top-32 left-4 right-4 z-50 bg-slate-200 rounded-lg text-black"
+  >
+    <OneProductSearchLine :search-q="store.typingSearchQuery" />
+  </div>
 </template>
 
 <style scoped></style>
