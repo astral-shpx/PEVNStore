@@ -7,7 +7,7 @@ import { Product as ProductItem } from "../types/product";
 
 const load_amount = ref(10);
 
-const allProducts = ref<ProductItem[]>([]);
+const products = ref<ProductItem[]>([]);
 const loading = ref(true);
 
 const fetchProducts = async () => {
@@ -18,7 +18,7 @@ const fetchProducts = async () => {
         limit: load_amount.value,
       },
     });
-    allProducts.value = resp.data;
+    products.value = resp.data;
   } catch (error) {
     console.error("Failed to fetch products:", error);
   } finally {
@@ -43,7 +43,7 @@ onMounted(fetchProducts);
     </div>
 
     <div
-      v-for="product in allProducts"
+      v-for="product in products"
       class="flex flex-col w-1/2 bg-gray-300 rounded dark:bg-gray-700 mb-4"
       :class="{ hidden: loading, flex: !loading }"
     >
