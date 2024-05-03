@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import SearchBar from "./components/SearchBar.vue";
 import ProductsAutocompleteSearch from "./components/ProductsAutocompleteSearch.vue";
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import { store } from "./store";
 
 // todo
@@ -22,6 +22,10 @@ const openMenu = () => {
 
   isMenuOpen.value = !isMenuOpen.value;
 };
+
+const showAutocompleteComponent = computed(
+  () => store.typingSearchQuery !== "" && store.showAutocomplete
+);
 </script>
 
 <template>
@@ -47,9 +51,9 @@ const openMenu = () => {
   <main>
     <RouterView />
   </main>
-  <!-- TODO hide on search bar inactive, error when no results  -->
+  <!-- TODO error when no results  -->
   <div
-    v-if="store.typingSearchQuery !== ''"
+    v-if="showAutocompleteComponent"
     class="fixed top-32 left-4 right-4 z-50 bg-slate-200 rounded-lg text-black overflow-scroll overscroll-contain h-4/5"
   >
     <ProductsAutocompleteSearch :search-q="store.typingSearchQuery" />
