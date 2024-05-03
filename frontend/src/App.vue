@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import SearchBar from "./components/SearchBar.vue";
-import OneProductSearchLine from "./components/OneProductSearchLine.vue";
+import ProductsAutocompleteSearch from "./components/ProductsAutocompleteSearch.vue";
 import { ref } from "vue";
 import { store } from "./store";
 
@@ -47,11 +47,12 @@ const openMenu = () => {
   <main>
     <RouterView />
   </main>
+  <!-- TODO hide on search bar inactive, disable background scrolling, error when no results  -->
   <div
     v-if="store.typingSearchQuery !== ''"
-    class="fixed top-32 left-4 right-4 z-50 bg-slate-200 rounded-lg text-black"
+    class="fixed top-32 left-4 right-4 z-50 bg-slate-200 rounded-lg text-black overflow-scroll h-4/5"
   >
-    <OneProductSearchLine :search-q="store.typingSearchQuery" />
+    <ProductsAutocompleteSearch :search-q="store.typingSearchQuery" />
   </div>
 </template>
 
