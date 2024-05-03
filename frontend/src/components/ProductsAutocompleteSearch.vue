@@ -19,8 +19,8 @@ const fetchProducts = async () => {
   try {
     // TODO better api search get handling
     const resp = await axios.get(`api/products/search/byname/${props.searchQ}`);
-    errorFetching.value = false;
     products.value = resp.data;
+    errorFetching.value = false;
   } catch (error) {
     errorFetching.value = true;
     console.error("Failed to fetch products:", error);
