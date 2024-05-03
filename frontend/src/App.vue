@@ -29,7 +29,7 @@ const openMenu = () => {
   >
     <div class="p-4 shadow-md bg-white dark:bg-slate-600">hello</div>
   </div>
-  <div class="sticky top-0 bg-white dark:bg-slate-600 mb-4">
+  <div class="sticky top-0 bg-white dark:bg-gray-700 mb-4">
     <nav class="flex">
       <img
         @click="openMenu"

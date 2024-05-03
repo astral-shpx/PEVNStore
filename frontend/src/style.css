@@ -7,5 +7,5 @@ h1 {
 }
 
 :root {
-  @apply dark:text-slate-200;
+  @apply dark:text-slate-200 dark:bg-slate-600;
 }

@@ -3,7 +3,7 @@
 <template>
   <div class="flex w-full p-4">
     <input
-      class="flex-grow w-1 p-2 border border-r-0 rounded-l-lg"
+      class="flex-grow w-1 p-2 border border-r-0 rounded-l-lg text-black"
       type="text"
       placeholder="Search..."
     />
