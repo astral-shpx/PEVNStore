@@ -11,6 +11,7 @@ import useToasterStore from "../piniaStores/useToasterStore";
 const toasterStore = useToasterStore();
 
 const load_amount = ref(10);
+const total_amount = ref(10);
 const page_num = ref(0);
 
 const products = ref<ProductItem[]>([]);
@@ -27,7 +28,7 @@ const fetchProducts = async () => {
       },
     });
     products.value = resp.data.products;
-    load_amount.value = resp.data.count;
+    total_amount.value = resp.data.count;
   } catch (error) {
     console.error("Failed to fetch products:", error);
   } finally {
@@ -36,14 +37,7 @@ const fetchProducts = async () => {
 };
 
 const nextPage = async () => {
-  const totalPages = Math.ceil(load_amount.value / load_amount.value) - 1;
-
-  console.log(
-    "Moving from page",
-    page_num.value,
-    "to page",
-    page_num.value + 1
-  );
+  const totalPages = Math.ceil(total_amount.value / load_amount.value) - 1;
 
   if (page_num.value < totalPages) {
     page_num.value++;

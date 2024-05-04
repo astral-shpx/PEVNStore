@@ -8,7 +8,7 @@ import { store } from "../store";
     Search: {{ store.searchQuery }}
   </div>
   <div
-    class="flex justify-center items-center mb-6 border sticky top-[8.5rem] dark:bg-slate-600 z-10 rounded-sm"
+    class="flex justify-center items-center mb-6 border sticky top-[8.5rem] dark:bg-slate-600 z-10 rounded-sm select-none"
   >
     filter
   </div>
