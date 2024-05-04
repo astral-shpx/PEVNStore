@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import { onMounted, ref } from "vue";
+import { onMounted, ref, watch } from "vue";
 import axios from "axios";
 import LoadingProduct from "./LoadingProduct.vue";
 import Product from "./Product.vue";
 import { Product as ProductItem } from "../types/product";
+import { store } from "../store";
 
 const load_amount = ref(10);
 
@@ -16,6 +17,7 @@ const fetchProducts = async () => {
     const resp = await axios.get("api/products", {
       params: {
         limit: load_amount.value,
+        productName: store.searchQuery,
       },
     });
     products.value = resp.data;
@@ -27,6 +29,13 @@ const fetchProducts = async () => {
 };
 
 onMounted(fetchProducts);
+watch(
+  () => store.searchQuery,
+  async () => {
+    fetchProducts();
+  },
+  { immediate: true }
+);
 </script>
 
 <template>

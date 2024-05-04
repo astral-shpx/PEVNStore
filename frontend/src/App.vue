@@ -51,7 +51,6 @@ const showAutocompleteComponent = computed(
   <main>
     <RouterView />
   </main>
-  <!-- TODO error when no results  -->
   <div
     v-if="showAutocompleteComponent"
     class="fixed top-32 left-4 right-4 z-50 bg-slate-200 rounded-lg text-black overflow-scroll overscroll-contain h-4/5"

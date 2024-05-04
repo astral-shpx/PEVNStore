@@ -8,6 +8,7 @@ const router = Router();
 router.get('/', async (req: Request, res: Response) => {
   const offsetString = req.query.offset as string;
   const limitString = req.query.limit as string;
+  const productName = req.query.productName as string;
 
   const offset = parseInt(offsetString) || 0;
   const limit = parseInt(limitString);
@@ -19,12 +20,21 @@ router.get('/', async (req: Request, res: Response) => {
   }
 
   const productRepository = AppDataSource.getRepository(Product);
-  const products = await productRepository
-    .createQueryBuilder('product')
+
+  const queryBuilder = productRepository.createQueryBuilder('product');
+
+  if (productName && productName.trim() !== '') {
+    queryBuilder.where('product.product_name ILIKE :productName', {
+      productName: `%${productName}%`
+    });
+  }
+
+  const products = await queryBuilder
     .orderBy('product.id', 'ASC')
     .skip(offset)
     .take(limit)
     .getMany();
+
   return res.json(products);
 });
 
@@ -56,6 +66,7 @@ router.get('/one/:productId', async (req: Request, res: Response) => {
   }
 });
 
+// remove
 router.get(
   '/search/byname/:productName',
   async (req: Request, res: Response) => {

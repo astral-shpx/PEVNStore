@@ -13,7 +13,4 @@ import { store } from "../store";
     filter
   </div>
   <ProductsList />
-  <div v-if="store.searchQuery !== ''" class="">
-    search: {{ store.searchQuery }}
-  </div>
 </template>
