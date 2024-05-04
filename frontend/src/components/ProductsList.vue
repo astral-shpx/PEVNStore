@@ -5,6 +5,10 @@ import LoadingProduct from "./LoadingProduct.vue";
 import Product from "./Product.vue";
 import { Product as ProductItem } from "../types/product";
 import { store } from "../store";
+import Toaster from "./Toaster.vue";
+import useToasterStore from "../piniaStores/useToasterStore";
+
+const toasterStore = useToasterStore();
 
 const load_amount = ref(10);
 const page_num = ref(0);
@@ -45,7 +49,7 @@ const nextPage = async () => {
     page_num.value++;
     await fetchProducts();
   } else {
-    console.log("No more pages to load.");
+    toasterStore.error({ text: "No more pages to load." });
   }
 };
 
@@ -54,7 +58,7 @@ const prevPage = async () => {
     page_num.value--;
     await fetchProducts();
   } else {
-    console.log("No more pages to navigate back to.");
+    toasterStore.error({ text: "No more pages to navigate back to." });
   }
 };
 
@@ -91,8 +95,14 @@ watch(
     </div>
 
     <div class="flex flex-row w-full">
-      <button class="w-1/2" @click="prevPage">previous page</button>
-      <button class="w-1/2" @click="nextPage">next page</button>
+      <button class="w-1/2 p-2 border rounded-sm" @click="prevPage">
+        previous page
+      </button>
+      <button class="w-1/2 p-2 border rounded-sm" @click="nextPage">
+        next page
+      </button>
     </div>
+
+    <Toaster />
   </div>
 </template>
