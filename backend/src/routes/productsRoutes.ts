@@ -29,13 +29,15 @@ router.get('/', async (req: Request, res: Response) => {
     });
   }
 
+  const count = await queryBuilder.getCount();
+
   const products = await queryBuilder
     .orderBy('product.id', 'ASC')
     .skip(offset)
     .take(limit)
     .getMany();
 
-  return res.json(products);
+  return res.json({ products, count });
 });
 
 router.get('/all', async (req: Request, res: Response) => {

@@ -2,6 +2,7 @@
 
 <template>
   <div class="flex flex-col items-center justify-center mb-4">
+    <span class="">Loading...</span>
     <svg
       class="w-10 h-10 text-gray-200 dark:text-gray-600"
       aria-hidden="true"
