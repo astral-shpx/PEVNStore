@@ -2,7 +2,7 @@ import { createWebHistory, createRouter } from "vue-router";
 import Home from "./components/Home.vue";
 
 const routes = [
-  // { path: "/hello", component: HelloWorld },
+  // { path: "/search/:search", component: Home },
   { path: "/", component: Home },
 ];
 
