@@ -17,9 +17,14 @@ const fetchProducts = async () => {
     return;
   }
   try {
-    // TODO better api search get handling
-    const resp = await axios.get(`api/products/search/byname/${props.searchQ}`);
-    products.value = resp.data;
+    const resp = await axios.get("api/products", {
+      params: {
+        productName: props.searchQ,
+        limit: 3,
+        offset: 0,
+      },
+    });
+    products.value = resp.data.products;
     errorFetching.value = false;
   } catch (error) {
     errorFetching.value = true;

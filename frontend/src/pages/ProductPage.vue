@@ -24,5 +24,5 @@ onMounted(() => {
   >
     filter
   </div>
-  <ProductsList />
+  <ProductsList v-if="store.searchQuery" />
 </template>

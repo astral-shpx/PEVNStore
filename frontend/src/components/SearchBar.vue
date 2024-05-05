@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { store } from "../store";
-// import { useRouter } from "vue-router";
+import { useRouter } from "vue-router";
 
-// const router = useRouter();
+const router = useRouter();
 const search = ref("");
 
 const typingSearch = () => {
@@ -13,11 +13,7 @@ const typingSearch = () => {
 
 const submitSearch = () => {
   store.searchQuery = search.value as string;
-  // TODO
-  // router.replace(`/search/${store.searchQuery}`);
-  // router.push({
-  //   query: { ...router.currentRoute.value.query, query: search.value },
-  // });
+  router.push(`/${store.searchQuery}`);
 };
 
 const onBlurInput = () => {
