@@ -1,9 +1,9 @@
 import { createWebHistory, createRouter } from "vue-router";
 import Home from "./pages/Home.vue";
-import ProductPage from "./pages/ProductPage.vue";
+import ProductSearchPage from "./pages/ProductSearchPage.vue";
 
 const routes = [
-  { path: "/:search", component: ProductPage },
+  { path: "/:search", component: ProductSearchPage },
   { path: "/", component: Home },
 ];
 
