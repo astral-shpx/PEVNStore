@@ -20,7 +20,7 @@ const loading = ref(true);
 const fetchProducts = async () => {
   loading.value = true;
   try {
-    const resp = await axios.get("api/products", {
+    const resp = await axios.get("/api/products", {
       params: {
         limit: load_amount.value,
         productName: store.searchQuery,
@@ -83,7 +83,7 @@ watch(
       class="flex flex-col w-1/2 bg-gray-300 rounded dark:bg-gray-700 mb-4"
       :class="{ hidden: loading, flex: !loading }"
     >
-      <div class="mb-4 mx-2">
+      <div class="mb-4 mx-2 cursor-pointer">
         <Product :product="product" />
       </div>
     </div>
