@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import ProductsList from "./ProductsList.vue";
+import ProductsList from "../components/ProductsList.vue";
 import { store } from "../store";
 </script>
 

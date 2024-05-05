@@ -68,37 +68,4 @@ router.get('/one/:productId', async (req: Request, res: Response) => {
   }
 });
 
-// remove
-router.get(
-  '/search/byname/:productName',
-  async (req: Request, res: Response) => {
-    const productRepository = AppDataSource.getRepository(Product);
-    const { take } = req.body;
-    try {
-      const productName = req.params.productName;
-      if (!productName) {
-        return res.status(400).json({ message: 'No product name given' });
-      }
-
-      const products = await productRepository
-        .createQueryBuilder('product')
-        .where('product.product_name ILIKE :productName', {
-          productName: `%${productName}%`
-        })
-        .orderBy('product.id', 'ASC')
-        .take(take || 3)
-        .getMany();
-
-      if (products.length === 0) {
-        return res.status(404).json({ message: 'Products not found' });
-      }
-
-      return res.json(products);
-    } catch (error) {
-      console.error('Error fetching product:', error);
-      return res.status(500).json({ message: 'Error fetching product' });
-    }
-  }
-);
-
 export default router;

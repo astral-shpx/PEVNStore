@@ -5,7 +5,6 @@ import { ref, computed } from "vue";
 import { store } from "./store";
 
 // todo
-// implement offset and take for products pagination
 // menu for categories
 // search
 // search error message and products
