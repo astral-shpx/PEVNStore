@@ -24,5 +24,6 @@ onMounted(() => {
   >
     filter
   </div>
+  <h1 class="mb-4">All products</h1>
   <ProductsList />
 </template>

@@ -5,11 +5,15 @@ import { ref, computed } from "vue";
 import { store } from "./store";
 
 // todo
-// menu for categories
-// search
-// search error message and products
-// product page
+// no results message on search
+// fix no search on enter pressed
+// product page - data and styles
+// filter functionality
+// pagination with page numbers
+// categories in burger menu
 // login page
+// account page
+// payments
 // checkout page
 // favourites page
 // desktop styles

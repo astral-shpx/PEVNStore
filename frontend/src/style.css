@@ -6,6 +6,10 @@ h1 {
   @apply text-3xl font-bold leading-tight dark:text-slate-200;
 }
 
+h2 {
+  @apply text-2xl font-bold leading-tight dark:text-slate-200;
+}
+
 :root {
   @apply dark:text-slate-200 dark:bg-slate-600;
 }
