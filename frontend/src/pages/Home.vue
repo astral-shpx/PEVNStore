@@ -2,15 +2,14 @@
 import ProductsList from "../components/ProductsList.vue";
 import { store } from "../store";
 import { onMounted } from "vue";
-import { useRouter, useRoute } from "vue-router";
+import { useRoute } from "vue-router";
 
-const router = useRouter();
 const route = useRoute();
 
 onMounted(() => {
   if (route) {
     console.log(route.params.search);
-    store.searchQuery = route.params.search;
+    store.searchQuery = route.params.search as string;
   }
 });
 </script>

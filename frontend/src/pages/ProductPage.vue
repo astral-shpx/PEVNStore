@@ -1,12 +1,11 @@
 <script setup lang="ts">
-import ProductsList from "../components/ProductsList.vue";
-import { store } from "../store";
 import axios from "axios";
 import { ref, onMounted } from "vue";
 import { useRoute } from "vue-router";
+import { Product } from "../types/product";
 
 const route = useRoute();
-const product = ref({});
+const product = ref<Product>();
 
 onMounted(async () => {
   try {
@@ -23,7 +22,7 @@ onMounted(async () => {
 <template>
   <div class="flex justify-center items-center">
     <div>
-      {{ product.id }}
+      {{ product?.id }}
     </div>
   </div>
 </template>

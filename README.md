@@ -1,23 +1,45 @@
 # PERNStore
 
-# running postgres in docker
+# Running postgres in docker
 
-`docker run --rm --name=my-postgres --env POSTGRES_PASSWORD=pass --detach --publish 5432:5432 postgres:16`
+`docker compose up my-postgres`
 
-or `docker compose up my-postgres`
+# To seed database
 
-in /backend `npm run db:create` if no database exists
-
-# to seed database
+in /backend `npm run db:create` if no database exists (TODO: fix not working on prod)
 
 in /backend `npm run seed:run`
 
-# Database inspection
+# Tools
 
-The database inspection tool I use is DBeaver
+Database inspection: DBeaver
+
+Api inspection: Insomnia
 
 # Docker compose
 
-Run with `docker compose up`
+Run with `docker compose up --build`
 
 Note: sometimes `docker system prune -a` or `docker-compose build --no-cache` might be needed
+
+# Recommended for development
+
+run frontend and backend with npm run dev and not with docker compose; use docker compose for postgres
+
+# Production
+
+Database: 
+`docker compose -p pernstore-prod -f docker-compose.prod.yml up my-postgres-prod --build`
+
+Full:
+`docker-compose -p pernstore-prod -f docker-compose.prod.yml up --build`
+
+... k8s
+
+# Clean up
+
+```sh
+docker-compose -p pernstore down
+docker-compose -p pernstore-prod down
+```
+
