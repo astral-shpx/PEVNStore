@@ -7,12 +7,16 @@ import { Product as ProductItem } from "../types/product";
 import { store } from "../store";
 import Toaster from "./Toaster.vue";
 import useToasterStore from "../piniaStores/useToasterStore";
+import { useRouter, useRoute } from "vue-router";
 
+const router = useRouter();
+const route = useRoute();
 const toasterStore = useToasterStore();
 
 const load_amount = ref(10);
 const total_amount = ref(10);
-const page_num = ref(0);
+const page_num = ref((route.query.page as unknown as number) || 0);
+const total_pages = ref(0);
 
 const products = ref<ProductItem[]>([]);
 const loading = ref(true);
@@ -29,17 +33,17 @@ const fetchProducts = async () => {
     });
     products.value = resp.data.products;
     total_amount.value = resp.data.count;
+    router.replace({ query: { page: page_num.value } }); //
   } catch (error) {
     console.error("Failed to fetch products:", error);
   } finally {
     loading.value = false;
+    total_pages.value = Math.ceil(total_amount.value / load_amount.value);
   }
 };
 
 const nextPage = async () => {
-  const totalPages = Math.ceil(total_amount.value / load_amount.value) - 1;
-
-  if (page_num.value < totalPages) {
+  if (page_num.value < total_pages.value - 1) {
     page_num.value++;
     await fetchProducts();
   } else {
@@ -54,6 +58,13 @@ const prevPage = async () => {
   } else {
     toasterStore.error({ text: "No more pages to navigate back to." });
   }
+};
+
+// todo move to component
+const navigateToPage = async (page: number) => {
+  page_num.value = page - 1;
+  router.replace({ query: { page: page_num.value } });
+  await fetchProducts();
 };
 
 onMounted(fetchProducts);
@@ -96,12 +107,39 @@ watch(
     </h2>
 
     <div class="flex flex-row w-full">
-      <button class="w-1/2 p-2 border rounded-sm" @click="prevPage">
+      <button
+        class="w-1/2 p-2 border rounded-sm hover:bg-slate-700"
+        @click="prevPage"
+      >
         previous page
       </button>
-      <button class="w-1/2 p-2 border rounded-sm" @click="nextPage">
+      <button
+        class="w-1/2 p-2 border rounded-sm hover:bg-slate-700"
+        @click="nextPage"
+      >
         next page
       </button>
+    </div>
+
+    <!-- TODO move to component -->
+    <div class="flex justify-center w-full my-2">
+      <button
+        class="mx-2 w-6 rounded-md border hover:bg-slate-700"
+        v-for="i in total_pages < 5 ? total_pages : 5"
+        @click="navigateToPage(i)"
+      >
+        {{ i }}
+      </button>
+      <div>...</div>
+      <div class="flex flex-row-reverse" v-if="total_pages > 7">
+        <button
+          class="mx-2 w-6 rounded-md border hover:bg-slate-700"
+          v-for="i in 3"
+          @click="navigateToPage(total_pages - i)"
+        >
+          {{ total_pages - i }}
+        </button>
+      </div>
     </div>
 
     <Toaster />
