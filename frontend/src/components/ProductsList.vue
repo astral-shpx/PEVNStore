@@ -88,6 +88,13 @@ watch(
       </div>
     </div>
 
+    <h2
+      v-if="products.every((el) => !el)"
+      class="flex justify-center items-center w-full mb-6"
+    >
+      No results
+    </h2>
+
     <div class="flex flex-row w-full">
       <button class="w-1/2 p-2 border rounded-sm" @click="prevPage">
         previous page
