@@ -2,13 +2,13 @@
 import { defineProps, defineEmits } from "vue";
 
 interface PaginationProps {
-  total_pages: number;
-  current_page: number;
+  beginning_pages: number[];
+  ending_pages: number[];
 }
 
 withDefaults(defineProps<PaginationProps>(), {
-  total_pages: 1,
-  current_page: 1,
+  beginning_pages: () => [1],
+  ending_pages: () => [1],
 });
 
 const emits = defineEmits(["pageChange"]);
@@ -22,22 +22,23 @@ const navigateToPage = (page: number) => {
   <div class="flex justify-center w-full my-2">
     <button
       class="mx-2 w-6 rounded-md border hover:bg-slate-700"
-      :class="{ 'border-2': i === current_page }"
-      v-for="i in total_pages < 5 ? total_pages : 5"
+      :class="{ 'border-2': i === 0 }"
+      v-for="i in beginning_pages"
       :key="'page-' + i"
       @click="navigateToPage(i)"
     >
-      {{ i }}
+      {{ i + 1 }}
     </button>
-    <div v-if="total_pages > 5">...</div>
-    <div class="flex flex-row-reverse" v-if="total_pages > 7">
+    <div>...</div>
+    <div class="flex flex-row">
       <button
         class="mx-2 w-6 rounded-md border hover:bg-slate-700"
-        v-for="i in 3"
-        :key="'page-' + (total_pages - i)"
-        @click="navigateToPage(total_pages - i)"
+        :class="{ 'border-2': i === 11 }"
+        v-for="i in ending_pages"
+        :key="'page-' + i"
+        @click="navigateToPage(i)"
       >
-        {{ total_pages - i }}
+        {{ i + 1 }}
       </button>
     </div>
   </div>

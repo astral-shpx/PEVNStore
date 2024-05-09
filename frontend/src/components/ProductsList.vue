@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, ref, watch } from "vue";
+import { onMounted, ref, watch, computed } from "vue";
 import axios from "axios";
 import LoadingProduct from "./LoadingProduct.vue";
 import Product from "./Product.vue";
@@ -18,6 +18,9 @@ const load_amount = ref(10);
 const total_amount = ref(10);
 const page_num = ref((route.query.page as unknown as number) || 0);
 const total_pages = ref(0);
+const pages_array = computed(() => {
+  return Array.from({ length: total_pages.value }, (_, index) => index);
+});
 
 const products = ref<ProductItem[]>([]);
 const loading = ref(true);
@@ -62,7 +65,7 @@ const prevPage = async () => {
 };
 
 const navigateToPage = async (page: number) => {
-  page_num.value = page - 1;
+  page_num.value = page;
   router.replace({ query: { page: page_num.value } });
   await fetchProducts();
 };
@@ -122,8 +125,8 @@ watch(
     </div>
 
     <Pagination
-      :total_pages="total_pages"
-      :current_page="page_num + 1"
+      :beginning_pages="pages_array.slice(0, 5)"
+      :ending_pages="pages_array.slice(-3)"
       @pageChange="navigateToPage"
     />
 
