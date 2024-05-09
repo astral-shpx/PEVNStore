@@ -6,10 +6,9 @@ import { store } from "./store";
 
 // todo
 // fix prod docker compose / prod container deployment
-// no results message on search
-// product page - data and styles
+// pagination: move current page variable in store
 // filter functionality
-// pagination with page numbers
+// product page - data and styles
 // categories in burger menu
 // login page
 // account page
