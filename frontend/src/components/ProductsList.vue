@@ -8,6 +8,7 @@ import { store } from "../store";
 import Toaster from "./Toaster.vue";
 import useToasterStore from "../piniaStores/useToasterStore";
 import { useRouter, useRoute } from "vue-router";
+import Pagination from "./Pagination.vue";
 
 const router = useRouter();
 const route = useRoute();
@@ -60,7 +61,6 @@ const prevPage = async () => {
   }
 };
 
-// todo move to component
 const navigateToPage = async (page: number) => {
   page_num.value = page - 1;
   router.replace({ query: { page: page_num.value } });
@@ -121,26 +121,11 @@ watch(
       </button>
     </div>
 
-    <!-- TODO move to component -->
-    <div class="flex justify-center w-full my-2">
-      <button
-        class="mx-2 w-6 rounded-md border hover:bg-slate-700"
-        v-for="i in total_pages < 5 ? total_pages : 5"
-        @click="navigateToPage(i)"
-      >
-        {{ i }}
-      </button>
-      <div>...</div>
-      <div class="flex flex-row-reverse" v-if="total_pages > 7">
-        <button
-          class="mx-2 w-6 rounded-md border hover:bg-slate-700"
-          v-for="i in 3"
-          @click="navigateToPage(total_pages - i)"
-        >
-          {{ total_pages - i }}
-        </button>
-      </div>
-    </div>
+    <Pagination
+      :total_pages="total_pages"
+      :current_page="page_num + 1"
+      @pageChange="navigateToPage"
+    />
 
     <Toaster />
   </div>
