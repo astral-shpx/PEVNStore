@@ -14,6 +14,7 @@ const typingSearch = () => {
 const submitSearch = () => {
   store.searchQuery = search.value as string;
   router.push(`/${store.searchQuery}`);
+  store.showAutocomplete = false;
 };
 
 const onBlurInput = () => {
@@ -31,6 +32,7 @@ const onFocusInput = () => {
       @keyup="typingSearch"
       @blur="onBlurInput"
       @focus="onFocusInput"
+      @keypress.enter="submitSearch"
       v-model="search"
       class="flex-grow w-1 p-2 border border-r-0 rounded-l-lg text-black z-30"
       type="text"

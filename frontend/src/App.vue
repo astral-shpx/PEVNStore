@@ -7,7 +7,6 @@ import { store } from "./store";
 // todo
 // fix prod docker compose / prod container deployment
 // no results message on search
-// fix no search on enter pressed
 // product page - data and styles
 // filter functionality
 // pagination with page numbers
