@@ -16,7 +16,8 @@ const toasterStore = useToasterStore();
 
 const load_amount = ref(10);
 const total_products_amount = ref(10);
-const page = ref((route.query.page as unknown as number) || 0);
+// todo move this to store
+const page = ref((route.query.page as unknown as number) || 1);
 const total_pages = ref(0);
 const pages_array = computed(() => {
   return Array.from({ length: total_pages.value }, (_, index) => index + 1);
@@ -129,7 +130,11 @@ watch(
       </button>
     </div>
 
-    <Pagination :pages="pages_array" @pageChange="navigateToPage" />
+    <Pagination
+      :current_page="page"
+      :pages="pages_array"
+      @pageChange="navigateToPage"
+    />
 
     <Toaster />
   </div>
