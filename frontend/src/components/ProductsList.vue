@@ -15,11 +15,11 @@ const route = useRoute();
 const toasterStore = useToasterStore();
 
 const load_amount = ref(10);
-const total_amount = ref(10);
-const page_num = ref((route.query.page as unknown as number) || 0);
+const total_products_amount = ref(10);
+const page = ref((route.query.page as unknown as number) || 0);
 const total_pages = ref(0);
 const pages_array = computed(() => {
-  return Array.from({ length: total_pages.value }, (_, index) => index);
+  return Array.from({ length: total_pages.value }, (_, index) => index + 1);
 });
 
 const products = ref<ProductItem[]>([]);
@@ -32,23 +32,28 @@ const fetchProducts = async () => {
       params: {
         limit: load_amount.value,
         productName: store.searchQuery,
-        offset: page_num.value * load_amount.value,
+        offset: (page.value - 1) * load_amount.value,
       },
     });
     products.value = resp.data.products;
-    total_amount.value = resp.data.count;
-    router.replace({ query: { page: page_num.value } }); //
+    total_products_amount.value = resp.data.count;
+    router.replace({ query: { page: page.value } });
+    // console.log("page.value", page.value);
+    // console.log("total_products_amount.value", total_products_amount.value);
+    // console.log("load_amount.value", load_amount.value);
   } catch (error) {
     console.error("Failed to fetch products:", error);
   } finally {
     loading.value = false;
-    total_pages.value = Math.ceil(total_amount.value / load_amount.value);
+    total_pages.value = Math.ceil(
+      total_products_amount.value / load_amount.value
+    );
   }
 };
 
 const nextPage = async () => {
-  if (page_num.value < total_pages.value - 1) {
-    page_num.value++;
+  if (page.value < total_pages.value - 1) {
+    page.value++;
     await fetchProducts();
   } else {
     toasterStore.error({ text: "No more pages to load." });
@@ -56,17 +61,17 @@ const nextPage = async () => {
 };
 
 const prevPage = async () => {
-  if (page_num.value > 0) {
-    page_num.value--;
+  if (page.value > 1) {
+    page.value--;
     await fetchProducts();
   } else {
     toasterStore.error({ text: "No more pages to navigate back to." });
   }
 };
 
-const navigateToPage = async (page: number) => {
-  page_num.value = page;
-  router.replace({ query: { page: page_num.value } });
+const navigateToPage = async (page_num: number) => {
+  page.value = page_num;
+  router.replace({ query: { page: page.value } });
   await fetchProducts();
 };
 
@@ -124,11 +129,7 @@ watch(
       </button>
     </div>
 
-    <Pagination
-      :beginning_pages="pages_array.slice(0, 5)"
-      :ending_pages="pages_array.slice(-3)"
-      @pageChange="navigateToPage"
-    />
+    <Pagination :pages="pages_array" @pageChange="navigateToPage" />
 
     <Toaster />
   </div>

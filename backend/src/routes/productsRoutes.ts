@@ -19,6 +19,12 @@ router.get('/', async (req: Request, res: Response) => {
       .send({ message: 'You must provide offset and limit' });
   }
 
+  if (offset < 0 || limit < 0) {
+    return res
+      .status(400)
+      .send({ message: 'Offset and limit must not be negative' });
+  }
+
   const productRepository = AppDataSource.getRepository(Product);
 
   const queryBuilder = productRepository.createQueryBuilder('product');
