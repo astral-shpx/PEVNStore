@@ -20,9 +20,57 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="flex justify-center items-center">
+  <div class="flex justify-center items-center mx-2">
     <div>
-      {{ product?.id }}
+      <img
+        class="px-2 py-4"
+        :src="product?.product_image_url"
+        alt=""
+        srcset=""
+      />
+      <h1 class="flex justify-center mb-2">
+        {{ product?.product_name }}
+      </h1>
+      <div class="flex justify-center mb-4">
+        {{ product?.product_rating }} rating
+        {{ product?.customer_reviews }} reviews
+      </div>
+      <div class="flex justify-center mb-2">$ {{ product?.product_price }}</div>
+      <div class="flex justify-center mb-4">
+        <button
+          class="flex w-2/3 justify-center mb-4 outline-dashed rounded-sm hover:bg-slate-700"
+        >
+          Buy
+        </button>
+      </div>
+      <div class="mb-4 mx-2">
+        <h2>Description</h2>
+        <p>
+          {{ product?.product_description }}
+        </p>
+      </div>
+
+      <div class="mb-4 mx-2">
+        <h2>Details</h2>
+        <tbody>
+          <tr>
+            <th>Manufacturer:</th>
+            <td>{{ product?.manufacturer }}</td>
+          </tr>
+          <tr>
+            <th>Category:</th>
+            <td>{{ product?.product_category }}</td>
+          </tr>
+          <tr>
+            <th>Website:</th>
+            <td>{{ product?.product_website }}</td>
+          </tr>
+          <tr>
+            <th>Release date:</th>
+            <td>{{ product?.release_date }}</td>
+          </tr>
+        </tbody>
+      </div>
     </div>
   </div>
 </template>

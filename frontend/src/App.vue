@@ -6,15 +6,14 @@ import { store } from "./store";
 
 // todo
 // fix prod docker compose / prod container deployment
-// pagination: move current page variable in store
-// filter functionality
-// product page - data and styles
-// categories in burger menu
+// filters
+// categories
 // login page
 // account page
+// favourites page
 // payments
 // checkout page
-// favourites page
+// better pagination
 // desktop styles
 
 const isMenuOpen = ref(false);

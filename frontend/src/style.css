@@ -13,3 +13,6 @@ h2 {
 :root {
   @apply dark:text-slate-200 dark:bg-slate-600;
 }
+th {
+  @apply text-end align-top;
+}
