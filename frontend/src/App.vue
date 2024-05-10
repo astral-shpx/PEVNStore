@@ -33,9 +33,11 @@ const showAutocompleteComponent = computed(
 <template>
   <div
     :class="{ 'translate-x-0': isMenuOpen, '-translate-x-full': !isMenuOpen }"
-    class="fixed left-0 top-16 z-10 transition-transform duration-500"
+    class="fixed left-0 top-20 z-50 transition-transform duration-500"
   >
-    <div class="p-4 shadow-md bg-white dark:bg-slate-600">hello</div>
+    <div class="p-4 shadow-md bg-white dark:bg-slate-700">categories</div>
+    <div class="p-4 shadow-md bg-white dark:bg-slate-700">categories</div>
+    <div class="p-4 shadow-md bg-white dark:bg-slate-700">categories</div>
   </div>
   <div class="sticky top-0 bg-white dark:bg-gray-700 mb-4">
     <nav class="flex">
