@@ -20,28 +20,33 @@ const toggleMenu = () => {
 </script>
 
 <template>
-  <div
-    :class="{ 'translate-x-0': isMenuOpen, '-translate-x-full': !isMenuOpen }"
-    class="fixed left-0 top-20 z-50 transition-transform duration-500 w-4/5 h-4/5 rounded-r-md overflow-scroll overscroll-contain"
-  >
+  <div>
+    <!-- Overlay -->
+    <div v-if="isMenuOpen" @click="toggleMenu" class="fixed inset-0 z-40"></div>
+
+    <!-- Sliding Menu -->
     <div
-      @click="toggleMenu"
-      class="p-2 flex justify-center sticky top-0 cursor-pointer bg-white dark:bg-slate-700 hover:dark:bg-slate-800"
+      :class="{ 'translate-x-0': isMenuOpen, '-translate-x-full': !isMenuOpen }"
+      class="fixed left-0 top-44 z-50 transition-transform duration-500 w-4/5 h-3/5 rounded-r-md overflow-scroll overscroll-contain"
     >
-      Close
+      <div
+        @click="toggleMenu"
+        class="p-2 flex justify-center sticky top-0 cursor-pointer bg-white dark:bg-slate-700 hover:dark:bg-slate-800"
+      >
+        Close
+      </div>
+      <div class="p-4 shadow-md bg-white dark:bg-slate-700">Filters</div>
+      <div class="p-4 shadow-md bg-white dark:bg-slate-700">Filters</div>
+      <div class="p-4 shadow-md bg-white dark:bg-slate-700">Filters</div>
+      <div class="p-4 shadow-md bg-white dark:bg-slate-700">Filters</div>
+      <div class="p-4 shadow-md bg-white dark:bg-slate-700">Filters</div>
+      <div class="p-4 shadow-md bg-white dark:bg-slate-700">Filters</div>
+      <div class="p-4 shadow-md bg-white dark:bg-slate-700">Filters</div>
+      <div class="p-4 shadow-md bg-white dark:bg-slate-700">Filters</div>
+      <div class="p-4 shadow-md bg-white dark:bg-slate-700">Filters</div>
+      <div class="p-4 shadow-md bg-white dark:bg-slate-700">Filters</div>
+      <div class="p-4 shadow-md bg-white dark:bg-slate-700">Filters</div>
     </div>
-    <div class="p-4 shadow-md bg-white dark:bg-slate-700">filters</div>
-    <div class="p-4 shadow-md bg-white dark:bg-slate-700">filters</div>
-    <div class="p-4 shadow-md bg-white dark:bg-slate-700">filters</div>
-    <div class="p-4 shadow-md bg-white dark:bg-slate-700">filters</div>
-    <div class="p-4 shadow-md bg-white dark:bg-slate-700">filters</div>
-    <div class="p-4 shadow-md bg-white dark:bg-slate-700">filters</div>
-    <div class="p-4 shadow-md bg-white dark:bg-slate-700">filters</div>
-    <div class="p-4 shadow-md bg-white dark:bg-slate-700">filters</div>
-    <div class="p-4 shadow-md bg-white dark:bg-slate-700">filters</div>
-    <div class="p-4 shadow-md bg-white dark:bg-slate-700">filters</div>
-    <div class="p-4 shadow-md bg-white dark:bg-slate-700">filters</div>
-    <div class="p-4 shadow-md bg-white dark:bg-slate-700">filters</div>
   </div>
   <h2 class="mb-6" v-if="store.searchQuery">Search: {{ store.searchQuery }}</h2>
   <div
