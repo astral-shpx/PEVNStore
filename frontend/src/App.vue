@@ -19,7 +19,7 @@ import { store } from "./store";
 
 const isMenuOpen = ref(false);
 
-const openMenu = () => {
+const toggleMenu = () => {
   console.log("hello");
 
   isMenuOpen.value = !isMenuOpen.value;
@@ -42,7 +42,7 @@ const showAutocompleteComponent = computed(
   <div class="sticky top-0 bg-white dark:bg-gray-700 mb-4">
     <nav class="flex">
       <svg
-        @click="openMenu"
+        @click="toggleMenu"
         class="w-14 mt-4 mx-2 cursor-pointer"
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 10 10"
