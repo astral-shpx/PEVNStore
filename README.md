@@ -17,13 +17,15 @@ docker compose up my-postgres
 ## Running backend
 
 ```sh
-cd backend && npm run dev
+cd backend
+npm run dev
 ```
 
 ## Running frontend
 
 ```sh
-cd frontend && npm run dev
+cd frontend
+npm run dev
 ```
 
 # To seed database

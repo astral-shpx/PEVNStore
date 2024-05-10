@@ -50,6 +50,13 @@ const navigateToPage = (new_page: number) => {
       {{ i }}
     </button>
     <!-- last page -->
+    <button
+      class="mx-2 w-6 rounded-md border hover:bg-slate-700"
+      :class="{ 'border-2': pages.length - 1 === current_page }"
+      @click="navigateToPage(pages.length - 1)"
+    >
+      >|
+    </button>
     <!-- <div>...</div>
     <div class="flex flex-row">
       <button
