@@ -1,11 +1,11 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: nginx-service
+  name: pevnstore-backend
 spec:
   type: LoadBalancer
   selector:
-    app: my-app
+    app: pevnstore-backend
   ports:
     - protocol: TCP
       port: 80

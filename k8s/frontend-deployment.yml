@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: pevnstore-backend
+  name: pevnstore-frontend
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: pevnstore-backend
+      app: pevnstore-frontend
   template:
     metadata:
       labels:
-        app: pevnstore-backend
+        app: pevnstore-frontend
     spec:
       containers:
       - name: my-container
-        image: europe-west2-docker.pkg.dev/pevnstore/cluster/pevnstore-backend
+        image: europe-west2-docker.pkg.dev/pevnstore/cluster/pevnstore-frontend
         ports:
         - containerPort: 80

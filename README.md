@@ -26,16 +26,6 @@ Note: sometimes `docker system prune -a` or `docker-compose build --no-cache` mi
 
 run frontend and backend with npm run dev and not with docker compose; use docker compose for postgres
 
-# Production
-
-Database: 
-`docker compose -p pernstore-prod -f docker-compose.prod.yml up my-postgres-prod --build`
-
-Full:
-`docker-compose -p pernstore-prod -f docker-compose.prod.yml up --build`
-
-... k8s
-
 # Clean up
 
 ```sh
@@ -43,3 +33,30 @@ docker-compose -p pernstore down
 docker-compose -p pernstore-prod down
 ```
 
+# Deploymjent to gke
+
+Database: 
+`docker compose -f docker-compose.prod.yml up my-postgres-prod --build`
+
+Full:
+`docker-compose -f docker-compose.prod.yml up --build`
+
+```sh
+gcloud config set project pevnstore
+gcloud auth configure-docker europe-west2-docker.pkg.dev
+gcloud artifacts repositories create repo --repository-format=docker --location=europe-west2 --description="Docker repository"
+# tag
+docker tag pevnstore-backend europe-west2-docker.pkg.dev/pevnstore/repo/pevnstore-backend
+docker tag pevnstore-frontend europe-west2-docker.pkg.dev/pevnstore/repo/pevnstore-frontend
+docker tag postgres:16 europe-west2-docker.pkg.dev/pevnstore/repo/postgres:16
+# push
+docker push europe-west2-docker.pkg.dev/pevnstore/repo/pevnstore-backend
+docker push europe-west2-docker.pkg.dev/pevnstore/repo/pevnstore-frontend
+docker push europe-west2-docker.pkg.dev/pevnstore/repo/postgres:16
+
+gcloud container clusters get-credentials cluster --zone europe-west2
+kubectl apply -k ./k8s/
+
+... k8s
+
+```
