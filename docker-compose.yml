@@ -6,7 +6,7 @@ services:
       - "3001:3001"
     build:
       context: ./backend
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile
     environment:
       - DB_HOST=my-postgres
     depends_on:
@@ -19,7 +19,7 @@ services:
       - "5173:5173"
     build:
       context: ./frontend
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile
     environment:
       - NODE_ENV=development
       - VITE_API_URL=http://backend:3001
