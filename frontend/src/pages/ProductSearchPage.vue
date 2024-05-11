@@ -40,19 +40,17 @@ watch(fromDate, (date) => {
     <!-- Sliding Menu -->
     <div
       :class="{ 'translate-x-0': isMenuOpen, '-translate-x-full': !isMenuOpen }"
-      class="fixed left-0 top-44 z-50 transition-transform duration-500 w-4/5 h-3/5 rounded-r-md overflow-scroll overscroll-contain"
+      class="fixed left-0 top-44 z-50 transition-transform duration-500 w-4/5 h-3/5 bg-white dark:bg-slate-700 rounded-r-md overflow-scroll overscroll-contain"
     >
       <div
         @click="toggleMenu"
-        class="p-2 flex justify-center sticky top-0 cursor-pointer bg-white dark:bg-slate-700 hover:dark:bg-slate-800"
+        class="p-2 flex justify-center sticky top-0 cursor-pointer bg-white dark:bg-slate-700 dark:hover:bg-slate-800 hover:bg-slate-300"
       >
         Close
       </div>
       <div class="bg-white dark:bg-slate-700 w-full mb-3">
         <h3 class="mb-2">Release date</h3>
-        <label for="fromDate" class="shadow-md bg-white dark:bg-slate-700">
-          From
-        </label>
+        <label for="fromDate" class="bg-white dark:bg-slate-700"> From </label>
         <input
           class="text-slate-800"
           type="date"
@@ -60,9 +58,7 @@ watch(fromDate, (date) => {
           id=""
           v-model="fromDate"
         />
-        <label for="toDate" class="shadow-md bg-white dark:bg-slate-700">
-          To
-        </label>
+        <label for="toDate" class="bg-white dark:bg-slate-700"> To </label>
         <input
           class="text-slate-800"
           type="date"
@@ -76,7 +72,7 @@ watch(fromDate, (date) => {
   <h2 class="mb-6" v-if="store.searchQuery">Search: {{ store.searchQuery }}</h2>
   <div
     @click="toggleMenu"
-    class="flex justify-center items-center mb-6 border sticky top-[8.5rem] dark:bg-slate-600 z-10 rounded-sm select-none cursor-pointer"
+    class="flex justify-center items-center mb-6 border sticky top-[8.5rem] bg-slate-200 dark:bg-slate-600 z-10 rounded-sm select-none cursor-pointer"
   >
     filter
   </div>

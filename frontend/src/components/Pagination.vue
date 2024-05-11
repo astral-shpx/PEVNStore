@@ -41,7 +41,7 @@ const navigateToPage = (new_page: number) => {
 <template>
   <div class="flex justify-center w-full my-2">
     <button
-      class="mx-2 w-6 rounded-md border hover:bg-slate-700"
+      class="mx-2 w-6 rounded-md border dark:hover:bg-slate-700 hover:bg-slate-400"
       :class="{ 'border-2': i === current_page }"
       v-for="i in pages.slice(page_begin, page_end)"
       :key="'page-' + i"

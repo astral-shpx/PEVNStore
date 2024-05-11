@@ -115,10 +115,12 @@ watch(
 
     <div
       v-for="product in products"
-      class="flex flex-col w-1/2 bg-gray-300 rounded dark:bg-gray-700 mb-4"
+      class="flex flex-col w-1/2"
       :class="{ hidden: loading, flex: !loading }"
     >
-      <div class="mb-4 mx-2 cursor-pointer">
+      <div
+        class="mb-4 mx-2 cursor-pointer hover:shadow-lg bg-gray-300 rounded dark:bg-gray-700 h-full p-2"
+      >
         <Product :product="product" />
       </div>
     </div>
@@ -132,13 +134,13 @@ watch(
 
     <div class="flex flex-row w-full">
       <button
-        class="w-1/2 p-2 border rounded-sm hover:bg-slate-700"
+        class="w-1/2 p-2 border rounded-sm dark:hover:bg-slate-700 hover:bg-slate-400"
         @click="prevPage"
       >
         previous page
       </button>
       <button
-        class="w-1/2 p-2 border rounded-sm hover:bg-slate-700"
+        class="w-1/2 p-2 border rounded-sm dark:hover:bg-slate-700 hover:bg-slate-400"
         @click="nextPage"
       >
         next page

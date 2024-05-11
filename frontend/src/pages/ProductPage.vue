@@ -38,9 +38,9 @@ onMounted(async () => {
       <div class="flex justify-center mb-2">$ {{ product?.product_price }}</div>
       <div class="flex justify-center mb-4">
         <button
-          class="flex w-2/3 justify-center mb-4 outline-dashed rounded-sm hover:bg-slate-700"
+          class="flex w-2/3 justify-center mb-4 outline-dashed rounded-sm dark:hover:bg-slate-700 hover:bg-slate-400"
         >
-          Buy
+          Add to cart
         </button>
       </div>
       <div class="mb-4 mx-2">
