@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import SearchBar from "./components/SearchBar.vue";
 import ProductsAutocompleteSearch from "./components/ProductsAutocompleteSearch.vue";
-import { ref, computed } from "vue";
+import { ref, computed, onMounted } from "vue";
 import { store } from "./store";
+import axios from "axios";
 
 // todo
 // fix prod docker compose / prod container deployment
@@ -17,26 +18,47 @@ import { store } from "./store";
 // desktop styles
 
 const isMenuOpen = ref(false);
+const categories = ref([]);
 
 const toggleMenu = () => {
-  console.log("hello");
-
   isMenuOpen.value = !isMenuOpen.value;
+};
+
+const fetchCategories = async () => {
+  try {
+    const resp = await axios.get("/api/products/categories");
+    categories.value = resp.data;
+  } catch (error) {
+    console.error("Failed to fetch products:", error);
+  }
 };
 
 const showAutocompleteComponent = computed(
   () => store.typingSearchQuery !== "" && store.showAutocomplete
 );
+
+onMounted(() => {
+  fetchCategories();
+});
 </script>
 
 <template>
   <div
     :class="{ 'translate-x-0': isMenuOpen, '-translate-x-full': !isMenuOpen }"
-    class="fixed left-0 top-20 z-50 transition-transform duration-500"
+    class="fixed left-0 top-20 z-50 transition-transform duration-500 h-5/6 w-3/5 overflow-scroll overscroll-contain"
   >
-    <div class="p-4 shadow-md bg-white dark:bg-slate-700">categories</div>
-    <div class="p-4 shadow-md bg-white dark:bg-slate-700">categories</div>
-    <div class="p-4 shadow-md bg-white dark:bg-slate-700">categories</div>
+    <div
+      class="p-4 shadow-md bg-white dark:bg-slate-700"
+      v-for="cat in categories"
+    >
+      <RouterLink
+        :to="`/category/${cat}`"
+        class="flex justify-between cursor-pointer"
+      >
+        <span>{{ cat }}</span
+        ><span>></span>
+      </RouterLink>
+    </div>
   </div>
   <div class="sticky top-0 bg-white dark:bg-gray-700 mb-4">
     <nav class="flex">

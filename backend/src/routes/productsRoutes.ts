@@ -9,6 +9,7 @@ router.get('/', async (req: Request, res: Response) => {
   const offsetString = req.query.offset as string;
   const limitString = req.query.limit as string;
   const productName = req.query.productName as string;
+  const category = req.query.category as string;
 
   const offset = parseInt(offsetString) || 0;
   const limit = parseInt(limitString);
@@ -28,6 +29,12 @@ router.get('/', async (req: Request, res: Response) => {
   const productRepository = AppDataSource.getRepository(Product);
 
   const queryBuilder = productRepository.createQueryBuilder('product');
+
+  if (category && category.trim() !== '') {
+    queryBuilder.where('product.product_category ILIKE :category', {
+      category: `%${category}%`
+    });
+  }
 
   if (productName && productName.trim() !== '') {
     queryBuilder.where('product.product_name ILIKE :productName', {
@@ -72,6 +79,17 @@ router.get('/one/:productId', async (req: Request, res: Response) => {
     console.error('Error fetching product:', error);
     return res.status(500).json({ message: 'Error fetching product' });
   }
+});
+
+router.get('/categories', async (req: Request, res: Response) => {
+  const productRepository = AppDataSource.getRepository(Product);
+  const queryBuilder = productRepository.createQueryBuilder('product');
+  const categoriesRaw = await queryBuilder
+    .select(`DISTINCT product.product_category`)
+    .getRawMany();
+
+  const categories = categoriesRaw.map(value => value['product_category']);
+  return res.json(categories);
 });
 
 export default router;

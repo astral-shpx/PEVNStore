@@ -14,6 +14,10 @@ const router = useRouter();
 const route = useRoute();
 const toasterStore = useToasterStore();
 
+const props = defineProps({
+  category: String,
+});
+
 const load_amount = ref(10);
 const total_products_amount = ref(10);
 // todo move this to store
@@ -34,6 +38,7 @@ const fetchProducts = async () => {
         limit: load_amount.value,
         productName: store.searchQuery,
         offset: (page.value - 1) * load_amount.value,
+        category: props.category,
       },
     });
     products.value = resp.data.products;
@@ -80,6 +85,13 @@ onMounted(fetchProducts);
 watch(
   () => store.searchQuery,
   async () => {
+    fetchProducts();
+  },
+  { immediate: true }
+);
+watch(
+  () => props.category,
+  () => {
     fetchProducts();
   },
   { immediate: true }
