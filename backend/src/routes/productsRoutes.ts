@@ -10,6 +10,8 @@ router.get('/', async (req: Request, res: Response) => {
   const limitString = req.query.limit as string;
   const productName = req.query.productName as string;
   const category = req.query.category as string;
+  const toDate = req.query.toDate as string;
+  const fromDate = req.query.fromDate as string;
 
   const offset = parseInt(offsetString) || 0;
   const limit = parseInt(limitString);
@@ -34,6 +36,17 @@ router.get('/', async (req: Request, res: Response) => {
     queryBuilder.where('product.product_category ILIKE :category', {
       category: `%${category}%`
     });
+  }
+
+  if (fromDate && fromDate.trim() !== '' && toDate && toDate.trim() !== '') {
+    const fromDateObj = new Date(fromDate);
+    const toDateObj = new Date(toDate);
+    queryBuilder
+      .where('example.date BETWEEN :fromDate AND :toDate', {
+        fromDate: fromDateObj,
+        toDate: toDateObj
+      })
+      .getMany();
   }
 
   if (productName && productName.trim() !== '') {

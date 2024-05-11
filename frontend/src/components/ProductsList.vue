@@ -16,6 +16,7 @@ const toasterStore = useToasterStore();
 
 const props = defineProps({
   category: String,
+  filters: Object,
 });
 
 const load_amount = ref(10);
@@ -33,6 +34,8 @@ const loading = ref(true);
 const fetchProducts = async () => {
   loading.value = true;
   try {
+    console.log(props.filters);
+
     const resp = await axios.get("/api/products", {
       params: {
         limit: load_amount.value,
