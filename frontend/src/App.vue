@@ -7,15 +7,20 @@ import axios from "axios";
 
 // todo
 // fix prod docker compose / prod container deployment
-// filters
-// categories
+// filters :
+// release date caledar input
+// price slider
+// product rating slider
+// category dropdown
+// reviews asc / desc
+//
+// desktop styles
 // login page
 // account page
 // favourites page
 // payments
 // checkout page
 // better pagination
-// desktop styles
 
 const isMenuOpen = ref(false);
 const categories = ref([]);
