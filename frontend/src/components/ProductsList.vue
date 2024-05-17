@@ -149,7 +149,7 @@ watch(
   </div>
 
   <div class="flex justify-center">
-    <div class="w-3/5">
+    <div class="w-full md:w-3/5">
       <button
         class="w-1/2 p-2 border rounded-sm dark:hover:bg-slate-700 hover:bg-slate-400"
         @click="prevPage"
