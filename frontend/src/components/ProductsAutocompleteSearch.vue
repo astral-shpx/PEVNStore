@@ -17,7 +17,7 @@ const fetchProducts = async () => {
     return;
   }
   try {
-    const resp = await axios.get("api/products", {
+    const resp = await axios.get("/api/products", {
       params: {
         productName: props.searchQ,
         limit: 3,
@@ -44,15 +44,25 @@ watch(
 </script>
 
 <template>
-  <div class="m-2" :class="{ 'animate-pulse': loading }">
-    <div v-for="product in products" v-if="!errorFetching">
-      <div>
-        <h1 class="text-slate-700">{{ product.product_name }}</h1>
-        <img :src="product.product_image_url" alt="" />
+  <div
+    class="m-2 flex justify-center flex-col"
+    :class="{ 'animate-pulse': loading }"
+  >
+    <div v-for="product in products" v-show="!errorFetching">
+      <RouterLink
+        :to="`/product/${product.id}`"
+        class="flex justify-between cursor-pointer mb-2"
+      >
+        <img
+          :src="product.product_image_url"
+          alt=""
+          class="w-24 md:w-52 object-contain"
+        />
+        <h2 class="text-slate-700">{{ product.product_name }}</h2>
         <p>Price: ${{ product.product_price }}</p>
-      </div>
+      </RouterLink>
     </div>
-    <div v-else class="flex justify-center">Error fetching</div>
+    <div v-if="errorFetching" class="flex justify-center">Error fetching</div>
   </div>
 </template>
 

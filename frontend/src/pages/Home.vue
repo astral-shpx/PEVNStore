@@ -15,6 +15,6 @@ onMounted(() => {
 </script>
 
 <template>
-  <h1 class="mb-4">All products</h1>
+  <h1 class="mb-4 flex justify-center">All products</h1>
   <ProductsList />
 </template>

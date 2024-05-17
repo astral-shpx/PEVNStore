@@ -48,6 +48,7 @@ watch(fromDate, (date) => {
       >
         Close
       </div>
+      <!-- filters -->
       <div class="bg-white dark:bg-slate-700 w-full mb-3">
         <h3 class="mb-2">Release date</h3>
         <label for="fromDate" class="bg-white dark:bg-slate-700"> From </label>
@@ -72,9 +73,9 @@ watch(fromDate, (date) => {
   <h2 class="mb-6" v-if="store.searchQuery">Search: {{ store.searchQuery }}</h2>
   <div
     @click="toggleMenu"
-    class="flex justify-center items-center mb-6 border sticky top-[8.5rem] bg-slate-200 dark:bg-slate-600 z-10 rounded-sm select-none cursor-pointer"
+    class="flex justify-center items-center mb-6 border sticky top-[8.5rem] bg-slate-200 dark:bg-slate-600 z-10 rounded-sm select-none cursor-pointer md:hidden"
   >
-    filter
+    Filters
   </div>
   <ProductsList v-if="store.searchQuery" :filters="filters" />
 </template>

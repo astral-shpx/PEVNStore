@@ -27,5 +27,4 @@ const navigateToProduct = async () => {
       <p>Price: ${{ product.product_price }}</p>
     </div>
   </div>
-  <div class="w-full"></div>
 </template>

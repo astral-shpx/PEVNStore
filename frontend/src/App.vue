@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import SearchBar from "./components/SearchBar.vue";
 import ProductsAutocompleteSearch from "./components/ProductsAutocompleteSearch.vue";
+import { useRoute } from "vue-router";
 import { ref, computed, onMounted } from "vue";
 import { store } from "./store";
 import axios from "axios";
@@ -24,6 +25,7 @@ import axios from "axios";
 // checkout page
 // better pagination
 
+const route = useRoute();
 const isMenuOpen = ref(false);
 const categories = ref([]);
 
@@ -52,17 +54,17 @@ onMounted(() => {
 <template>
   <div
     :class="{ 'translate-x-0': isMenuOpen, '-translate-x-full': !isMenuOpen }"
-    class="fixed left-0 top-20 z-50 transition-transform duration-500 h-5/6 w-3/5 overflow-scroll overscroll-contain"
+    class="fixed left-0 top-20 z-50 transition-transform duration-500 h-5/6 w-3/5 md:w-1/5 overflow-y-scroll"
   >
     <div
       class="p-4 shadow-md bg-white dark:bg-slate-700"
-      v-for="cat in categories"
+      v-for="category in categories"
     >
       <RouterLink
-        :to="`/category/${cat}`"
+        :to="`/category/${category}`"
         class="flex justify-between cursor-pointer"
       >
-        <span>{{ cat }}</span
+        <span>{{ category }}</span
         ><span>></span>
       </RouterLink>
     </div>
@@ -118,14 +120,16 @@ onMounted(() => {
       </svg>
       <RouterLink class="w-10 mt-4 mx-2" to="/">Go to Home</RouterLink>
     </nav>
-    <SearchBar />
+    <div class="flex justify-center">
+      <SearchBar />
+    </div>
   </div>
   <main>
-    <RouterView />
+    <RouterView :key="route.fullPath" />
   </main>
   <div
-    v-if="showAutocompleteComponent"
-    class="fixed top-32 left-4 right-4 z-50 bg-slate-200 rounded-lg text-black overflow-scroll overscroll-contain h-4/5"
+    v-show="showAutocompleteComponent"
+    class="fixed top-32 left-4 right-4 lg:left-80 lg:right-80 z-50 bg-slate-200 rounded-lg text-black overflow-y-auto overscroll-x-contain h-auto"
   >
     <ProductsAutocompleteSearch :search-q="store.typingSearchQuery" />
   </div>

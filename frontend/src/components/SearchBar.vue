@@ -18,7 +18,9 @@ const submitSearch = () => {
 };
 
 const onBlurInput = () => {
-  store.showAutocomplete = false;
+  setTimeout(() => {
+    store.showAutocomplete = false;
+  }, 150);
 };
 
 const onFocusInput = () => {
@@ -27,7 +29,7 @@ const onFocusInput = () => {
 </script>
 
 <template>
-  <div class="flex flex-wrap w-full p-4">
+  <div class="flex flex-wrap w-full p-4 md:w-7/12">
     <input
       @keyup="typingSearch"
       @blur="onBlurInput"
