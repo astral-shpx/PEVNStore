@@ -14,14 +14,14 @@ docker compose up --build
 docker compose up my-postgres
 ```
 
-## Running backend
+## Running the backend
 
 ```sh
 cd backend
 npm run dev
 ```
 
-## Running frontend
+## Running the frontend
 
 ```sh
 cd frontend
@@ -32,7 +32,7 @@ npm run dev
 
 ```sh
 cd backend
-npm run db:create # run if its not created already
+npm run db:create # if it's not created already
 npm run seed:run
 ```
 

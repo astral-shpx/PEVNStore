@@ -14,6 +14,8 @@ import axios from "axios";
 // category dropdown
 // reviews asc / desc
 //
+// Search autocomplete products revamp / add RouterLink to=""
+// dark theme switch button
 // desktop styles
 // login page
 // account page

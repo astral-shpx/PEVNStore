@@ -22,12 +22,14 @@ onMounted(async () => {
 <template>
   <div class="flex justify-center items-center mx-2">
     <div>
-      <img
-        class="px-2 py-4"
-        :src="product?.product_image_url"
-        alt=""
-        srcset=""
-      />
+      <div class="flex justify-center">
+        <img
+          class="px-2 py-4"
+          :src="product?.product_image_url"
+          alt=""
+          srcset=""
+        />
+      </div>
       <h1 class="flex justify-center mb-2">
         {{ product?.product_name }}
       </h1>
