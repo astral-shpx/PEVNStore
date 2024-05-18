@@ -11,7 +11,6 @@ onMounted(async () => {
   try {
     const resp = await axios.get(`/api/products/one/${route.params.productId}`);
     product.value = resp.data;
-    console.log(product.value);
   } catch (error) {
     console.error("Failed to fetch products:", error);
   } finally {

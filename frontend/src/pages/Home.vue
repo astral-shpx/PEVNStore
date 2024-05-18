@@ -8,7 +8,6 @@ const route = useRoute();
 
 onMounted(() => {
   if (route) {
-    console.log(route.params.search);
     store.searchQuery = route.params.search as string;
   }
 });
