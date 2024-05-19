@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 import { useRoute, useRouter } from "vue-router";
-import { ref, computed } from "vue";
+import { ref, computed, reactive, onMounted, watch } from "vue";
 import axios from "axios";
 import { Product as ProductItem } from "../types/product";
 import useToasterStore from "../piniaStores/useToasterStore";
@@ -11,8 +11,16 @@ export default defineStore("products-store", () => {
   const router = useRouter();
   const toasterStore = useToasterStore();
 
-  const page = ref((route.query.page as unknown as number) || 1);
-  const filters = ref({ fromDate: "", toDate: "" });
+  const page = ref(1);
+  // Ensure page is updated when route query changes
+  watch(
+    () => route.query.page,
+    (newPage) => {
+      page.value = newPage ? Number(newPage) : 1;
+    }
+  );
+
+  const filters = reactive({ fromDate: "", toDate: "" });
 
   const load_amount = ref(12);
 
@@ -50,7 +58,7 @@ export default defineStore("products-store", () => {
   };
 
   const navigateToPage = async (page_num: number) => {
-    console.log(page_num - page.value);
+    // console.log(page_num - page.value);
 
     const direction = Math.sign(page_num - page.value);
     const canShiftForward =
@@ -66,9 +74,12 @@ export default defineStore("products-store", () => {
     await fetchProducts();
   };
 
+  // todo add backend functionality to get with filter
   const fetchProducts = async (category = "") => {
     loading.value = true;
     try {
+      // console.log(filters.fromDate);
+
       const resp = await axios.get("/api/products", {
         params: {
           limit: load_amount.value,
@@ -79,7 +90,7 @@ export default defineStore("products-store", () => {
       });
       products.value = resp.data.products;
       total_products_amount.value = resp.data.count;
-      router.replace({ query: { page: page.value } });
+      router.push({ query: { page: page.value } });
     } catch (error) {
       console.error("Failed to fetch products:", error);
     } finally {
