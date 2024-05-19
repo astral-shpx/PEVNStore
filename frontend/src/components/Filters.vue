@@ -7,10 +7,10 @@ const router = useRouter();
 const productsStore = useProductStore();
 
 watch(
-  () => productsStore.filters,
+  () => productsStore.filters.toDate,
   (date) => {
-    console.log(productsStore.filters.toDate);
-    console.log(date);
+    // console.log(productsStore.filters.toDate);
+    // console.log(date);
     // add to query
     router.push({ query: { toDate: productsStore.filters.toDate } });
   }

@@ -8,7 +8,7 @@ const props = defineProps<{ product: Product }>();
 
 const navigateToProduct = async () => {
   try {
-    console.log("navigating to ", props.product.id);
+    // console.log("navigating to ", props.product.id);
     router.push(`/product/${props.product.id}`);
   } catch (error) {
     console.error(error);

@@ -14,21 +14,14 @@ const props = defineProps({
 
 const fetchProducts = async () => {
   productsStore.fetchProducts(props.category ?? "");
-  // console.log("productStore.load_amount", productStore.load_amount);
 };
 
 onMounted(fetchProducts);
+
 watch(
-  () => store.searchQuery,
+  [() => store.searchQuery, () => props.category],
   async () => {
-    fetchProducts();
-  },
-  { immediate: true }
-);
-watch(
-  () => props.category,
-  () => {
-    fetchProducts();
+    await fetchProducts();
   },
   { immediate: true }
 );

@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 import { useRoute, useRouter } from "vue-router";
-import { ref, computed, reactive, onMounted, watch } from "vue";
+import { ref, computed, reactive, watch } from "vue";
 import axios from "axios";
 import { Product as ProductItem } from "../types/product";
 import useToasterStore from "../piniaStores/useToasterStore";
