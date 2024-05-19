@@ -7,7 +7,6 @@ import { store } from "./store";
 import axios from "axios";
 
 // todo
-// fix prod docker compose / prod container deployment
 // filters :
 // release date caledar input
 // price slider
@@ -15,15 +14,15 @@ import axios from "axios";
 // category dropdown
 // reviews asc / desc
 //
-// Search autocomplete products revamp / add RouterLink to=""
-// dark theme switch button
-// desktop styles
 // login page
+// add to cart button functionality
+// checkout page
+// payments
+// dark theme switch button
 // account page
 // favourites page
-// payments
-// checkout page
-// better pagination
+// fix position on next page
+// fix pagination
 
 const route = useRoute();
 const isMenuOpen = ref(false);
