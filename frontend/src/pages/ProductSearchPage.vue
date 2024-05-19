@@ -1,36 +1,24 @@
 <script setup lang="ts">
 import ProductsList from "../components/ProductsList.vue";
 import { store } from "../store";
-import { onMounted, ref, watch } from "vue";
+import { onMounted, ref } from "vue";
 import { useRoute } from "vue-router";
 import Toaster from "../components/Toaster.vue";
 import Pagination from "../components/Pagination.vue";
+import Filters from "../components/Filters.vue";
 
 const route = useRoute();
 
-const filters = ref({});
-const toDate = ref("");
-const fromDate = ref("");
-
-onMounted(() => {
-  if (route) {
-    console.log(route.params.search);
-    store.searchQuery = route.params.search as string;
-  }
-});
 const isMenuOpen = ref(false);
 
 const toggleMenu = () => {
   isMenuOpen.value = !isMenuOpen.value;
 };
 
-watch(toDate, (date) => {
-  console.log(toDate);
-  console.log(date);
-});
-watch(fromDate, (date) => {
-  console.log(fromDate);
-  console.log(date);
+onMounted(() => {
+  if (route) {
+    store.searchQuery = route.params.search as string;
+  }
 });
 </script>
 
@@ -50,29 +38,13 @@ watch(fromDate, (date) => {
       >
         Close
       </div>
-      <!-- filters -->
-      <div class="bg-white dark:bg-slate-700 w-full mb-3">
-        <h3 class="mb-2">Release date</h3>
-        <label for="fromDate" class="bg-white dark:bg-slate-700"> From </label>
-        <input
-          class="text-slate-800"
-          type="date"
-          name="toDate"
-          id=""
-          v-model="fromDate"
-        />
-        <label for="toDate" class="bg-white dark:bg-slate-700"> To </label>
-        <input
-          class="text-slate-800"
-          type="date"
-          name="fromDate"
-          id=""
-          v-model="toDate"
-        />
-      </div>
+
+      <Filters />
     </div>
   </div>
+
   <h2 class="mb-6" v-if="store.searchQuery">Search: {{ store.searchQuery }}</h2>
+
   <div
     @click="toggleMenu"
     class="flex justify-center items-center mb-6 border sticky top-[8.5rem] bg-slate-200 dark:bg-slate-600 z-10 rounded-sm select-none cursor-pointer md:hidden"
@@ -81,18 +53,10 @@ watch(fromDate, (date) => {
   </div>
 
   <div class="flex">
-    <ProductsList v-if="store.searchQuery" :filters="filters" />
+    <ProductsList v-if="store.searchQuery" :filters="store.filters" />
 
     <aside class="hidden md:flex">
-      <div class="bg-white dark:bg-slate-700 w-full mb-3 p-2 rounded-md">
-        <!-- TODO MOVE TO COMPONENT -->
-        <h2>Filters</h2>
-        <h3 class="mb-2">Release date</h3>
-        <label for="fromDate" class="bg-white dark:bg-slate-700"> From </label>
-        <input class="text-slate-800" type="date" name="toDate" id="" />
-        <label for="toDate" class="bg-white dark:bg-slate-700"> To </label>
-        <input class="text-slate-800" type="date" name="fromDate" id="" />
-      </div>
+      <Filters />
     </aside>
   </div>
 
