@@ -2,7 +2,9 @@
 import { ref } from "vue";
 import { store } from "../store";
 import { useRouter } from "vue-router";
+import useProductStore from "../piniaStores/useProductsStore";
 
+const productsStore = useProductStore();
 const router = useRouter();
 const search = ref("");
 
@@ -13,6 +15,7 @@ const typingSearch = () => {
 
 const submitSearch = () => {
   store.searchQuery = search.value as string;
+  productsStore.page = 1;
   router.push(`/${store.searchQuery}`);
   store.showAutocomplete = false;
 };
