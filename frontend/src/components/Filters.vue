@@ -1,24 +1,18 @@
 <script setup lang="ts">
 import { watch } from "vue";
-import { store } from "../store";
+import { useRouter } from "vue-router";
+import useProductStore from "../piniaStores/useProductsStore";
 
-const filters = store.filters;
-
-watch(
-  () => filters.toDate,
-  (date) => {
-    console.log(filters.toDate);
-    console.log(date);
-    // add to query
-  }
-);
+const router = useRouter();
+const productsStore = useProductStore();
 
 watch(
-  () => filters.fromDate,
+  () => productsStore.filters,
   (date) => {
-    console.log(filters.fromDate);
+    console.log(productsStore.filters.toDate);
     console.log(date);
     // add to query
+    router.push({ query: { toDate: productsStore.filters.toDate } });
   }
 );
 </script>
@@ -32,7 +26,7 @@ watch(
       type="date"
       name="toDate"
       id=""
-      v-model="filters.fromDate"
+      v-model="productsStore.filters.fromDate"
     />
     <label for="toDate" class="bg-white dark:bg-slate-700"> To </label>
     <input
@@ -40,7 +34,7 @@ watch(
       type="date"
       name="fromDate"
       id=""
-      v-model="filters.toDate"
+      v-model="productsStore.filters.toDate"
     />
   </div>
 </template>

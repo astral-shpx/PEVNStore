@@ -6,12 +6,13 @@ import { Product as ProductItem } from "../types/product";
 import useToasterStore from "../piniaStores/useToasterStore";
 import { store } from "../store";
 
-export default defineStore("pagination-store", () => {
+export default defineStore("products-store", () => {
   const route = useRoute();
   const router = useRouter();
   const toasterStore = useToasterStore();
 
   const page = ref((route.query.page as unknown as number) || 1);
+  const filters = ref({ fromDate: "", toDate: "" });
 
   const load_amount = ref(12);
 
@@ -96,14 +97,10 @@ export default defineStore("pagination-store", () => {
     loading,
     page_begin,
     page_end,
+    filters,
     navigateToPage,
     fetchProducts,
     nextPage,
     previousPage,
   };
-});
-
-export const useProductStore = defineStore("pagination-store", {
-  state: () => ({}),
-  actions: {},
 });
