@@ -4,14 +4,30 @@ import { Product } from '../entities/Product';
 
 const router = Router();
 
-// TODO add query params for searching by name description etc
 router.get('/', async (req: Request, res: Response) => {
-  const offsetString = req.query.offset as string;
-  const limitString = req.query.limit as string;
-  const productName = req.query.productName as string;
-  const category = req.query.category as string;
-  const toDate = req.query.toDate as string;
-  const fromDate = req.query.fromDate as string;
+  const {
+    offset: offsetString,
+    limit: limitString,
+    productName,
+    category,
+    filters: filtersString
+  } = req.query as {
+    offset: string;
+    limit: string;
+    productName: string;
+    category: string;
+    filters: string;
+  };
+
+  // parse filters
+  let filters: any = {};
+  if (filtersString && filtersString !== '') {
+    try {
+      filters = JSON.parse(filtersString);
+    } catch (error) {
+      return res.status(400).send({ message: 'Invalid filters JSON format' });
+    }
+  }
 
   const offset = parseInt(offsetString) || 0;
   const limit = parseInt(limitString);
@@ -32,25 +48,30 @@ router.get('/', async (req: Request, res: Response) => {
 
   const queryBuilder = productRepository.createQueryBuilder('product');
 
+  if (filters) {
+    if (filters.fromDate && filters.toDate) {
+      const fromDate = new Date(filters.fromDate);
+      const toDate = new Date(filters.toDate);
+      queryBuilder.andWhere(
+        'product.release_date BETWEEN :fromDate AND :toDate',
+        {
+          fromDate,
+          toDate
+        }
+      );
+      console.log('fromDate:', fromDate);
+      console.log('toDate:', toDate);
+    }
+  }
+
   if (category && category.trim() !== '') {
-    queryBuilder.where('product.product_category ILIKE :category', {
+    queryBuilder.andWhere('product.product_category ILIKE :category', {
       category: `%${category}%`
     });
   }
 
-  if (fromDate && fromDate.trim() !== '' && toDate && toDate.trim() !== '') {
-    const fromDateObj = new Date(fromDate);
-    const toDateObj = new Date(toDate);
-    queryBuilder
-      .where('example.date BETWEEN :fromDate AND :toDate', {
-        fromDate: fromDateObj,
-        toDate: toDateObj
-      })
-      .getMany();
-  }
-
   if (productName && productName.trim() !== '') {
-    queryBuilder.where('product.product_name ILIKE :productName', {
+    queryBuilder.andWhere('product.product_name ILIKE :productName', {
       productName: `%${productName}%`
     });
   }
