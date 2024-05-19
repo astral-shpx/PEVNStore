@@ -36,7 +36,7 @@ onMounted(async () => {
         {{ product?.product_rating }} rating
         {{ product?.customer_reviews }} reviews
       </div>
-      <div class="flex justify-center mb-2">$ {{ product?.product_price }}</div>
+      <h2 class="flex justify-center mb-2">$ {{ product?.product_price }}</h2>
       <div class="flex justify-center mb-4">
         <button
           class="flex w-2/3 justify-center mb-4 outline-dashed rounded-sm dark:hover:bg-slate-700 hover:bg-slate-400"
