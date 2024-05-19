@@ -7,6 +7,9 @@ import { store } from "./store";
 import axios from "axios";
 
 // todo
+// fix position on next page
+// fix pagination
+//
 // filters :
 // release date caledar input
 // price slider
@@ -21,8 +24,6 @@ import axios from "axios";
 // dark theme switch button
 // account page
 // favourites page
-// fix position on next page
-// fix pagination
 
 const route = useRoute();
 const isMenuOpen = ref(false);
