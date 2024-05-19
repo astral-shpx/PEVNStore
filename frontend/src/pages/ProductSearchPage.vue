@@ -3,6 +3,8 @@ import ProductsList from "../components/ProductsList.vue";
 import { store } from "../store";
 import { onMounted, ref, watch } from "vue";
 import { useRoute } from "vue-router";
+import Toaster from "../components/Toaster.vue";
+import Pagination from "../components/Pagination.vue";
 
 const route = useRoute();
 
@@ -77,5 +79,24 @@ watch(fromDate, (date) => {
   >
     Filters
   </div>
-  <ProductsList v-if="store.searchQuery" :filters="filters" />
+
+  <div class="flex">
+    <ProductsList v-if="store.searchQuery" :filters="filters" />
+
+    <aside class="hidden md:flex">
+      <div class="bg-white dark:bg-slate-700 w-full mb-3 p-2 rounded-md">
+        <!-- TODO MOVE TO COMPONENT -->
+        <h2>Filters</h2>
+        <h3 class="mb-2">Release date</h3>
+        <label for="fromDate" class="bg-white dark:bg-slate-700"> From </label>
+        <input class="text-slate-800" type="date" name="toDate" id="" />
+        <label for="toDate" class="bg-white dark:bg-slate-700"> To </label>
+        <input class="text-slate-800" type="date" name="fromDate" id="" />
+      </div>
+    </aside>
+  </div>
+
+  <Pagination />
+
+  <Toaster />
 </template>

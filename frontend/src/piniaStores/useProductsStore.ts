@@ -31,6 +31,7 @@ export default defineStore("pagination-store", () => {
   const nextPage = async () => {
     if (page.value < total_pages.value) {
       page.value++;
+      // navigateToPage(page.value++);
       await fetchProducts();
     } else {
       toasterStore.error({ text: "No more pages to load." });
@@ -40,6 +41,7 @@ export default defineStore("pagination-store", () => {
   const previousPage = async () => {
     if (page.value > 1) {
       page.value--;
+      // navigateToPage(page.value--);
       await fetchProducts();
     } else {
       toasterStore.error({ text: "No more pages to navigate back to." });
@@ -47,6 +49,8 @@ export default defineStore("pagination-store", () => {
   };
 
   const navigateToPage = async (page_num: number) => {
+    console.log(page_num - page.value);
+
     const direction = Math.sign(page_num - page.value);
     const canShiftForward =
       direction > 0 && page_end.value < pages_array.value.length - 1;
