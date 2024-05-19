@@ -17,6 +17,7 @@ router.get('/', async (req: Request, res: Response) => {
     productName: string;
     category: string;
     filters: string;
+    // reviews asc desc
   };
 
   // parse filters
@@ -62,6 +63,8 @@ router.get('/', async (req: Request, res: Response) => {
       console.log('fromDate:', fromDate);
       console.log('toDate:', toDate);
     }
+    // price from - to
+    // rating from - to
   }
 
   if (category && category.trim() !== '') {
