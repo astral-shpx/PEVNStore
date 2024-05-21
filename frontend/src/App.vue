@@ -7,8 +7,6 @@ import { store } from "./store";
 import axios from "axios";
 
 // todo
-// fix cannot open product in new page
-//
 // filters :
 // release date caledar input
 // price slider
