@@ -39,10 +39,7 @@ const prevPage = async () => {
     <button
       class="mx-2 w-6 rounded-md border dark:hover:bg-slate-700 hover:bg-slate-400"
       :class="{ 'border-2': i === productsStore.page }"
-      v-for="i in productsStore.pages_array.slice(
-        productsStore.page_begin,
-        productsStore.page_end
-      )"
+      v-for="i in productsStore.pages_to_show"
       :key="'page-' + i"
       @click="navigateToPage(i)"
     >

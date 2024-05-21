@@ -7,8 +7,7 @@ import { store } from "./store";
 import axios from "axios";
 
 // todo
-// fix position on next page
-// fix pagination
+// fix cannot open product in new page
 //
 // filters :
 // release date caledar input
@@ -16,6 +15,7 @@ import axios from "axios";
 // product rating slider
 // category dropdown
 // reviews asc / desc
+// load amount dropdown
 //
 // login page
 // add to cart button functionality

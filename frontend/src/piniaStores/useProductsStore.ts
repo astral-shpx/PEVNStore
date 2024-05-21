@@ -25,8 +25,25 @@ export default defineStore("products-store", () => {
   const load_amount = ref(12);
 
   const total_products_amount = ref(0);
-  const page_begin = ref(0);
-  const page_end = ref(5);
+  const pages_to_show = computed(() => {
+    const toShow = 7;
+    const midPoint = Math.ceil(toShow / 2);
+
+    let begin;
+    let end;
+    if (page.value < midPoint) {
+      begin = 0;
+      end = toShow;
+    } else if (page.value > total_pages.value - midPoint) {
+      begin = total_pages.value - toShow;
+      end = total_pages.value;
+    } else {
+      begin = page.value - midPoint;
+      end = page.value + midPoint - 1;
+    }
+
+    return pages_array.value.slice(begin, end);
+  });
   const loading = ref(true);
   const products = ref<ProductItem[]>([]);
   const total_pages = computed(() => {
@@ -36,12 +53,9 @@ export default defineStore("products-store", () => {
     return Array.from({ length: total_pages.value }, (_, index) => index + 1);
   });
 
-  // TODO move this logic to navigateToPage
   const nextPage = async () => {
     if (page.value < total_pages.value) {
-      page.value++;
-      // navigateToPage(page.value++);
-      await fetchProducts();
+      navigateToPage(page.value + 1);
     } else {
       toasterStore.error({ text: "No more pages to load." });
     }
@@ -49,28 +63,17 @@ export default defineStore("products-store", () => {
 
   const previousPage = async () => {
     if (page.value > 1) {
-      page.value--;
-      // navigateToPage(page.value--);
-      await fetchProducts();
+      navigateToPage(page.value - 1);
     } else {
       toasterStore.error({ text: "No more pages to navigate back to." });
     }
   };
 
-  const navigateToPage = async (page_num: number) => {
-    // console.log(page_num - page.value);
+  const navigateToPage = async (new_page: number) => {
+    const direction = Math.sign(new_page - page.value);
+    console.log("direction", direction);
 
-    const direction = Math.sign(page_num - page.value);
-    const canShiftForward =
-      direction > 0 && page_end.value < pages_array.value.length - 1;
-    const canShiftBackward = direction < 0 && page_begin.value > 0;
-
-    if (canShiftForward || canShiftBackward) {
-      page_begin.value += direction;
-      page_end.value += direction;
-    }
-
-    page.value = page_num;
+    page.value = new_page;
     await fetchProducts();
   };
 
@@ -106,8 +109,7 @@ export default defineStore("products-store", () => {
     total_products_amount,
     products,
     loading,
-    page_begin,
-    page_end,
+    pages_to_show,
     filters,
     navigateToPage,
     fetchProducts,
