@@ -26,7 +26,7 @@ export default defineStore("products-store", () => {
 
   const total_products_amount = ref(0);
   const pages_to_show = computed(() => {
-    const toShow = 7;
+    let toShow = 6;
     const midPoint = Math.ceil(toShow / 2);
 
     let begin;
@@ -39,7 +39,7 @@ export default defineStore("products-store", () => {
       end = total_pages.value;
     } else {
       begin = page.value - midPoint;
-      end = page.value + midPoint - 1;
+      end = page.value + midPoint;
     }
 
     return pages_array.value.slice(begin, end);
