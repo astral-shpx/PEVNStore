@@ -8,12 +8,11 @@ import axios from "axios";
 
 // todo
 // filters :
-// release date caledar input
-// price slider
+// price checkbox
 // product rating slider
 // category dropdown
 // reviews asc / desc
-// load amount dropdown
+// load amount radio
 //
 // login page
 // add to cart button functionality

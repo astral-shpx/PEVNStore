@@ -53,6 +53,12 @@ export default defineStore("products-store", () => {
     return Array.from({ length: total_pages.value }, (_, index) => index + 1);
   });
 
+  const reset = () => {
+    page.value = 1;
+    filters.fromDate = "";
+    filters.toDate = "";
+  };
+
   const nextPage = async () => {
     if (page.value < total_pages.value) {
       navigateToPage(page.value + 1);
@@ -123,6 +129,7 @@ export default defineStore("products-store", () => {
     loading,
     pages_to_show,
     filters,
+    reset,
     navigateToPage,
     fetchProducts,
     nextPage,
