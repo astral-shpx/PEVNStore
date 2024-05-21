@@ -37,6 +37,8 @@ watch(filters, async () => {
 
 <template>
   <div class="bg-white dark:bg-slate-700 w-full mb-3 p-2 rounded-md">
+    <h4 class="mb-2 underline cursor-pointer">Clear filters</h4>
+
     <div class="mb-4">
       <h3 class="mb-2">Release date</h3>
       <label for="fromDate" class="bg-white dark:bg-slate-700"> From </label>
