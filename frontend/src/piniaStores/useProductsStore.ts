@@ -26,7 +26,7 @@ export default defineStore("products-store", () => {
 
   const total_products_amount = ref(0);
   const pages_to_show = computed(() => {
-    let toShow = 6;
+    let toShow = 5;
     const midPoint = Math.ceil(toShow / 2);
 
     let begin;
@@ -70,30 +70,42 @@ export default defineStore("products-store", () => {
   };
 
   const navigateToPage = async (new_page: number) => {
-    const direction = Math.sign(new_page - page.value);
-    console.log("direction", direction);
+    // const direction = Math.sign(new_page - page.value);
+    // console.log("direction", direction);
 
     page.value = new_page;
     await fetchProducts();
   };
 
-  // todo add backend functionality to get with filter
   const fetchProducts = async (category = "") => {
     loading.value = true;
     try {
-      // console.log(filters.fromDate);
-
       const resp = await axios.get("/api/products", {
         params: {
           limit: load_amount.value,
           productName: store.searchQuery,
           offset: (page.value - 1) * load_amount.value,
           category: category,
+          filters: JSON.stringify(filters),
         },
       });
       products.value = resp.data.products;
       total_products_amount.value = resp.data.count;
-      router.push({ query: { page: page.value } });
+
+      if (Object.values(filters).every((el) => !el)) {
+        router.push({
+          query: {
+            page: page.value,
+          },
+        });
+      } else {
+        router.push({
+          query: {
+            page: page.value,
+            filters: JSON.stringify(filters),
+          },
+        });
+      }
     } catch (error) {
       console.error("Failed to fetch products:", error);
     } finally {
