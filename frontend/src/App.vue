@@ -126,6 +126,11 @@ onMounted(() => {
       <div class="flex">
         <RouterLink
           class="mt-4 mx-2 justify-end"
+          :to="{ path: '/cart', query: {} }"
+          >Cart</RouterLink
+        >
+        <RouterLink
+          class="mt-4 mx-2 justify-end"
           :to="{ path: '/favourites', query: {} }"
           >Favourites</RouterLink
         >

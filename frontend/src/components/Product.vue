@@ -1,8 +1,5 @@
 <script setup lang="ts">
 import { Product } from "../types/product";
-import useUserStore from "../piniaStores/useUserStore";
-
-const userStotre = useUserStore();
 
 const props = defineProps<{ product: Product }>();
 </script>
@@ -18,16 +15,4 @@ const props = defineProps<{ product: Product }>();
       <p>Price: ${{ product.product_price }}</p>
     </div>
   </RouterLink>
-  <div class="flex justify-center" v-if="userStotre.user">
-    <div
-      class="flex justify-center outline-dashed rounded-sm dark:hover:bg-slate-500 hover:bg-slate-400 w-10/12 mr-3"
-    >
-      add to cart
-    </div>
-    <div
-      class="flex justify-center outline-dashed rounded-sm dark:hover:bg-slate-500 hover:bg-slate-400 w-2/12"
-    >
-      ⭐
-    </div>
-  </div>
 </template>

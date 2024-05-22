@@ -4,7 +4,9 @@ import LoadingProduct from "./LoadingProduct.vue";
 import Product from "./Product.vue";
 import { store } from "../store";
 import useProductStore from "../piniaStores/useProductsStore";
+import useUserStore from "../piniaStores/useUserStore";
 
+const userStotre = useUserStore();
 const productsStore = useProductStore();
 
 const props = defineProps({
@@ -48,6 +50,19 @@ watch(
         class="flex flex-col justify-between mb-4 mx-2 cursor-pointer hover:shadow-lg bg-gray-300 rounded dark:bg-gray-700 h-full p-2"
       >
         <Product :product="product" />
+
+        <div class="flex justify-center" v-if="userStotre.user">
+          <div
+            class="flex justify-center outline-dashed rounded-sm dark:hover:bg-slate-500 hover:bg-slate-400 w-10/12 mr-3"
+          >
+            add to cart
+          </div>
+          <div
+            class="flex justify-center outline-dashed rounded-sm dark:hover:bg-slate-500 hover:bg-slate-400 w-2/12"
+          >
+            ⭐
+          </div>
+        </div>
       </div>
     </div>
 

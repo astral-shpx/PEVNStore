@@ -4,6 +4,7 @@ import ProductSearchPage from "./pages/ProductSearchPage.vue";
 import ProductPage from "./pages/ProductPage.vue";
 import CategoryPage from "./pages/CategoryPage.vue";
 import AccountPage from "./pages/AccountPage.vue";
+import CartPage from "./pages/CartPage.vue";
 
 const routes = [
   { path: "/", component: Home },
@@ -11,6 +12,7 @@ const routes = [
   { path: "/product/:productId", component: ProductPage },
   { path: "/category/:category", component: CategoryPage },
   { path: "/account", component: AccountPage },
+  { path: "/cart", component: CartPage },
 ];
 
 const router = createRouter({
