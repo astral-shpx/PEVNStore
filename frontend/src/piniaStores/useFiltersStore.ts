@@ -63,6 +63,7 @@ export default defineStore("filters-store", () => {
     filters.toDate = "";
     filters.minPrice = 0;
     filters.maxPrice = undefined;
+    filters.ratingAbove = 0;
   };
 
   watch(filters, async () => {
