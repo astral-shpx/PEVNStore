@@ -6,9 +6,9 @@ import { useRoute } from "vue-router";
 import Toaster from "../components/Toaster.vue";
 import Pagination from "../components/Pagination.vue";
 import Filters from "../components/Filters.vue";
-import useProductStore from "../piniaStores/useProductsStore";
+import useFiltersStore from "../piniaStores/useFiltersStore";
 
-const productsStore = useProductStore();
+const filtersStore = useFiltersStore();
 const route = useRoute();
 
 const isMenuOpen = ref(false);
@@ -55,7 +55,7 @@ onMounted(() => {
   </div>
 
   <div class="flex">
-    <ProductsList v-if="store.searchQuery" :filters="productsStore.filters" />
+    <ProductsList v-if="store.searchQuery" :filters="filtersStore.filters" />
 
     <aside class="hidden md:flex">
       <Filters />

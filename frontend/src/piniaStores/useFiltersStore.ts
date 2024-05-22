@@ -16,6 +16,11 @@ interface PriceRange {
   max: number;
 }
 
+// TODO
+// use a button for applying filters
+// auto apply closes filters menu on mobile view
+// or fix the issue
+
 export default defineStore("filters-store", () => {
   const productsStore = useProductStore();
   const route = useRoute();
@@ -62,6 +67,7 @@ export default defineStore("filters-store", () => {
   };
 
   watch(filters, async () => {
+    productsStore.page = 1;
     await productsStore.fetchProducts();
   });
 
@@ -75,10 +81,7 @@ export default defineStore("filters-store", () => {
 
     const smallestMinValue = rawRanges.reduce<number>((min, currentRange) => {
       return currentRange.min < min ? currentRange.min : min;
-    }, 0);
-
-    console.log("Smallest min value:", smallestMinValue);
-    console.log("Largest max value:", largestMaxValue);
+    }, Infinity);
 
     filters.minPrice = smallestMinValue;
     filters.maxPrice = largestMaxValue || undefined;
