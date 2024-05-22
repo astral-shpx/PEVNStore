@@ -56,7 +56,7 @@ router.post('/', (req: Request, res: Response) => {
   if (!product_id || !quantity) {
     return res.status(400).send({ message: 'Product id or quantity missing' });
   }
-  console.log(newItem);
+
   if (isNaN(newItem.product_id) || isNaN(newItem.quantity)) {
     return res.status(400).send({
       message: 'Product id or quantity is not a number',
