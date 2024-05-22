@@ -57,7 +57,7 @@ export default defineStore("user-store", () => {
     try {
       const resp = await axios.get("/api/auth/sessionStatus");
       user.value = resp.data.session;
-      console.log(resp.data.session);
+      // console.log(resp.data.session);
     } catch (error: any) {
       console.error("Failed call to /api/auth/sessionStatus:", error);
     }

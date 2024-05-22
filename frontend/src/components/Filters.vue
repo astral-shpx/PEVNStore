@@ -1,18 +1,28 @@
 <script setup lang="ts">
-import { watch, ref } from "vue";
+import { watch, ref, toRaw } from "vue";
 import useProductStore from "../piniaStores/useProductsStore";
+import useFiltersStore from "../piniaStores/useFiltersStore";
 
 const productsStore = useProductStore();
+const filtersStore = useFiltersStore();
 
-const { filters, fetchProducts } = productsStore;
-const priceRanges = ref([
+interface PriceRange {
+  label: string;
+  min: number;
+  max: number;
+}
+
+const { fetchProducts } = productsStore;
+const filters = filtersStore.filters;
+const priceRanges = ref<PriceRange[]>([
   { label: "$0 - $50", min: 0, max: 50 },
   { label: "$51 - $100", min: 51, max: 100 },
   { label: "$101 - $200", min: 101, max: 200 },
   { label: "$201 - $500", min: 201, max: 500 },
   { label: "$501 - $1000", min: 501, max: 1000 },
+  { label: "above $1000", min: 1001, max: Number.POSITIVE_INFINITY },
 ]);
-const selectedPriceRanges = ref([]);
+const selectedPriceRanges = ref<PriceRange[]>([]);
 const rating = ref(3);
 const ratingMin = ref(0);
 const ratingMax = ref(5);
@@ -22,16 +32,32 @@ const loadAmounts = ref([12, 24, 30]);
 
 const updateFromDate = (event: Event) => {
   filters.fromDate = (event.target as HTMLInputElement).value;
-  fetchProducts();
+  // fetchProducts();
 };
 
 const updateToDate = (event: Event) => {
   filters.toDate = (event.target as HTMLInputElement).value;
-  fetchProducts();
+  // fetchProducts();
 };
 
-watch(filters, async () => {
-  await productsStore.fetchProducts();
+watch(selectedPriceRanges, async () => {
+  const rawRanges = toRaw(selectedPriceRanges.value) as PriceRange[];
+
+  const largestMaxValue = rawRanges.reduce<number>((max, currentRange) => {
+    return currentRange.max > max ? currentRange.max : max;
+  }, 0);
+
+  const smallestMinValue = rawRanges.reduce<number>((min, currentRange) => {
+    return currentRange.min < min ? currentRange.min : min;
+  }, Number.POSITIVE_INFINITY);
+
+  console.log("Smallest min value:", smallestMinValue);
+  console.log("Largest max value:", largestMaxValue);
+
+  // filters.minPrice = smallestMinValue;
+  // filters.maxPrice = largestMaxValue;
+
+  // await productsStore.fetchProducts();
 });
 </script>
 

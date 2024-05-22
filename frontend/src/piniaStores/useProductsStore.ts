@@ -1,15 +1,17 @@
 import { defineStore } from "pinia";
 import { useRoute, useRouter } from "vue-router";
-import { ref, computed, reactive, watch } from "vue";
+import { ref, computed, watch } from "vue";
 import axios from "axios";
 import { Product as ProductItem } from "../types/product";
 import useToasterStore from "../piniaStores/useToasterStore";
+import useFiltersStore from "../piniaStores/useFiltersStore";
 import { store } from "../store";
 
 export default defineStore("products-store", () => {
   const route = useRoute();
   const router = useRouter();
   const toasterStore = useToasterStore();
+  const filtersStore = useFiltersStore();
 
   const page = ref(1);
   // Ensure page is updated when route query changes
@@ -20,13 +22,11 @@ export default defineStore("products-store", () => {
     }
   );
 
-  const filters = reactive({ fromDate: "", toDate: "" });
-
   const load_amount = ref(12);
 
   const total_products_amount = ref(0);
   const pages_to_show = computed(() => {
-    let toShow = 5;
+    let toShow = 6;
     const midPoint = Math.ceil(toShow / 2);
 
     let begin;
@@ -55,8 +55,7 @@ export default defineStore("products-store", () => {
 
   const reset = () => {
     page.value = 1;
-    filters.fromDate = "";
-    filters.toDate = "";
+    filtersStore.reset();
   };
 
   const nextPage = async () => {
@@ -92,13 +91,15 @@ export default defineStore("products-store", () => {
           productName: store.searchQuery,
           offset: (page.value - 1) * load_amount.value,
           category: category,
-          filters: JSON.stringify(filters),
+          filters: JSON.stringify(filtersStore.filters),
         },
       });
       products.value = resp.data.products;
       total_products_amount.value = resp.data.count;
 
-      if (Object.values(filters).every((el) => !el)) {
+      console.log("in fetchprods", filtersStore.filters);
+
+      if (Object.values(filtersStore.filters).every((el) => !el)) {
         router.push({
           query: {
             page: page.value,
@@ -108,7 +109,7 @@ export default defineStore("products-store", () => {
         router.push({
           query: {
             page: page.value,
-            filters: JSON.stringify(filters),
+            filters: JSON.stringify(filtersStore.filters),
           },
         });
       }
@@ -128,7 +129,6 @@ export default defineStore("products-store", () => {
     products,
     loading,
     pages_to_show,
-    filters,
     reset,
     navigateToPage,
     fetchProducts,
