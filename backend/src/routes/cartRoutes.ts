@@ -13,6 +13,10 @@ const router = Router();
 
 // router.use(checkAuth);
 
+// todo
+// migrate shopping cart to postgres
+// make unique id for guest
+
 router.get('/', (req: Request, res: Response) => {
   const cart: CartItem[] = req.session.cart || [];
   return res.json(cart);
