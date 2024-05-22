@@ -11,7 +11,7 @@ const rating = ref(filters.value.ratingAbove);
 const ratingMin = ref(0);
 const ratingMax = ref(5);
 const sortBy = ref("reviews_asc");
-const loadAmount = ref(10);
+const loadAmount = ref(12);
 const loadAmounts = ref([12, 24, 30]);
 
 const updateFromDate = (event: Event) => {
@@ -98,18 +98,18 @@ const clearFilters = () => {
     <!-- sort by reviews[dropdown] asc / desc -->
     <div class="flex flex-col mb-4">
       <h3 class="mb-2">Sort by</h3>
-      <label>
-        <input type="radio" />
-        Ascending
-      </label>
-      <label>
-        <input type="radio" />
-        Descending
-      </label>
       <select class="dark:text-slate-900" v-model="sortBy">
         <option class="mx-2" value="reviews_asc">Reviews (Asc)</option>
         <option class="mx-2" value="reviews_desc">Reviews (Desc)</option>
       </select>
+      <label>
+        <input type="radio" name="order" value="asc" checked />
+        Ascending
+      </label>
+      <label>
+        <input type="radio" name="order" value="desc" />
+        Descending
+      </label>
     </div>
 
     <div class="flex flex-col mb-4">
@@ -121,6 +121,7 @@ const clearFilters = () => {
             type="radio"
             v-model="loadAmount"
             :value="amount"
+            :checked="loadAmount === amount"
           />
           {{ amount }}
         </label>
