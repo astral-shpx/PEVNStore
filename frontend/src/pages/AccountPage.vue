@@ -1,39 +1,11 @@
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
-import axios from "axios";
+import useUserStore from "../piniaStores/useUserStore";
 
-// Define form data
-const username = ref("");
-const email = ref("");
-const password = ref("");
-const message = ref("");
-const user = ref({});
+const userStore = useUserStore();
 
 const signUp = async () => {
-  try {
-    const resp = await axios.post("/api/auth/signup", {
-      username: username.value,
-      email: email.value,
-      password: password.value,
-    });
-    console.log("Sign up successful:", resp.data);
-    localStorage.setItem("user", JSON.stringify(resp.data));
-    // message.value = `Sign up successful. ${resp.data.message}`;
-    message.value = "Sign up successful.";
-  } catch (error: any) {
-    console.error("Failed to sign up:", error);
-    message.value = `Failed to sign up. Please try again. Error: ${error.response.data.message}`;
-  }
+  await userStore.signUp();
 };
-
-onMounted(() => {
-  const savedUser = localStorage.getItem("user");
-  if (savedUser) {
-    user.value = JSON.parse(savedUser);
-  } else {
-    // user.value = { username: "Guest" };
-  }
-});
 </script>
 
 <template>
@@ -47,7 +19,7 @@ onMounted(() => {
         class="text-black"
         type="text"
         id="username"
-        v-model="username"
+        v-model="userStore.username"
         required
       />
     </div>
@@ -57,7 +29,7 @@ onMounted(() => {
         class="text-black"
         type="email"
         id="email"
-        v-model="email"
+        v-model="userStore.email"
         required
       />
     </div>
@@ -67,7 +39,7 @@ onMounted(() => {
         class="text-black"
         type="password"
         id="password"
-        v-model="password"
+        v-model="userStore.password"
         required
       />
     </div>
@@ -79,7 +51,16 @@ onMounted(() => {
     </button>
   </form>
 
-  <p v-if="message">{{ message }}</p>
+  <p v-if="userStore.message">{{ userStore.message }}</p>
 
-  <p>Logged in as {{ user }}</p>
+  <div v-if="userStore.user">
+    <p>Logged in as {{ userStore.user }}</p>
+
+    <button
+      @click="userStore.logOut"
+      class="outline-dashed rounded-sm dark:hover:bg-slate-700 hover:bg-slate-400"
+    >
+      Log out
+    </button>
+  </div>
 </template>

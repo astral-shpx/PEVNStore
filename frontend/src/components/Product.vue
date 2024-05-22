@@ -1,5 +1,8 @@
 <script setup lang="ts">
 import { Product } from "../types/product";
+import useUserStore from "../piniaStores/useUserStore";
+
+const userStotre = useUserStore();
 
 const props = defineProps<{ product: Product }>();
 </script>
@@ -13,6 +16,7 @@ const props = defineProps<{ product: Product }>();
       <h1 class="text-ellipsis overflow-hidden">{{ product.product_name }}</h1>
       <img :src="product.product_image_url" alt="" />
       <p>Price: ${{ product.product_price }}</p>
+      <div v-if="userStotre.user">add to cart</div>
     </div>
   </RouterLink>
 </template>

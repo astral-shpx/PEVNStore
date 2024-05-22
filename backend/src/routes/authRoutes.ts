@@ -179,6 +179,13 @@ router.post('/signup', async (req, res, next) => {
   }
 });
 
+router.get('/sessionStatus', async (req, res, next) => {
+  if (req.isAuthenticated()) {
+    return res.status(200).json({ status: 'Authorized', session: req.session });
+  }
+  return res.status(200).json({ status: 'Unauthorized' });
+});
+
 router.get(
   '/google',
   passport.authenticate('google', { scope: ['email', 'profile'] })
