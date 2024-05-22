@@ -8,7 +8,7 @@ export default defineStore("user-store", () => {
   const password = ref("");
   const message = ref("");
   // change to userId
-  const user = ref({});
+  const user = ref(null);
 
   const signUp = async () => {
     try {
@@ -30,11 +30,26 @@ export default defineStore("user-store", () => {
     try {
       const resp = await axios.post("/api/auth/logout");
       console.log("Log out successful:", resp.data);
-      user.value = {};
+      user.value = null;
       message.value = "Log out successful.";
     } catch (error: any) {
       console.error("Failed to log out:", error);
       message.value = `Failed to log out. Please try again. Error: ${error.response.data.message}`;
+    }
+  };
+
+  const logIn = async (uname: string, pass: string) => {
+    try {
+      const resp = await axios.post("/api/auth/login/password", {
+        username: uname,
+        password: pass,
+      });
+      console.log("Log in successful:", resp.data);
+      user.value = resp.data.user;
+      message.value = "Log in successful.";
+    } catch (error: any) {
+      console.error("Failed to log in:", error);
+      message.value = `Failed to log in. Please try again. Error: ${error.response.data.message}`;
     }
   };
 
@@ -56,5 +71,6 @@ export default defineStore("user-store", () => {
     user,
     signUp,
     logOut,
+    logIn,
   };
 });

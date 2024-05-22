@@ -16,7 +16,18 @@ const props = defineProps<{ product: Product }>();
       <h1 class="text-ellipsis overflow-hidden">{{ product.product_name }}</h1>
       <img :src="product.product_image_url" alt="" />
       <p>Price: ${{ product.product_price }}</p>
-      <div v-if="userStotre.user">add to cart</div>
     </div>
   </RouterLink>
+  <div class="flex justify-center" v-if="userStotre.user">
+    <div
+      class="flex justify-center outline-dashed rounded-sm dark:hover:bg-slate-500 hover:bg-slate-400 w-10/12 mr-3"
+    >
+      add to cart
+    </div>
+    <div
+      class="flex justify-center outline-dashed rounded-sm dark:hover:bg-slate-500 hover:bg-slate-400 w-2/12"
+    >
+      ⭐
+    </div>
+  </div>
 </template>
