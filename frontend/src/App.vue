@@ -11,6 +11,7 @@ import axios from "axios";
 // remove from cart
 // fix session not saved after login/logout
 // account page styles
+// scroll up animation on page change
 // filters :
 // price checkbox
 // product rating slider
