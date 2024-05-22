@@ -1,19 +1,10 @@
 <script setup lang="ts">
-import { onMounted } from "vue";
-import useUserStore from "../piniaStores/useUserStore";
-import { useRouter } from "vue-router";
+import useCartStore from "../piniaStores/useCartStore";
 
-const router = useRouter();
-const userStore = useUserStore();
-
-onMounted(() => {
-  if (!userStore.user) {
-    router.push("/account");
-  } else {
-  }
-});
+const cartStore = useCartStore();
 </script>
 
 <template>
   <h1>Cart</h1>
+  {{ cartStore.cart }}
 </template>

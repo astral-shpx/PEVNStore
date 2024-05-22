@@ -1,25 +1,26 @@
 <script setup lang="ts">
 import axios from "axios";
 import { ref, onMounted } from "vue";
-import { useRoute, useRouter } from "vue-router";
+import { useRoute } from "vue-router";
 import { Product } from "../types/product";
-import useUserStore from "../piniaStores/useUserStore";
 import useCartStore from "../piniaStores/useCartStore";
 import Toaster from "../components/Toaster.vue";
 
 const route = useRoute();
-const router = useRouter();
-const userStore = useUserStore();
 const cartStore = useCartStore();
 const product = ref<Product>();
 
 const addToCart = () => {
-  if (!userStore.user) {
-    router.push("/account");
-  } else {
-    if (product.value) {
-      cartStore.addToCart(product.value.id);
-    }
+  // to be used in favourites
+  // if (!userStore.user) {
+  //   router.push("/account");
+  // } else {
+  //   if (product.value) {
+  //     cartStore.addToCart(product.value.id);
+  //   }
+  // }
+  if (product.value) {
+    cartStore.addToCart(product.value.id);
   }
 };
 

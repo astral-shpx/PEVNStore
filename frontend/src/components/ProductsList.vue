@@ -51,14 +51,15 @@ watch(
       >
         <Product :product="product" />
 
-        <div class="flex justify-center" v-if="userStotre.user">
+        <div class="flex justify-center">
           <div
-            class="flex justify-center outline-dashed rounded-sm dark:hover:bg-slate-500 hover:bg-slate-400 w-10/12 mr-3"
+            class="flex justify-center outline-dashed rounded-sm dark:hover:bg-slate-500 hover:bg-slate-400 w-full"
           >
             add to cart
           </div>
           <div
-            class="flex justify-center outline-dashed rounded-sm dark:hover:bg-slate-500 hover:bg-slate-400 w-2/12"
+            v-show="userStotre.user"
+            class="flex justify-center outline-dashed rounded-sm dark:hover:bg-slate-500 hover:bg-slate-400 ml-3 w-2/12"
           >
             ⭐
           </div>

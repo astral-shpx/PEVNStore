@@ -7,6 +7,8 @@ import { store } from "./store";
 import axios from "axios";
 
 // todo
+// cart page styles
+// account page styles
 // filters :
 // price checkbox
 // product rating slider
@@ -14,13 +16,10 @@ import axios from "axios";
 // reviews asc / desc
 // load amount radio
 //
-// login page
-// add to cart button functionality
-// checkout page
-// payments
-// dark theme switch button
-// account page
 // favourites page
+// payments
+// checkout page
+// dark theme switch button
 
 const route = useRoute();
 const isMenuOpen = ref(false);
