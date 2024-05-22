@@ -1,28 +1,12 @@
 <script setup lang="ts">
-import { watch, ref, toRaw } from "vue";
-import useProductStore from "../piniaStores/useProductsStore";
+import { ref } from "vue";
 import useFiltersStore from "../piniaStores/useFiltersStore";
+import { storeToRefs } from "pinia";
 
-const productsStore = useProductStore();
 const filtersStore = useFiltersStore();
 
-interface PriceRange {
-  label: string;
-  min: number;
-  max: number;
-}
+const { filters } = storeToRefs(filtersStore);
 
-const { fetchProducts } = productsStore;
-const filters = filtersStore.filters;
-const priceRanges = ref<PriceRange[]>([
-  { label: "$0 - $50", min: 0, max: 50 },
-  { label: "$51 - $100", min: 51, max: 100 },
-  { label: "$101 - $200", min: 101, max: 200 },
-  { label: "$201 - $500", min: 201, max: 500 },
-  { label: "$501 - $1000", min: 501, max: 1000 },
-  { label: "above $1000", min: 1001, max: Number.POSITIVE_INFINITY },
-]);
-const selectedPriceRanges = ref<PriceRange[]>([]);
 const rating = ref(3);
 const ratingMin = ref(0);
 const ratingMax = ref(5);
@@ -31,39 +15,23 @@ const loadAmount = ref(10);
 const loadAmounts = ref([12, 24, 30]);
 
 const updateFromDate = (event: Event) => {
-  filters.fromDate = (event.target as HTMLInputElement).value;
-  // fetchProducts();
+  filters.value.fromDate = (event.target as HTMLInputElement).value;
 };
 
 const updateToDate = (event: Event) => {
-  filters.toDate = (event.target as HTMLInputElement).value;
-  // fetchProducts();
+  filters.value.toDate = (event.target as HTMLInputElement).value;
 };
 
-watch(selectedPriceRanges, async () => {
-  const rawRanges = toRaw(selectedPriceRanges.value) as PriceRange[];
-
-  const largestMaxValue = rawRanges.reduce<number>((max, currentRange) => {
-    return currentRange.max > max ? currentRange.max : max;
-  }, 0);
-
-  const smallestMinValue = rawRanges.reduce<number>((min, currentRange) => {
-    return currentRange.min < min ? currentRange.min : min;
-  }, Number.POSITIVE_INFINITY);
-
-  console.log("Smallest min value:", smallestMinValue);
-  console.log("Largest max value:", largestMaxValue);
-
-  // filters.minPrice = smallestMinValue;
-  // filters.maxPrice = largestMaxValue;
-
-  // await productsStore.fetchProducts();
-});
+const clearFilters = () => {
+  filtersStore.reset();
+};
 </script>
 
 <template>
   <div class="bg-white dark:bg-slate-700 w-full mb-3 p-2 rounded-md">
-    <h4 class="mb-2 underline cursor-pointer">Clear filters</h4>
+    <h4 @click="clearFilters" class="mb-2 underline cursor-pointer">
+      Clear filters
+    </h4>
 
     <div class="mb-4">
       <h3 class="mb-2">Release date</h3>
@@ -90,10 +58,13 @@ watch(selectedPriceRanges, async () => {
     <div class="flex flex-col mb-4">
       <h3 class="mb-2">Price</h3>
       <div class="flex flex-col">
-        <label v-for="priceRange in priceRanges" :key="priceRange.label">
+        <label
+          v-for="priceRange in filtersStore.priceRanges"
+          :key="priceRange.label"
+        >
           <input
             type="checkbox"
-            v-model="selectedPriceRanges"
+            v-model="filtersStore.selectedPriceRanges"
             :value="priceRange"
           />
           {{ priceRange.label }}

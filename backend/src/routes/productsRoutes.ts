@@ -60,10 +60,20 @@ router.get('/', async (req: Request, res: Response) => {
           toDate
         }
       );
-      console.log('fromDate:', fromDate);
-      console.log('toDate:', toDate);
     }
-    // price from - to
+    if (!isNaN(filters.minPrice) && !isNaN(filters.maxPrice)) {
+      console.log('filters', filters);
+
+      const minPrice = Number(filters.minPrice);
+      const maxPrice = Number(filters.maxPrice);
+      queryBuilder.andWhere(
+        'product.product_price BETWEEN :minPrice AND :maxPrice',
+        {
+          minPrice,
+          maxPrice
+        }
+      );
+    }
     // rating from - to
   }
 
