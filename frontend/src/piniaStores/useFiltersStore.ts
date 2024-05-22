@@ -8,6 +8,7 @@ interface IFilters {
   toDate: string;
   minPrice: number;
   maxPrice?: number;
+  ratingAbove: number;
 }
 
 interface PriceRange {
@@ -25,6 +26,7 @@ export default defineStore("filters-store", () => {
     toDate: "",
     minPrice: 0,
     maxPrice: undefined,
+    ratingAbove: 0,
   });
   watch(
     () => route.query.filters,
@@ -37,6 +39,7 @@ export default defineStore("filters-store", () => {
           filters.toDate = f.toDate;
           filters.minPrice = f.minPrice;
           filters.maxPrice = f.maxPrice;
+          filters.ratingAbove = f.ratingAbove;
         } catch (error) {
           console.error("error setting filters", error);
         }

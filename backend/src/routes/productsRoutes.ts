@@ -74,7 +74,15 @@ router.get('/', async (req: Request, res: Response) => {
         }
       );
     }
-    // rating from - to
+    if (!isNaN(filters.ratingAbove)) {
+      const ratingAbove = Number(filters.ratingAbove);
+      queryBuilder.andWhere(
+        'product.product_rating BETWEEN :ratingAbove AND 5',
+        {
+          ratingAbove
+        }
+      );
+    }
   }
 
   if (category && category.trim() !== '') {

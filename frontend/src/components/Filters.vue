@@ -7,7 +7,7 @@ const filtersStore = useFiltersStore();
 
 const { filters } = storeToRefs(filtersStore);
 
-const rating = ref(3);
+const rating = ref(filters.value.ratingAbove);
 const ratingMin = ref(0);
 const ratingMax = ref(5);
 const sortBy = ref("reviews_asc");
@@ -20,6 +20,10 @@ const updateFromDate = (event: Event) => {
 
 const updateToDate = (event: Event) => {
   filters.value.toDate = (event.target as HTMLInputElement).value;
+};
+
+const updateRangeAbove = () => {
+  filters.value.ratingAbove = rating.value;
 };
 
 const clearFilters = () => {
@@ -77,6 +81,7 @@ const clearFilters = () => {
       <h3 class="mb-2">Rating above</h3>
       <input
         type="range"
+        @mouseup="updateRangeAbove"
         v-model="rating"
         :min="ratingMin"
         :max="ratingMax"
