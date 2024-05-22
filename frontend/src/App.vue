@@ -7,7 +7,9 @@ import { store } from "./store";
 import axios from "axios";
 
 // todo
-// cart page styles
+// cart
+// remove from cart
+// fix session not saved after login/logout
 // account page styles
 // filters :
 // price checkbox
@@ -34,7 +36,7 @@ const fetchCategories = async () => {
     const resp = await axios.get("/api/products/categories");
     categories.value = resp.data;
   } catch (error) {
-    console.error("Failed to fetch products:", error);
+    console.error("Failed to fetch categories:", error);
   }
 };
 

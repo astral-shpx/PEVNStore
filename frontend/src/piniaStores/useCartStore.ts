@@ -5,7 +5,7 @@ import useToasterStore from "./useToasterStore";
 
 export default defineStore("cart-store", () => {
   const toasterStore = useToasterStore();
-  const cart = ref({});
+  const cart = ref([]);
   const addToCart = async (productId: number) => {
     try {
       const resp = await axios.post("/api/cart", {
@@ -23,7 +23,15 @@ export default defineStore("cart-store", () => {
     }
   };
   onMounted(async () => {
-    cart.value = (await axios.get("/api/cart")).data;
+    console.log("cart before", cart.value);
+
+    try {
+      cart.value = (await axios.get("/api/cart")).data;
+    } catch (error) {
+      console.error("Failed to fetch cart:", error);
+    }
+
+    console.log("cart after", cart.value);
   });
   return {
     cart,
