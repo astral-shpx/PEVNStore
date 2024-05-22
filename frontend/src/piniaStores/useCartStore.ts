@@ -23,7 +23,7 @@ export default defineStore("cart-store", () => {
     }
   };
   onMounted(async () => {
-    console.log("cart before", cart.value);
+    // console.log("cart before", cart.value);
 
     try {
       cart.value = (await axios.get("/api/cart")).data;
@@ -31,7 +31,7 @@ export default defineStore("cart-store", () => {
       console.error("Failed to fetch cart:", error);
     }
 
-    console.log("cart after", cart.value);
+    // console.log("cart after", cart.value);
   });
   return {
     cart,
