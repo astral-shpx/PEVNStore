@@ -30,16 +30,16 @@ export default defineStore("filters-store", () => {
   watch(
     () => route.query.filters,
     (newFilters) => {
-      //   try {
-      //     let f: IFilters = newFilters as unknown as IFilters;
-      //     console.log(f);
-      //     filters.fromDate = f.fromDate;
-      //     filters.toDate = f.toDate;
-      //     filters.minPrice = f.minPrice;
-      //     filters.maxPrice = f.maxPrice;
-      //   } catch (error) {
-      //     console.error("error setting filters", error);
-      //   }
+      try {
+        let f: IFilters = newFilters as unknown as IFilters;
+        console.log(f);
+        filters.fromDate = f.fromDate;
+        filters.toDate = f.toDate;
+        filters.minPrice = f.minPrice;
+        filters.maxPrice = f.maxPrice;
+      } catch (error) {
+        console.error("error setting filters", error);
+      }
     }
   );
 
