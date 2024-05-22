@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import ProductsList from "../components/ProductsList.vue";
 import { store } from "../store";
-import { onMounted, ref } from "vue";
+import { onMounted } from "vue";
 import { useRoute } from "vue-router";
 import Toaster from "../components/Toaster.vue";
 import Pagination from "../components/Pagination.vue";
@@ -11,10 +11,8 @@ import useFiltersStore from "../piniaStores/useFiltersStore";
 const filtersStore = useFiltersStore();
 const route = useRoute();
 
-const isMenuOpen = ref(false);
-
 const toggleMenu = () => {
-  isMenuOpen.value = !isMenuOpen.value;
+  filtersStore.isMenuOpen = !filtersStore.isMenuOpen;
 };
 
 onMounted(() => {
@@ -27,11 +25,18 @@ onMounted(() => {
 <template>
   <div>
     <!-- Overlay -->
-    <div v-if="isMenuOpen" @click="toggleMenu" class="fixed inset-0 z-40"></div>
+    <div
+      v-if="filtersStore.isMenuOpen"
+      @click="toggleMenu"
+      class="fixed inset-0 z-40"
+    ></div>
 
     <!-- Sliding Menu -->
     <div
-      :class="{ 'translate-x-0': isMenuOpen, '-translate-x-full': !isMenuOpen }"
+      :class="{
+        'translate-x-0': filtersStore.isMenuOpen,
+        '-translate-x-full': !filtersStore.isMenuOpen,
+      }"
       class="fixed left-0 top-44 z-50 transition-transform duration-500 w-4/5 h-3/5 bg-white dark:bg-slate-700 rounded-r-md overflow-scroll overscroll-contain"
     >
       <div

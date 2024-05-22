@@ -16,15 +16,9 @@ interface PriceRange {
   max: number;
 }
 
-// TODO
-// use a button for applying filters
-// auto apply closes filters menu on mobile view
-// or fix the issue
-
 export default defineStore("filters-store", () => {
   const productsStore = useProductStore();
   const route = useRoute();
-  //   const { fetchProducts } = productsStore;
 
   const filters = reactive<IFilters>({
     fromDate: "",
@@ -59,6 +53,8 @@ export default defineStore("filters-store", () => {
   ]);
   const selectedPriceRanges = ref<PriceRange[]>([]);
 
+  const isMenuOpen = ref(false);
+
   const reset = () => {
     filters.fromDate = "";
     filters.toDate = "";
@@ -90,6 +86,7 @@ export default defineStore("filters-store", () => {
     filters,
     priceRanges,
     selectedPriceRanges,
+    isMenuOpen,
     reset,
   };
 });
