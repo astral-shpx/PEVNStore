@@ -1,11 +1,27 @@
 <script setup lang="ts">
 import axios from "axios";
 import { ref, onMounted } from "vue";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import { Product } from "../types/product";
+import useUserStore from "../piniaStores/useUserStore";
+import useCartStore from "../piniaStores/useCartStore";
+import Toaster from "../components/Toaster.vue";
 
 const route = useRoute();
+const router = useRouter();
+const userStore = useUserStore();
+const cartStore = useCartStore();
 const product = ref<Product>();
+
+const addToCart = () => {
+  if (!userStore.user) {
+    router.push("/account");
+  } else {
+    if (product.value) {
+      cartStore.addToCart(product.value.id);
+    }
+  }
+};
 
 onMounted(async () => {
   try {
@@ -40,6 +56,7 @@ onMounted(async () => {
       <div class="flex justify-center mb-4">
         <button
           class="flex w-2/3 justify-center mb-4 outline-dashed rounded-sm dark:hover:bg-slate-700 hover:bg-slate-400"
+          @click="addToCart"
         >
           Add to cart
         </button>
@@ -74,4 +91,6 @@ onMounted(async () => {
       </div>
     </div>
   </div>
+
+  <Toaster />
 </template>
