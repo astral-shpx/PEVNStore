@@ -24,6 +24,7 @@ const updateToDate = (event: Event) => {
 
 const clearFilters = () => {
   filtersStore.reset();
+  filtersStore.selectedPriceRanges = [];
 };
 </script>
 
