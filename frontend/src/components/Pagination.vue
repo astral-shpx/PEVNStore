@@ -35,7 +35,13 @@ const prevPage = async () => {
   </div>
 
   <div class="flex justify-center w-full my-2">
-    <!-- TODO revise usage of page_begin and page_end -->
+    <button
+      class="mx-2 w-6 rounded-md border dark:hover:bg-slate-700 hover:bg-slate-400"
+      @click="navigateToPage(1)"
+    >
+      ⏮️
+    </button>
+
     <button
       class="mx-2 w-6 rounded-md border dark:hover:bg-slate-700 hover:bg-slate-400"
       :class="{ 'border-2': i === productsStore.page }"
@@ -45,23 +51,12 @@ const prevPage = async () => {
     >
       {{ i }}
     </button>
-    <!-- <div>...</div> -->
-    <!-- last page -->
-    <!-- <button
-      class="mx-2 w-6 rounded-md border hover:bg-slate-700"
-      :class="{ 'border-2': pages.length - 1 === current_page }"
-      @click="navigateToPage(pages.length - 1)"
+
+    <button
+      class="mx-2 w-6 rounded-md border dark:hover:bg-slate-700 hover:bg-slate-400"
+      @click="navigateToPage(productsStore.total_pages)"
     >
-      >|
-    </button> -->
-    <!-- <div>...</div>
-    <div class="flex flex-row">
-      <button
-        class="mx-2 w-6 rounded-md border hover:bg-slate-700"
-        @click="navigateToPage(props.pages.length)"
-      >
-        {{ props.pages.length }}
-      </button>
-    </div> -->
+      ⏭️
+    </button>
   </div>
 </template>
