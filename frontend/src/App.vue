@@ -67,55 +67,74 @@ onMounted(() => {
     </div>
   </div>
   <div class="sticky top-0 bg-white dark:bg-gray-700 mb-4">
-    <nav class="flex">
-      <svg
-        @click="toggleMenu"
-        class="w-14 mt-4 mx-2 cursor-pointer"
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 10 10"
-        stroke="currentColor"
-        stroke-width=".6"
-        fill="rgba(0,0,0,0)"
-        stroke-linecap="round"
-      >
-        <path d="M2,3L5,3L8,3M2,5L8,5M2,7L5,7L8,7">
-          <animate
-            dur="0.2s"
-            attributeName="d"
-            values="M2,3L5,3L8,3M2,5L8,5M2,7L5,7L8,7;M3,3L5,5L7,3M5,5L5,5M3,7L5,5L7,7"
-            fill="freeze"
-            begin="start.begin"
-          />
-          <animate
-            dur="0.2s"
-            attributeName="d"
-            values="M3,3L5,5L7,3M5,5L5,5M3,7L5,5L7,7;M2,3L5,3L8,3M2,5L8,5M2,7L5,7L8,7"
-            fill="freeze"
-            begin="reverse.begin"
-          />
-        </path>
-        <rect width="10" height="10" stroke="none">
-          <animate dur="2s" id="reverse" attributeName="width" begin="click" />
-        </rect>
-        <rect width="10" height="10" stroke="none">
-          <animate
-            dur="0.001s"
-            id="start"
-            attributeName="width"
-            values="10;0"
-            fill="freeze"
-            begin="click"
-          />
-          <animate
-            dur="0.001s"
-            attributeName="width"
-            values="0;10"
-            fill="freeze"
-            begin="reverse.begin"
-          />
-        </rect>
-      </svg>
-      <RouterLink class="w-10 mt-4 mx-2" to="/">Go to Home</RouterLink>
+    <nav class="flex justify-between items-center">
+      <div class="flex items-center">
+        <svg
+          @click="toggleMenu"
+          class="w-14 mt-4 mx-2 cursor-pointer"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 10 10"
+          stroke="currentColor"
+          stroke-width=".6"
+          fill="rgba(0,0,0,0)"
+          stroke-linecap="round"
+        >
+          <path d="M2,3L5,3L8,3M2,5L8,5M2,7L5,7L8,7">
+            <animate
+              dur="0.2s"
+              attributeName="d"
+              values="M2,3L5,3L8,3M2,5L8,5M2,7L5,7L8,7;M3,3L5,5L7,3M5,5L5,5M3,7L5,5L7,7"
+              fill="freeze"
+              begin="start.begin"
+            />
+            <animate
+              dur="0.2s"
+              attributeName="d"
+              values="M3,3L5,5L7,3M5,5L5,5M3,7L5,5L7,7;M2,3L5,3L8,3M2,5L8,5M2,7L5,7L8,7"
+              fill="freeze"
+              begin="reverse.begin"
+            />
+          </path>
+          <rect width="10" height="10" stroke="none">
+            <animate
+              dur="2s"
+              id="reverse"
+              attributeName="width"
+              begin="click"
+            />
+          </rect>
+          <rect width="10" height="10" stroke="none">
+            <animate
+              dur="0.001s"
+              id="start"
+              attributeName="width"
+              values="10;0"
+              fill="freeze"
+              begin="click"
+            />
+            <animate
+              dur="0.001s"
+              attributeName="width"
+              values="0;10"
+              fill="freeze"
+              begin="reverse.begin"
+            />
+          </rect>
+        </svg>
+        <RouterLink class="w-10 mt-4 mx-2" to="/">Home</RouterLink>
+      </div>
+      <div class="flex">
+        <RouterLink
+          class="mt-4 mx-2 justify-end"
+          :to="{ path: '/favourites', query: {} }"
+          >Favourites</RouterLink
+        >
+        <RouterLink
+          class="mt-4 mx-2 justify-end"
+          :to="{ path: '/account', query: {} }"
+          >Account</RouterLink
+        >
+      </div>
     </nav>
     <div class="flex justify-center">
       <SearchBar />

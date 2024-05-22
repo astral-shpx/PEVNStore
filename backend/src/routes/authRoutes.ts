@@ -21,14 +21,12 @@ passport.use(
       });
 
       if (!user) {
-        // console.log('User found: ', user);
         return done(null, false, {
           message: 'Incorrect username or password.'
         });
       }
 
       const isValid = await argon2.verify(user.password_hash, password);
-      // console.log('isValid is ', isValid);
       if (!isValid) {
         return done(null, false, {
           message: 'Incorrect username or password.'
@@ -128,25 +126,49 @@ router.post('/logout', (req: Request, res: Response, next: NextFunction) => {
 
 router.post('/signup', async (req, res, next) => {
   try {
-    // console.log(req.body);
+    const userRepository = AppDataSource.getRepository(User);
+
+    if (!req.body.username || !req.body.email) {
+      return res.status(409).json({ message: 'Email or username missing' });
+    }
+
+    const existingUser = await userRepository.findOne({
+      where: { username: req.body.username }
+    });
+    if (existingUser) {
+      return res.status(409).json({ message: 'Username already exists' });
+    }
+
+    const existingEmail = await userRepository.findOne({
+      where: { email: req.body.email }
+    });
+    if (existingEmail) {
+      return res.status(409).json({ message: 'Email already registered' });
+    }
+
+    if (req.body.password.length <= 6) {
+      return res
+        .status(409)
+        .json({ message: 'Password must be longer than 6 characters' });
+    }
+
     const hashedPassword = await argon2.hash(req.body.password, {
       timeCost: 3,
       memoryCost: 1024 * 64
     });
 
-    const userRepository = AppDataSource.getRepository(User);
     const newUser = userRepository.create({
       username: req.body.username,
+      email: req.body.email,
       password_hash: hashedPassword
     });
 
     const savedUser = await userRepository.save(newUser);
 
-    req.login(savedUser, err => {
+    return req.login(savedUser, err => {
       if (err) {
         return next(err);
       }
-      // res.redirect('/');
       return res.status(200).json({
         message: 'Signup successful',
         user: { id: savedUser.id, username: savedUser.username }
