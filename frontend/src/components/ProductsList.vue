@@ -5,9 +5,11 @@ import Product from "./Product.vue";
 import { store } from "../store";
 import useProductStore from "../piniaStores/useProductsStore";
 import useUserStore from "../piniaStores/useUserStore";
+import useCartStore from "../piniaStores/useCartStore";
 
 const userStotre = useUserStore();
 const productsStore = useProductStore();
+const cartStore = useCartStore();
 
 const props = defineProps({
   category: String,
@@ -53,6 +55,7 @@ watch(
 
         <div class="flex justify-center">
           <div
+            @click="cartStore.addToCart(product.id)"
             class="flex justify-center outline-dashed rounded-sm dark:hover:bg-slate-500 hover:bg-slate-400 w-full"
           >
             add to cart
