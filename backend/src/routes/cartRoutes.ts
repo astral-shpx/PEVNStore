@@ -5,10 +5,6 @@ import { AppDataSource } from '../data-source';
 
 const router = Router();
 
-// todo
-// migrate shopping cart to postgres
-// make unique id for guest
-
 router.use(async (req: Request, res: Response, next: Function) => {
   if (req.isAuthenticated()) {
     const cartRepository = AppDataSource.getRepository(CartProduct);
@@ -89,12 +85,6 @@ router.put('/', async (req: Request, res: Response) => {
   return res
     .status(200)
     .send({ message: 'Item quantity updated', product_id, quantity });
-  if (itemIndex !== -1) {
-  } else {
-    return res
-      .status(406)
-      .send({ message: 'Item is not in cart', product_id, quantity });
-  }
 });
 
 router.post('/', async (req: Request, res: Response) => {
