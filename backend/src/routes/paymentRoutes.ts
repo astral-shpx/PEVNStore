@@ -29,25 +29,34 @@ router.post('/create-checkout-session', async (req: Request, res: Response) => {
   const cartRepository = AppDataSource.getRepository(CartProduct);
   const cart = await cartRepository.find({ relations: ['product'] });
 
-  const session = await stripe.checkout.sessions.create({
-    line_items: cart.map(item => ({
-      price_data: {
-        currency: 'usd',
-        product_data: {
-          name: item.product.product_name
+  if (cart.length === 0) {
+    // return res.status(400).json({ message: 'Cart is empty' });
+    return res.status(303).redirect(`${req.frontendBaseUrl}/cart-empty`);
+  }
+
+  try {
+    const session = await stripe.checkout.sessions.create({
+      line_items: cart.map(item => ({
+        price_data: {
+          currency: 'usd',
+          product_data: {
+            name: item.product.product_name
+          },
+          unit_amount: item.product.product_price * 100
         },
-        unit_amount: item.product.product_price * 100
-      },
-      quantity: item.quantity
-    })),
-    mode: 'payment',
-    success_url: `${req.frontendBaseUrl}/successful-payment`,
-    cancel_url: req.get('referer') || `${req.frontendBaseUrl}/cart`
-  });
+        quantity: item.quantity
+      })),
+      mode: 'payment',
+      success_url: `${req.frontendBaseUrl}/successful-payment`,
+      cancel_url: req.get('referer') || `${req.frontendBaseUrl}/cart`
+    });
 
-  await cartRepository.delete({});
+    await cartRepository.delete({});
 
-  return res.status(303).redirect(session.url!);
+    return res.status(303).redirect(session.url!);
+  } catch (error) {
+    console.error(error);
+  }
 });
 
 export default router;
