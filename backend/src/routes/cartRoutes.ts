@@ -3,16 +3,6 @@ import { CartItem } from '../types/types';
 
 const router = Router();
 
-// to be used in product favourites
-// const checkAuth = (req: Request, res: Response, next: any) => {
-//   if (!req.isAuthenticated()) {
-//     return res.status(401).json({ message: 'Unauthorized' });
-//   }
-//   return next();
-// };
-
-// router.use(checkAuth);
-
 // todo
 // migrate shopping cart to postgres
 // make unique id for guest
