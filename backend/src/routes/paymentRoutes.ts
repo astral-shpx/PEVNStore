@@ -10,7 +10,7 @@ const stripe = new Stripe(stripe_secret, {
   apiVersion: '2024-04-10'
 });
 
-router.use((req: Request, res: Response, next: any) => {
+const setHeaders = (req: Request, res: Response, next: any) => {
   res.setHeader(
     'Content-Security-Policy',
     "connect-src 'self' https://checkout.stripe.com; " +
@@ -19,9 +19,11 @@ router.use((req: Request, res: Response, next: any) => {
       "img-src 'self' https://*.stripe.com"
   );
   return next();
-});
+};
 
-router.use((req: Request, res: Response, next: any) => {
+router.use(setHeaders);
+
+const extractCallerUrl = (req: Request, res: Response, next: any) => {
   const fullUrl = req.get('referer');
   if (fullUrl) {
     const { origin } = new URL(fullUrl);
@@ -30,7 +32,9 @@ router.use((req: Request, res: Response, next: any) => {
     req.frontendBaseUrl = '';
   }
   return next();
-});
+};
+
+router.use(extractCallerUrl);
 
 router.post('/test', async (req: Request, res: Response) => {
   try {
