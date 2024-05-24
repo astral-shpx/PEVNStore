@@ -20,14 +20,8 @@ const session_secret = process.env.SESSION_SECRET!;
 const stripe_secret = process.env.STRIPE_API_KEY!;
 
 // TODO
-// product reviews
-// user favourites
-// Stripe - integrate with db
-// Testing
-// AdminJS
-// remove logging
-// econt integration
-// frontend
+// Stripe
+// Save cart session to db on login
 
 const stripe = new Stripe(stripe_secret, {
   apiVersion: '2024-04-10'
