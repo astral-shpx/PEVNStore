@@ -5,11 +5,11 @@ import { AppDataSource } from './data-source';
 import { Product } from './entities/Product';
 import passport from 'passport';
 import session from 'express-session';
-import Stripe from 'stripe';
 import cartRoutes from './routes/cartRoutes';
 import productsRoutes from './routes/productsRoutes';
 import authRoutes from './routes/authRoutes';
 import favouritesRoutes from './routes/favouritesRoutes';
+import paymentRoutes from './routes/paymentRoutes';
 import cors from 'cors';
 
 dotenv.config();
@@ -17,15 +17,10 @@ dotenv.config();
 const app: Express = express();
 const port = parseInt(process.env.PORT!, 10) || 3001;
 const session_secret = process.env.SESSION_SECRET!;
-const stripe_secret = process.env.STRIPE_API_KEY!;
 
 // TODO
 // Stripe
 // Save cart session to db on login
-
-const stripe = new Stripe(stripe_secret, {
-  apiVersion: '2024-04-10'
-});
 
 app.use(express.json());
 
@@ -56,27 +51,7 @@ app.use('/cart', cartRoutes);
 app.use('/products', productsRoutes);
 app.use('/auth', authRoutes);
 app.use('/favourites', favouritesRoutes);
-
-app.post('/create-payment-intent', async (req: Request, res: Response) => {
-  try {
-    const { amount } = req.body;
-
-    const paymentIntent = await stripe.paymentIntents.create({
-      amount: amount,
-      currency: 'eur'
-    });
-
-    res.send({
-      clientSecret: paymentIntent.client_secret
-    });
-  } catch (error) {
-    res.status(400).send({
-      error: {
-        message: error.message
-      }
-    });
-  }
-});
+app.use('/payment', paymentRoutes);
 
 app.get('/', async (req: Request, res: Response) => {
   const productRepository = AppDataSource.getRepository(Product);
