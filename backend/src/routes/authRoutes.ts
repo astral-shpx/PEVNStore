@@ -49,18 +49,15 @@ passport.use(
     },
     async (accessToken, refreshToken, profile, done) => {
       try {
-        console.log('GOOGLE profile: ', profile);
         const userRepository = AppDataSource.getRepository(User);
         let user = await userRepository.findOne({
           where: { googleId: profile.id }
         });
-        console.log('GOOGLE USER: ', user);
 
         if (user) {
           return done(null, user);
         }
 
-        // If user is new via Google, save them in the DB
         user = new User();
         user.googleId = profile.id;
         user.email = profile.emails?.[0].value;

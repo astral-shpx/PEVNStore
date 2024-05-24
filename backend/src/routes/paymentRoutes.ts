@@ -1,7 +1,9 @@
 import Stripe from 'stripe';
 import { Router, Request, Response } from 'express';
-
 import dotenv from 'dotenv';
+import { AppDataSource } from '../data-source';
+import { CartProduct } from '../entities/CartProduct';
+
 dotenv.config();
 
 const router = Router();
@@ -23,49 +25,27 @@ const extractCallerUrl = (req: Request, res: Response, next: any) => {
 
 router.use(extractCallerUrl);
 
-router.post('/test', async (req: Request, res: Response) => {
-  try {
-    const { amount } = req.body;
-
-    const paymentIntent = await stripe.paymentIntents.create({
-      amount: amount,
-      currency: 'eur'
-    });
-
-    res.send({
-      clientSecret: paymentIntent.client_secret
-    });
-  } catch (error) {
-    res.status(400).send({
-      error: {
-        message: error.message
-      }
-    });
-  }
-});
-
-router.get('/successful-payment', async (req: Request, res: Response) => {
-  return res.json({ message: 'successful payment' });
-});
-
 router.post('/create-checkout-session', async (req: Request, res: Response) => {
+  const cartRepository = AppDataSource.getRepository(CartProduct);
+  const cart = await cartRepository.find({ relations: ['product'] });
+
   const session = await stripe.checkout.sessions.create({
-    line_items: [
-      {
-        price_data: {
-          currency: 'usd',
-          product_data: {
-            name: 'test'
-          },
-          unit_amount: 100
+    line_items: cart.map(item => ({
+      price_data: {
+        currency: 'usd',
+        product_data: {
+          name: item.product.product_name
         },
-        quantity: 1
-      }
-    ],
+        unit_amount: item.product.product_price * 100
+      },
+      quantity: item.quantity
+    })),
     mode: 'payment',
     success_url: `${req.frontendBaseUrl}/successful-payment`,
-    cancel_url: `${req.get('referer')}`
+    cancel_url: req.get('referer') || `${req.frontendBaseUrl}/cart`
   });
+
+  await cartRepository.delete({});
 
   return res.status(303).redirect(session.url!);
 });

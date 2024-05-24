@@ -24,7 +24,6 @@ router.get('/', async (req: Request, res: Response) => {
     relations: ['product']
   });
 
-  //   return res.json({userId: user.id, favourites});
   return res.json(favourites);
 });
 

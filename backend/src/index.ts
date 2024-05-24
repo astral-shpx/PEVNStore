@@ -18,9 +18,6 @@ const app: Express = express();
 const port = parseInt(process.env.PORT!, 10) || 3001;
 const session_secret = process.env.SESSION_SECRET!;
 
-// TODO
-// Stripe
-
 app.use(express.json());
 
 app.use(
@@ -54,16 +51,7 @@ app.use('/payment', paymentRoutes);
 
 app.get('/', async (req: Request, res: Response) => {
   const productRepository = AppDataSource.getRepository(Product);
-
-  // const product = new Product();
-  // product.product_name = 'Me and Bears';
-  // product.product_description = 'I am near polar bears';
-  // await productRepository.save(product);
-  // console.log('Product has been saved');
-
   const savedProducts = await productRepository.find();
-  // console.log('All Products from the db: ', savedProducts);
-
   const user = req.user ? req.user : 'No user logged in';
 
   res.json({
