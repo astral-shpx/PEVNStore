@@ -28,7 +28,21 @@ router.get('/', async (req: Request, res: Response) => {
   return res.json(favourites);
 });
 
-router.post('/', (req: Request, res: Response) => {});
+router.post('/', (req: Request, res: Response) => {
+  const user = req.user as User;
+  const { product_id } = req.body;
+
+  const favouriteRepository = AppDataSource.getRepository(Favourite);
+
+  favouriteRepository.save({
+    product: { id: product_id },
+    user: user
+  });
+
+  return res
+    .status(201)
+    .send({ message: 'Product added to favourites', product_id });
+});
 
 router.put('/', (req: Request, res: Response) => {});
 
