@@ -4,6 +4,7 @@ import { Request } from 'express';
 interface CartItem {
   product_id: number;
   quantity: number;
+  user?: number;
 }
 
 declare module 'express-session' {

@@ -5,6 +5,7 @@ import { SeederOptions } from 'typeorm-extension';
 import { Product } from './entities/Product';
 import { User } from './entities/User';
 import { Favourite } from './entities/Favourite';
+import { CartProduct } from './entities/CartProduct';
 require('dotenv').config();
 
 const db = process.env.POSTGRES_DB;
@@ -21,7 +22,7 @@ const options: DataSourceOptions & SeederOptions = {
   database: db,
   synchronize: true,
   logging: true,
-  entities: [Product, User, Favourite],
+  entities: [Product, User, Favourite, CartProduct],
   subscribers: [],
   migrations: [],
 
