@@ -10,19 +10,6 @@ const stripe = new Stripe(stripe_secret, {
   apiVersion: '2024-04-10'
 });
 
-const setHeaders = (req: Request, res: Response, next: any) => {
-  res.setHeader(
-    'Content-Security-Policy',
-    "connect-src 'self' https://checkout.stripe.com; " +
-      "frame-src 'self' https://checkout.stripe.com; " +
-      "script-src 'self' https://checkout.stripe.com; " +
-      "img-src 'self' https://*.stripe.com"
-  );
-  return next();
-};
-
-router.use(setHeaders);
-
 const extractCallerUrl = (req: Request, res: Response, next: any) => {
   const fullUrl = req.get('referer');
   if (fullUrl) {
