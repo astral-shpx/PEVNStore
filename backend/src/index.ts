@@ -9,6 +9,7 @@ import Stripe from 'stripe';
 import cartRoutes from './routes/cartRoutes';
 import productsRoutes from './routes/productsRoutes';
 import authRoutes from './routes/authRoutes';
+import favouritesRoutes from './routes/favouritesRoutes';
 import cors from 'cors';
 
 dotenv.config();
@@ -60,6 +61,7 @@ app.use(passport.session());
 app.use('/cart', cartRoutes);
 app.use('/products', productsRoutes);
 app.use('/auth', authRoutes);
+app.use('/favourites', favouritesRoutes);
 
 app.post('/create-payment-intent', async (req: Request, res: Response) => {
   try {
