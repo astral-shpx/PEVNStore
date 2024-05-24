@@ -28,13 +28,13 @@ router.get('/', async (req: Request, res: Response) => {
   return res.json(favourites);
 });
 
-router.post('/', (req: Request, res: Response) => {
+router.post('/', async (req: Request, res: Response) => {
   const user = req.user as User;
   const { product_id } = req.body;
 
   const favouriteRepository = AppDataSource.getRepository(Favourite);
 
-  favouriteRepository.save({
+  await favouriteRepository.save({
     product: { id: product_id },
     user: user
   });
@@ -44,8 +44,20 @@ router.post('/', (req: Request, res: Response) => {
     .send({ message: 'Product added to favourites', product_id });
 });
 
-router.put('/', (req: Request, res: Response) => {});
+router.delete('/', async (req: Request, res: Response) => {
+  const user = req.user as User;
+  const { product_id } = req.body;
 
-router.delete('/', (req: Request, res: Response) => {});
+  const favouriteRepository = AppDataSource.getRepository(Favourite);
+
+  await favouriteRepository.delete({
+    user: { id: user.id },
+    product: { id: product_id }
+  });
+
+  return res
+    .status(201)
+    .send({ message: 'Product removed from favourites', product_id });
+});
 
 export default router;
