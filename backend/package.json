@@ -11,7 +11,8 @@
     "db:create": "ts-node ./node_modules/typeorm-extension/bin/cli.cjs db:create",
     "db:drop": "ts-node ./node_modules/typeorm-extension/bin/cli.cjs db:drop",
     "seed:run": "ts-node ./node_modules/typeorm-extension/bin/cli.cjs seed:run",
-    "seed:create": "ts-node ./node_modules/typeorm-extension/bin/cli.cjs seed:create"
+    "seed:create": "ts-node ./node_modules/typeorm-extension/bin/cli.cjs seed:create",
+    "seed:favourites": "ts-node ./node_modules/typeorm-extension/bin/cli.cjs seed:run --name ./src/seeders/favourites.seed.ts"
   },
   "keywords": [],
   "author": "",

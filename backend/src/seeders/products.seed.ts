@@ -2,7 +2,7 @@ import { Seeder, SeederFactoryManager } from 'typeorm-extension';
 import { DataSource } from 'typeorm';
 import { Product } from '../entities/Product';
 
-export default class UserSeeder implements Seeder {
+export default class ProductsSeeder implements Seeder {
   public async run(
     dataSource: DataSource,
     factoryManager: SeederFactoryManager

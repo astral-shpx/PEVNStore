@@ -14,20 +14,37 @@ export default class FavouritesSeeder implements Seeder {
     const productRepository = dataSource.getRepository(Product);
 
     const user = await userRepository.findOne({ where: { username: 'admin' } });
-    const product = await productRepository.findOne({ where: { id: 1 } });
 
-    console.log('asdasd');
+    if (user) {
+      const totalProducts = await productRepository.count();
 
-    if (user && product) {
-      const newFavourite = favouriteRepository.create({
-        user: user,
-        product: product
-      });
+      if (totalProducts > 0) {
+        const randomIndex = Math.floor(Math.random() * totalProducts);
 
-      await favouriteRepository.save(newFavourite);
-      console.log('Favourite has been seeded:', newFavourite);
+        const randomProduct = await productRepository.find({
+          skip: randomIndex,
+          take: 1
+        });
+
+        if (randomProduct.length > 0) {
+          const newFavourite = favouriteRepository.create({
+            user: user,
+            product: randomProduct[0]
+          });
+
+          await favouriteRepository.save(newFavourite);
+          console.log(
+            'Favourite has been seeded with a random product:',
+            newFavourite
+          );
+        } else {
+          console.log('No products found to create a favourite.');
+        }
+      } else {
+        console.log('No products available in the database.');
+      }
     } else {
-      console.log('User or Product not found, seeding failed.');
+      console.log('User not found, seeding failed.');
     }
   }
 }

@@ -19,7 +19,7 @@ export class User {
   email?: string; // Email can be used for both Google and local accounts
 
   @Column({ nullable: true })
-  displayName?: string; // Optional: for storing the user's display name
+  displayName?: string;
 
   @OneToMany(() => Favourite, fav => fav.user)
   favourites: Favourite[];
