@@ -2,6 +2,7 @@ import { Router, Request, Response } from 'express';
 import { CartItem } from '../types/types';
 import { CartProduct } from '../entities/CartProduct';
 import { AppDataSource } from '../data-source';
+import { Product } from '../entities/Product';
 
 const router = Router();
 
@@ -89,6 +90,7 @@ router.put('/', async (req: Request, res: Response) => {
 
 router.post('/', async (req: Request, res: Response) => {
   const { product_id, quantity }: CartItem = req.body;
+  const productRepository = AppDataSource.getRepository(Product);
 
   if (!req.session.cart) {
     req.session.cart = [];
@@ -110,6 +112,13 @@ router.post('/', async (req: Request, res: Response) => {
     return res
       .status(400)
       .send({ message: 'Cannot add duplicate item', product_id });
+  }
+
+  const productExists = await productRepository.existsBy({ id: product_id });
+  if (!productExists) {
+    return res
+      .status(400)
+      .send({ message: 'Product with id doesnt exist', product_id });
   }
 
   const newItem: CartItem = { product_id, quantity };
