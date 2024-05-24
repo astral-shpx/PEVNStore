@@ -20,7 +20,6 @@ const session_secret = process.env.SESSION_SECRET!;
 
 // TODO
 // Stripe
-// Save cart session to db on login
 
 app.use(express.json());
 
