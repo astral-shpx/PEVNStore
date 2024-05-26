@@ -26,7 +26,7 @@ export default defineStore("products-store", () => {
 
   const total_products_amount = ref(0);
   const pages_to_show = computed(() => {
-    let toShow = 6;
+    let toShow = total_pages.value < 6 ? total_pages.value : 6;
     const midPoint = Math.ceil(toShow / 2);
 
     let begin;
