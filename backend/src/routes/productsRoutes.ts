@@ -10,14 +10,15 @@ router.get('/', async (req: Request, res: Response) => {
     limit: limitString,
     productName,
     category,
-    filters: filtersString
+    filters: filtersString,
+    ids: idsString
   } = req.query as {
     offset: string;
     limit: string;
     productName: string;
     category: string;
     filters: string;
-    // reviews asc desc
+    ids: string;
   };
 
   // parse filters
@@ -48,6 +49,11 @@ router.get('/', async (req: Request, res: Response) => {
   const productRepository = AppDataSource.getRepository(Product);
 
   const queryBuilder = productRepository.createQueryBuilder('product');
+
+  if (idsString && idsString.trim() !== '') {
+    const ids = JSON.parse(idsString);
+    queryBuilder.andWhereInIds(ids);
+  }
 
   if (filters) {
     if (filters.fromDate && filters.toDate) {
