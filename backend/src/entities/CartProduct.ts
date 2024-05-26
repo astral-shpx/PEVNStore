@@ -2,7 +2,6 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   ManyToOne,
-  OneToOne,
   JoinColumn,
   Column
 } from 'typeorm';
@@ -14,10 +13,10 @@ export class CartProduct {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => User, user => user.favourites)
+  @ManyToOne(() => User, user => user.cartProducts)
   user: User;
 
-  @OneToOne(() => Product)
+  @ManyToOne(() => Product)
   @JoinColumn()
   product: Product;
 

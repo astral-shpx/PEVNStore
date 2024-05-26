@@ -6,6 +6,7 @@ import argon2 from 'argon2';
 import { Strategy as LocalStrategy } from 'passport-local';
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 import dotenv from 'dotenv';
+import { CartProduct } from '../entities/CartProduct';
 
 dotenv.config();
 
@@ -88,18 +89,36 @@ passport.deserializeUser(async (id: number, done) => {
 
 const router = Router();
 
+const saveCartToDb = async (req: Request, user: User) => {
+  const cartRepository = AppDataSource.getRepository(CartProduct);
+  if (req.session.cart && req.session.cart.length > 0) {
+    for (const item of req.session.cart) {
+      const cartProduct = cartRepository.create({
+        user: user,
+        product: { id: item.product_id },
+        quantity: item.quantity
+      });
+      await cartRepository.save(cartProduct);
+    }
+  }
+};
+
 router.post('/login/password', (req, res, next) => {
-  passport.authenticate('local', (err: any, user: User, info: any) => {
+  passport.authenticate('local', async (err: any, user: User, info: any) => {
     if (err) {
       return res.status(500).json({ message: 'Internal server error' });
     }
     if (!user) {
       return res.status(401).json({ message: info.message || 'Login failed' });
     }
+
+    await saveCartToDb(req, user);
+
     req.login(user, err => {
       if (err) {
         return res.status(500).json({ message: 'Error logging in' });
       }
+
       return res.status(200).json({
         message: 'Login successful',
         user: { id: user.id, username: user.username }
@@ -162,10 +181,13 @@ router.post('/signup', async (req, res, next) => {
 
     const savedUser = await userRepository.save(newUser);
 
+    await saveCartToDb(req, savedUser);
+
     return req.login(savedUser, err => {
       if (err) {
         return next(err);
       }
+
       return res.status(200).json({
         message: 'Signup successful',
         user: { id: savedUser.id, username: savedUser.username }
