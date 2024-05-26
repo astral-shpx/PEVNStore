@@ -1,9 +1,19 @@
 # PEVNStore
 
+# Showcase
+
+...
+
 # Running with docker compose
 
 ```sh
 docker compose up --build
+```
+
+## Clean up
+
+```sh
+docker-compose down
 ```
 
 # Development
@@ -28,7 +38,7 @@ cd frontend
 npm run dev
 ```
 
-# To seed database
+# To seed the database
 
 ```sh
 cd backend
@@ -42,8 +52,3 @@ Database inspection: DBeaver
 
 Api inspection: Insomnia
 
-# Clean up
-
-```sh
-docker-compose down
-```
