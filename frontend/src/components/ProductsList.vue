@@ -54,18 +54,18 @@ watch(
         <Product :product="product" />
 
         <div class="flex justify-center">
-          <div
+          <button
             @click="cartStore.addToCart(product.id)"
             class="flex justify-center outline-dashed rounded-sm dark:hover:bg-slate-500 hover:bg-slate-400 w-full"
           >
             add to cart
-          </div>
-          <div
+          </button>
+          <button
             v-show="userStotre.user"
             class="flex justify-center outline-dashed rounded-sm dark:hover:bg-slate-500 hover:bg-slate-400 ml-3 w-2/12"
           >
             ⭐
-          </div>
+          </button>
         </div>
       </div>
     </div>

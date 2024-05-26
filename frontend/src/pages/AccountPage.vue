@@ -68,15 +68,17 @@ const logIn = async () => {
       <p v-if="userStore.message">{{ userStore.message }}</p>
 
       <!-- log out button -->
-      <div v-if="userStore.user">
-        <p>Logged in as {{ userStore.user }}</p>
+      <div class="" v-if="userStore.user">
+        <div class="flex flex-col justify-center w-full items-center">
+          <p>Logged in as {{ userStore.user }}</p>
 
-        <button
-          @click="userStore.logOut"
-          class="outline-dashed rounded-sm dark:hover:bg-slate-700 hover:bg-slate-400"
-        >
-          Log out
-        </button>
+          <button
+            @click="userStore.logOut"
+            class="outline-dashed rounded-sm dark:hover:bg-slate-700 hover:bg-slate-400 w-2/3"
+          >
+            Log out
+          </button>
+        </div>
       </div>
 
       <!-- log in form -->

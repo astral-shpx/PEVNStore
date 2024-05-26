@@ -31,7 +31,7 @@ router.post('/create-checkout-session', async (req: Request, res: Response) => {
 
   if (cart.length === 0) {
     // return res.status(400).json({ message: 'Cart is empty' });
-    return res.status(303).redirect(`${req.frontendBaseUrl}/cart-empty`);
+    return res.status(303).redirect(`${req.frontendBaseUrl}/cart/?empty=true`);
   }
 
   try {

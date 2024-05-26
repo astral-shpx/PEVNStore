@@ -61,10 +61,10 @@ onMounted(() => {
     >
       <RouterLink
         :to="`/category/${category}`"
-        class="flex justify-between cursor-pointer"
+        class="flex justify-between cursor-pointer hover:underline"
       >
         <span>{{ category }}</span
-        ><span>></span>
+        ><span>🔗</span>
       </RouterLink>
     </div>
   </div>
