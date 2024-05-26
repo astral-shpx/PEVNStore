@@ -20,7 +20,7 @@ const clearCart = () => {
   <div class="flex justify-center">
     <aside class="hidden md:flex justify-center w-1/4">aside</aside>
     <div class="flex flex-col justify-center md:w-3/5 w-full p-2">
-      <div class="flex flex-wrap">
+      <div class="flex flex-wrap justify-center">
         <div v-show="cartStore.cartProducts?.length === 0">Cart is empty</div>
         <div
           class="flex flex-col w-1/2 md:w-1/4"
@@ -43,35 +43,40 @@ const clearCart = () => {
         </div>
       </div>
 
-      <div class="flex flex-col justify-center w-1/2 md:w-3/5 p-2">
-        <p v-if="!userStotre.user">
-          ! You should log in to see your cart and checkout
-        </p>
+      <div class="flex flex-wrap justify-center">
+        <div class="flex flex-col justify-center w-1/2 md:w-3/5 p-2">
+          <p v-if="!userStotre.user">
+            ! You should log in to see your cart and checkout
+          </p>
 
-        <button
-          @click="clearCart"
-          class="outline-dashed rounded-sm dark:hover:bg-slate-700 hover:bg-slate-400"
-        >
-          Clear cart
-        </button>
+          <div class="flex justify-center w-full mt-4">
+            <button
+              @click="clearCart"
+              class="outline-dashed rounded-sm dark:hover:bg-slate-700 hover:bg-slate-400 w-4/5"
+            >
+              Clear cart
+            </button>
+          </div>
 
-        <form
-          action="/api/payment/create-checkout-session"
-          method="POST"
-          v-if="userStotre.user"
-        >
-          <button
-            class="outline-dashed rounded-sm dark:hover:bg-slate-700 hover:bg-slate-400"
-            type="submit"
-            id="checkout-button"
+          <form
+            class="flex justify-center w-full mt-4"
+            action="/api/payment/create-checkout-session"
+            method="POST"
+            v-if="userStotre.user"
           >
-            Checkout
-          </button>
-        </form>
-        <div v-else>You must be logged in to checkout.</div>
+            <button
+              class="outline-dashed rounded-sm dark:hover:bg-slate-700 hover:bg-slate-400 w-4/5"
+              type="submit"
+              id="checkout-button"
+            >
+              Checkout
+            </button>
+          </form>
+          <div v-else>You must be logged in to checkout.</div>
 
-        <div v-show="cartStore.isEmptyResponse">
-          Your cart is empty. Cannot create transaction.
+          <div v-show="cartStore.isEmptyResponse">
+            Your cart is empty. Cannot create transaction.
+          </div>
         </div>
       </div>
     </div>
