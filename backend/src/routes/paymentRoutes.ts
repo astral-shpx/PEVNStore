@@ -51,6 +51,7 @@ router.post('/create-checkout-session', async (req: Request, res: Response) => {
       cancel_url: req.get('referer') || `${req.frontendBaseUrl}/cart`
     });
 
+    // must use webhooks to delete on payment status successful
     await cartRepository.delete({});
 
     return res.status(303).redirect(session.url!);
