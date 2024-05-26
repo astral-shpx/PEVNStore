@@ -4,15 +4,15 @@ import { User } from '../entities/User';
 import passport from 'passport';
 import argon2 from 'argon2';
 import { Strategy as LocalStrategy } from 'passport-local';
-import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
+// import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 import dotenv from 'dotenv';
 import { CartProduct } from '../entities/CartProduct';
 import { CartItem } from '../types/types';
 
 dotenv.config();
 
-const google_client_id = process.env.GOOGLE_CLIENT_ID!;
-const google_secret = process.env.GOOGLE_CLIENT_SECRET!;
+// const google_client_id = process.env.GOOGLE_CLIENT_ID!;
+// const google_secret = process.env.GOOGLE_CLIENT_SECRET!;
 
 passport.use(
   new LocalStrategy(async (username, password, done) => {
@@ -42,37 +42,37 @@ passport.use(
   })
 );
 
-passport.use(
-  new GoogleStrategy(
-    {
-      clientID: google_client_id,
-      clientSecret: google_secret,
-      callbackURL: 'http://localhost:3001/auth/google/callback'
-    },
-    async (accessToken, refreshToken, profile, done) => {
-      try {
-        const userRepository = AppDataSource.getRepository(User);
-        let user = await userRepository.findOne({
-          where: { googleId: profile.id }
-        });
+// passport.use(
+//   new GoogleStrategy(
+//     {
+//       clientID: google_client_id,
+//       clientSecret: google_secret,
+//       callbackURL: 'http://localhost:3001/auth/google/callback'
+//     },
+//     async (accessToken, refreshToken, profile, done) => {
+//       try {
+//         const userRepository = AppDataSource.getRepository(User);
+//         let user = await userRepository.findOne({
+//           where: { googleId: profile.id }
+//         });
 
-        if (user) {
-          return done(null, user);
-        }
+//         if (user) {
+//           return done(null, user);
+//         }
 
-        user = new User();
-        user.googleId = profile.id;
-        user.email = profile.emails?.[0].value;
-        user.displayName = profile.displayName;
-        await userRepository.save(user);
+//         user = new User();
+//         user.googleId = profile.id;
+//         user.email = profile.emails?.[0].value;
+//         user.displayName = profile.displayName;
+//         await userRepository.save(user);
 
-        done(null, user);
-      } catch (err) {
-        done(err);
-      }
-    }
-  )
-);
+//         done(null, user);
+//       } catch (err) {
+//         done(err);
+//       }
+//     }
+//   )
+// );
 
 passport.serializeUser((user: User, done) => {
   done(null, user.id);
@@ -206,17 +206,17 @@ router.get('/sessionStatus', async (req, res, next) => {
   return res.status(200).json({ status: 'Unauthorized' });
 });
 
-router.get(
-  '/google',
-  passport.authenticate('google', { scope: ['email', 'profile'] })
-);
+// router.get(
+//   '/google',
+//   passport.authenticate('google', { scope: ['email', 'profile'] })
+// );
 
-router.get(
-  '/google/callback',
-  passport.authenticate('google', { failureRedirect: '/login' }),
-  (req, res) => {
-    return res.send(req.user);
-  }
-);
+// router.get(
+//   '/google/callback',
+//   passport.authenticate('google', { failureRedirect: '/login' }),
+//   (req, res) => {
+//     return res.send(req.user);
+//   }
+// );
 
 export default router;
