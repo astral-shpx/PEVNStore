@@ -129,18 +129,27 @@ onMounted(() => {
         <RouterLink
           class="mt-4 mx-2 justify-end"
           :to="{ path: '/cart', query: {} }"
-          >Cart</RouterLink
-        >
+          ><img
+            class="object-contain h-9 dark:invert"
+            src="./assets/shopping_cart.png"
+            alt="Cart"
+        /></RouterLink>
         <RouterLink
           class="mt-4 mx-2 justify-end"
           :to="{ path: '/favourites', query: {} }"
-          >Favourites</RouterLink
-        >
+          ><img
+            class="object-contain h-9 dark:invert"
+            src="./assets/favourite.png"
+            alt="Favourites"
+        /></RouterLink>
         <RouterLink
           class="mt-4 mx-2 justify-end"
           :to="{ path: '/account', query: {} }"
-          >Account</RouterLink
-        >
+          ><img
+            class="object-contain h-9 dark:invert"
+            src="./assets/account.png"
+            alt="Account"
+        /></RouterLink>
       </div>
     </nav>
     <div class="flex justify-center">
