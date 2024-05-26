@@ -21,8 +21,12 @@ router.get('/', async (req: Request, res: Response) => {
     ids: string;
   };
 
-  // parse filters
+  let ids: number[] = [];
+  let offset: number = 0;
+  let limit: number | undefined;
   let filters: any = {};
+
+  // Parse filters
   if (filtersString && filtersString !== '') {
     try {
       filters = JSON.parse(filtersString);
@@ -31,13 +35,42 @@ router.get('/', async (req: Request, res: Response) => {
     }
   }
 
-  const offset = parseInt(offsetString) || 0;
-  const limit = parseInt(limitString);
+  // Parse IDs
+  if (idsString && idsString !== '') {
+    try {
+      ids = JSON.parse(idsString);
+      if (!Array.isArray(ids)) {
+        throw new Error('IDs must be an array');
+      }
+    } catch (error) {
+      return res.status(400).send({ message: 'Invalid product IDs format' });
+    }
+  }
 
-  if (isNaN(offset) || isNaN(limit)) {
+  // Parse offset
+  try {
+    offset = parseInt(offsetString) || 0;
+    if (isNaN(offset)) {
+      throw new Error('Offset must be a number');
+    }
+  } catch (error) {
+    return res.status(400).send({ message: 'Offset must be a number' });
+  }
+
+  // Parse limit
+  try {
+    limit = parseInt(limitString) || ids.length;
+    if (isNaN(limit)) {
+      throw new Error('Limit must be a number');
+    }
+  } catch (error) {
+    return res.status(400).send({ message: 'Limit must be a number' });
+  }
+
+  if (isNaN(offset) && isNaN(limit)) {
     return res
       .status(400)
-      .send({ message: 'You must provide offset and limit' });
+      .send({ message: 'Offset and limit must be numbers' });
   }
 
   if (offset < 0 || limit < 0) {
@@ -51,7 +84,6 @@ router.get('/', async (req: Request, res: Response) => {
   const queryBuilder = productRepository.createQueryBuilder('product');
 
   if (idsString && idsString.trim() !== '') {
-    const ids = JSON.parse(idsString);
     queryBuilder.andWhereInIds(ids);
   }
 
