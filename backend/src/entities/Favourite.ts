@@ -1,10 +1,4 @@
-import {
-  Entity,
-  PrimaryGeneratedColumn,
-  ManyToOne,
-  OneToOne,
-  JoinColumn
-} from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, ManyToOne, JoinColumn } from 'typeorm';
 import { User } from './User';
 import { Product } from './Product';
 
@@ -16,7 +10,7 @@ export class Favourite {
   @ManyToOne(() => User, user => user.favourites)
   user: User;
 
-  @OneToOne(() => Product)
+  @ManyToOne(() => Product)
   @JoinColumn()
   product: Product;
 }
