@@ -7,6 +7,7 @@ import { Strategy as LocalStrategy } from 'passport-local';
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 import dotenv from 'dotenv';
 import { CartProduct } from '../entities/CartProduct';
+import { CartItem } from '../types/types';
 
 dotenv.config();
 
@@ -89,10 +90,10 @@ passport.deserializeUser(async (id: number, done) => {
 
 const router = Router();
 
-const saveCartToDb = async (req: Request, user: User) => {
-  const cartRepository = AppDataSource.getRepository(CartProduct);
-  if (req.session.cart && req.session.cart.length > 0) {
-    for (const item of req.session.cart) {
+const saveCartToDb = async (cart: CartItem[], user: User) => {
+  if (cart && cart.length > 0) {
+    const cartRepository = AppDataSource.getRepository(CartProduct);
+    for (const item of cart) {
       const cartProduct = cartRepository.create({
         user: user,
         product: { id: item.product_id },
@@ -112,7 +113,7 @@ router.post('/login/password', (req, res, next) => {
       return res.status(401).json({ message: info.message || 'Login failed' });
     }
 
-    await saveCartToDb(req, user);
+    await saveCartToDb(req.session.cart!, user);
 
     req.login(user, err => {
       if (err) {
@@ -181,7 +182,7 @@ router.post('/signup', async (req, res, next) => {
 
     const savedUser = await userRepository.save(newUser);
 
-    await saveCartToDb(req, savedUser);
+    await saveCartToDb(req.session.cart!, savedUser);
 
     return req.login(savedUser, err => {
       if (err) {
