@@ -18,15 +18,15 @@ const prevPage = async () => {
 
 <template>
   <div class="flex justify-center">
-    <div class="w-full md:w-3/5">
+    <div class="flex justify-center w-full md:w-3/5">
       <button
-        class="w-1/2 p-2 border rounded-sm dark:hover:bg-slate-700 hover:bg-slate-400"
+        class="w-1/2 md:w-1/4 mx-1 p-2 border rounded-sm dark:hover:bg-slate-700 hover:bg-slate-400"
         @click="prevPage"
       >
         previous page
       </button>
       <button
-        class="w-1/2 p-2 border rounded-sm dark:hover:bg-slate-700 hover:bg-slate-400"
+        class="w-1/2 md:w-1/4 mx-1 p-2 border rounded-sm dark:hover:bg-slate-700 hover:bg-slate-400"
         @click="nextPage"
       >
         next page
