@@ -49,7 +49,7 @@ watch(
       :class="{ hidden: productsStore.loading, flex: !productsStore.loading }"
     >
       <div
-        class="flex flex-col justify-between mb-4 mx-2 cursor-pointer hover:shadow-lg bg-gray-300 rounded dark:bg-gray-700 h-full p-2"
+        class="flex flex-col justify-between mb-4 mx-2 cursor-pointer hover:shadow-lg bg-gray-300 rounded dark:bg-gray-700 h-full max-h-96 p-2"
       >
         <Product :product="product" />
 
