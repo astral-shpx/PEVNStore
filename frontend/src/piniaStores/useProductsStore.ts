@@ -90,14 +90,16 @@ export default defineStore("products-store", () => {
   const fetchProducts = async (category = "") => {
     loading.value = true;
     try {
-      const cat = category === "" ? filtersStore.filters.category : category;
+      // const cat = category === "" ? filtersStore.category : category;
       const resp = await axios.get("/api/products", {
         params: {
           limit: load_amount.value,
           productName: store.searchQuery,
           offset: (page.value - 1) * load_amount.value,
-          category: cat,
+          category: category,
           filters: JSON.stringify(filtersStore.filters),
+          orderBy: filtersStore.orderBy,
+          orderDirection: filtersStore.orderDirection,
         },
       });
       products.value = resp.data.products;
@@ -115,6 +117,8 @@ export default defineStore("products-store", () => {
           page: page.value,
           filters: stringifiedFilters,
           loadAmount: filtersStore.loadAmount,
+          orderBy: filtersStore.orderBy,
+          orderDirection: filtersStore.orderDirection,
         },
       });
     } catch (error) {

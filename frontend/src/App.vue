@@ -23,6 +23,7 @@ const toggleMenu = () => {
   isMenuOpen.value = !isMenuOpen.value;
 };
 
+// use filtersStore (?)
 const fetchCategories = async () => {
   try {
     const resp = await axios.get("/api/products/categories");

@@ -10,7 +10,6 @@ const { filters } = storeToRefs(filtersStore);
 const rating = ref(filters.value.ratingAbove);
 const ratingMin = ref(0);
 const ratingMax = ref(5);
-const sortBy = ref("reviews_asc");
 
 const updateFromDate = (event: Event) => {
   filters.value.fromDate = (event.target as HTMLInputElement).value;
@@ -91,8 +90,9 @@ const clearFilters = () => {
       <h3 class="mb-2">Category</h3>
       <select
         class="dark:text-slate-900 rounded-sm"
-        v-model="filtersStore.filters.category"
+        v-model="filtersStore.category"
       >
+        <option value="">All</option>
         <option
           class="mx-2"
           :value="catg"
@@ -103,19 +103,41 @@ const clearFilters = () => {
       </select>
     </div>
 
-    <!-- sort by reviews[dropdown] asc / desc -->
     <div class="flex flex-col mb-4">
-      <h3 class="mb-2">Sort by</h3>
-      <select class="dark:text-slate-900 rounded-sm" v-model="sortBy">
-        <option class="mx-2" value="reviews_asc">Reviews (Asc)</option>
-        <option class="mx-2" value="reviews_desc">Reviews (Desc)</option>
+      <h3 class="mb-2">Order by</h3>
+      <select
+        class="dark:text-slate-900 rounded-sm"
+        v-model="filtersStore.orderBy"
+      >
+        <option value="">Default</option>
+        <option
+          class="mx-2"
+          :value="orderByOpt"
+          v-for="orderByOpt in filtersStore.orderByOptions"
+        >
+          {{
+            orderByOpt.charAt(0).toUpperCase() +
+            orderByOpt.replace("_", " ").slice(1)
+          }}
+        </option>
       </select>
       <label>
-        <input type="radio" name="order" value="asc" checked />
+        <input
+          type="radio"
+          name="order"
+          value="ASC"
+          checked
+          v-model="filtersStore.orderDirection"
+        />
         Ascending
       </label>
       <label>
-        <input type="radio" name="order" value="desc" />
+        <input
+          type="radio"
+          name="order"
+          value="DESC"
+          v-model="filtersStore.orderDirection"
+        />
         Descending
       </label>
     </div>

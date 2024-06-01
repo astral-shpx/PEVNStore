@@ -4,6 +4,17 @@ import { Product } from '../entities/Product';
 
 const router = Router();
 
+interface IFilters {
+  fromDate: string;
+  toDate: string;
+  minPrice: number;
+  maxPrice: number;
+  ratingAbove: number;
+  category: string;
+  orderBy: string;
+  orderDirection: 'ASC' | 'DESC' | undefined;
+}
+
 router.get('/', async (req: Request, res: Response) => {
   const {
     offset: offsetString,
@@ -11,7 +22,9 @@ router.get('/', async (req: Request, res: Response) => {
     productName,
     category,
     filters: filtersString,
-    ids: idsString
+    ids: idsString,
+    orderBy: orderByString,
+    orderDirection
   } = req.query as {
     offset: string;
     limit: string;
@@ -19,12 +32,29 @@ router.get('/', async (req: Request, res: Response) => {
     category: string;
     filters: string;
     ids: string;
+    orderBy: string;
+    orderDirection: 'ASC' | 'DESC' | undefined;
   };
+
+  const productRepository = AppDataSource.getRepository(Product);
 
   let ids: number[] = [];
   let offset: number = 0;
   let limit: number | undefined;
-  let filters: any = {};
+  let orderBy = orderByString;
+  let filters: IFilters | undefined = undefined;
+
+  // Parse orderBy
+  if (orderBy && orderBy.length > 0) {
+    const productPropsArray = Object.getOwnPropertyNames(
+      productRepository.metadata.propertiesMap
+    );
+    if (!productPropsArray.filter(prop => orderBy.includes(prop))) {
+      return res.status(400).send({ message: 'Invalid orderBy format' });
+    }
+  } else {
+    orderBy = 'id';
+  }
 
   // Parse filters
   if (filtersString && filtersString !== '') {
@@ -79,7 +109,13 @@ router.get('/', async (req: Request, res: Response) => {
       .send({ message: 'Offset and limit must not be negative' });
   }
 
-  const productRepository = AppDataSource.getRepository(Product);
+  if (orderDirection) {
+    if (!orderDirection.match(/\b(?:ASC|DESC)\b/)) {
+      return res
+        .status(400)
+        .send({ message: 'Order direction must be either ASC or DESC' });
+    }
+  }
 
   const queryBuilder = productRepository.createQueryBuilder('product');
 
@@ -138,7 +174,7 @@ router.get('/', async (req: Request, res: Response) => {
   const count = await queryBuilder.getCount();
 
   const products = await queryBuilder
-    .orderBy('product.id', 'ASC')
+    .orderBy(`product.${orderBy}`, orderDirection)
     .skip(offset)
     .take(limit)
     .getMany();
