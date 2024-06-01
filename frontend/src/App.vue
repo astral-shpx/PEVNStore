@@ -11,6 +11,8 @@ import axios from "axios";
 // reviews asc / desc
 // category dropdown
 // load amount radio buttons
+// fix navigation to category, it should be without filters
+// logged in as should say username not id
 
 const route = useRoute();
 const isMenuOpen = ref(false);
@@ -68,7 +70,7 @@ onMounted(() => {
     class="fixed left-0 top-20 z-50 transition-transform duration-500 h-5/6 w-3/5 md:w-1/5 overflow-y-scroll"
   >
     <div
-      class="p-4 shadow-md bg-white dark:bg-slate-700"
+      class="p-4 bg-slate-400 dark:bg-slate-700"
       v-for="category in categories"
     >
       <RouterLink
@@ -80,7 +82,7 @@ onMounted(() => {
       </RouterLink>
     </div>
   </div>
-  <div class="sticky top-0 bg-white dark:bg-gray-700 mb-4">
+  <div class="sticky top-0 bg-gray-300 dark:bg-gray-700 mb-4">
     <nav class="flex justify-between items-center">
       <div class="flex items-center">
         <svg
