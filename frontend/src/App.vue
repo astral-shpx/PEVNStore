@@ -8,20 +8,17 @@ import axios from "axios";
 
 // todo
 // option to change quantity on cart page
-// fix cart not being up to date after log in / log out
-// scroll up animation on page change
 // filters :
 // reviews asc / desc
 // category dropdown
 // load amount radio
 // ===
-// favourites page
 // dark theme switch button
-// aside nav
 
 const route = useRoute();
 const isMenuOpen = ref(false);
 const categories = ref([]);
+const isDayMode = ref(false);
 
 const toggleMenu = () => {
   isMenuOpen.value = !isMenuOpen.value;
@@ -40,7 +37,31 @@ const showAutocompleteComponent = computed(
   () => store.typingSearchQuery !== "" && store.showAutocomplete
 );
 
+const switchTheme = () => {
+  isDayMode.value = !isDayMode.value;
+  if (isDayMode.value) {
+    document.documentElement.classList.remove("dark");
+    localStorage.theme = "light";
+  } else {
+    document.documentElement.classList.add("dark");
+    localStorage.theme = "dark";
+  }
+};
+
 onMounted(() => {
+  if (
+    localStorage.theme === "dark" ||
+    (!("theme" in localStorage) &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches)
+  ) {
+    document.documentElement.classList.add("dark");
+    isDayMode.value = false;
+  } else {
+    document.documentElement.classList.remove("dark");
+    isDayMode.value = true;
+  }
+  console.log(localStorage.theme);
+
   fetchCategories();
 });
 </script>
@@ -121,6 +142,13 @@ onMounted(() => {
         <RouterLink class="w-10 mt-4 mx-2" to="/">Home</RouterLink>
       </div>
       <div class="flex">
+        <button class="mt-4 mx-2 justify-end" @click="switchTheme">
+          <img
+            class="object-contain h-9 dark:invert"
+            src="./assets/night-mode.png"
+            alt="Switch theme"
+          />
+        </button>
         <RouterLink
           class="mt-4 mx-2 justify-end"
           :to="{ path: '/cart', query: {} }"
