@@ -75,9 +75,6 @@ export default defineStore("products-store", () => {
   };
 
   const navigateToPage = async (new_page: number) => {
-    // const direction = Math.sign(new_page - page.value);
-    // console.log("direction", direction);
-
     page.value = new_page;
     await fetchProducts();
   };
@@ -96,8 +93,6 @@ export default defineStore("products-store", () => {
       });
       products.value = resp.data.products;
       total_products_amount.value = resp.data.count;
-
-      console.log("in fetchprods", filtersStore.filters);
 
       if (Object.values(filtersStore.filters).every((el) => !el)) {
         router.push({

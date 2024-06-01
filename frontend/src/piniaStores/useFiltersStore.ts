@@ -31,7 +31,6 @@ export default defineStore("filters-store", () => {
   watch(
     () => route.query.filters,
     (newFilters) => {
-      console.log("newFilters", newFilters);
       if (newFilters)
         try {
           const f: IFilters = JSON.parse(newFilters as string) as IFilters;
@@ -73,7 +72,6 @@ export default defineStore("filters-store", () => {
 
   watch(selectedPriceRanges, async () => {
     const rawRanges = toRaw(selectedPriceRanges.value) as PriceRange[];
-    console.log("rawRanges", rawRanges);
 
     const largestMaxValue = rawRanges.reduce<number>((max, currentRange) => {
       return currentRange.max > max ? currentRange.max : max;

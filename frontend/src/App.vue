@@ -60,7 +60,6 @@ onMounted(() => {
     document.documentElement.classList.remove("dark");
     isDayMode.value = true;
   }
-  console.log(localStorage.theme);
 
   fetchCategories();
 });

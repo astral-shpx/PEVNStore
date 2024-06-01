@@ -9,7 +9,6 @@ const router = useRouter();
 const search = ref("");
 
 const typingSearch = () => {
-  // console.log(search.value);
   store.typingSearchQuery = search.value;
 };
 

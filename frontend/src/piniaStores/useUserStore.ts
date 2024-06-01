@@ -17,7 +17,6 @@ export default defineStore("user-store", () => {
         email: email.value,
         password: password.value,
       });
-      console.log("Sign up successful:", resp.data);
       user.value = resp.data.user.username;
       message.value = "Sign up successful.";
     } catch (error: any) {
@@ -28,8 +27,7 @@ export default defineStore("user-store", () => {
 
   const logOut = async () => {
     try {
-      const resp = await axios.post("/api/auth/logout");
-      console.log("Log out successful:", resp.data);
+      await axios.post("/api/auth/logout");
       user.value = null;
       message.value = "Log out successful.";
     } catch (error: any) {
@@ -44,7 +42,6 @@ export default defineStore("user-store", () => {
         username: uname,
         password: pass,
       });
-      console.log("Log in successful:", resp.data);
       user.value = resp.data.user.username;
       message.value = "Log in successful.";
     } catch (error: any) {
@@ -57,7 +54,6 @@ export default defineStore("user-store", () => {
     try {
       const resp = await axios.get("/api/auth/sessionStatus");
       user.value = resp.data.session.passport.user;
-      // console.log(resp.data.session);
     } catch (error: any) {
       console.error("Failed call to /api/auth/sessionStatus:", error);
     }
