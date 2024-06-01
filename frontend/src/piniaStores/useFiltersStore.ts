@@ -23,6 +23,16 @@ export default defineStore("filters-store", () => {
   const productsStore = useProductStore();
   const route = useRoute();
   const categories = ref([]);
+  const loadAmounts = ref([12, 24, 30]);
+  const loadAmount = ref(loadAmounts.value[0]);
+  watch(
+    () => route.query.loadAmount,
+    (newLoadAmount) => {
+      loadAmount.value = newLoadAmount
+        ? Number(newLoadAmount)
+        : loadAmounts.value[0];
+    }
+  );
 
   const filters = reactive<IFilters>({
     fromDate: "",
@@ -43,8 +53,6 @@ export default defineStore("filters-store", () => {
           filters.minPrice = f.minPrice;
           filters.maxPrice = f.maxPrice;
           filters.ratingAbove = f.ratingAbove;
-          console.log(f.category);
-
           filters.category = f.category;
         } catch (error) {
           console.error("error setting filters", error);
@@ -112,6 +120,8 @@ export default defineStore("filters-store", () => {
     selectedPriceRanges,
     isMenuOpen,
     categories,
+    loadAmount,
+    loadAmounts,
     reset,
   };
 });

@@ -22,7 +22,15 @@ export default defineStore("products-store", () => {
     }
   );
 
-  const load_amount = ref(12);
+  const load_amount = ref(filtersStore.loadAmount);
+  watch(
+    () => filtersStore.loadAmount,
+    async () => {
+      load_amount.value = filtersStore.loadAmount;
+      await fetchProducts();
+    },
+    { immediate: true }
+  );
 
   const total_products_amount = ref(0);
   const pages_to_show = computed(() => {
@@ -95,20 +103,30 @@ export default defineStore("products-store", () => {
       products.value = resp.data.products;
       total_products_amount.value = resp.data.count;
 
-      if (Object.values(filtersStore.filters).every((el) => !el)) {
-        router.push({
-          query: {
-            page: page.value,
-          },
-        });
-      } else {
-        router.push({
-          query: {
-            page: page.value,
-            filters: JSON.stringify(filtersStore.filters),
-          },
-        });
-      }
+      // if (Object.values(filtersStore.filters).every((el) => !el)) {
+      //   router.push({
+      //     query: {
+      //       page: page.value,
+      //       filters: null,
+      //     },
+      //   });
+      // } else {
+
+      const stringifiedFilters = Object.values(filtersStore.filters).every(
+        (f) => {
+          return !f;
+        }
+      )
+        ? null
+        : JSON.stringify(filtersStore.filters);
+      router.push({
+        query: {
+          page: page.value,
+          filters: stringifiedFilters,
+          loadAmount: filtersStore.loadAmount,
+        },
+      });
+      // }
     } catch (error) {
       console.error("Failed to fetch products:", error);
     } finally {

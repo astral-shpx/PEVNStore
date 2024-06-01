@@ -11,8 +11,6 @@ const rating = ref(filters.value.ratingAbove);
 const ratingMin = ref(0);
 const ratingMax = ref(5);
 const sortBy = ref("reviews_asc");
-const loadAmount = ref(12);
-const loadAmounts = ref([12, 24, 30]);
 
 const updateFromDate = (event: Event) => {
   filters.value.fromDate = (event.target as HTMLInputElement).value;
@@ -91,7 +89,7 @@ const clearFilters = () => {
       <p>{{ rating }}</p>
     </div>
 
-    <div class="flex flex-col">
+    <div class="flex flex-col mb-4">
       <h3 class="mb-2">Category</h3>
       <select
         class="dark:text-slate-900"
@@ -127,13 +125,13 @@ const clearFilters = () => {
     <div class="flex flex-col mb-4">
       <h3 class="mb-2">Load amount</h3>
       <div>
-        <label v-for="amount in loadAmounts" :key="amount">
+        <label v-for="amount in filtersStore.loadAmounts" :key="amount">
           <input
             class="mx-1"
             type="radio"
-            v-model="loadAmount"
+            v-model="filtersStore.loadAmount"
             :value="amount"
-            :checked="loadAmount === amount"
+            :checked="filtersStore.loadAmount === amount"
           />
           {{ amount }}
         </label>
