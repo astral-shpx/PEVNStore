@@ -4,7 +4,7 @@ import Toaster from "../components/Toaster.vue";
 import useUserStore from "../piniaStores/useUserStore";
 import Product from "../components/Product.vue";
 
-const userStotre = useUserStore();
+const userStore = useUserStore();
 const cartStore = useCartStore();
 
 const clearCart = () => {
@@ -47,7 +47,7 @@ const removeFromCart = (id: number) => {
 
       <div class="flex flex-wrap justify-center">
         <div class="flex flex-col justify-center w-1/2 md:w-3/5 p-2">
-          <p v-if="!userStotre.user">
+          <p v-if="!userStore.user">
             ! You should log in to see your cart and checkout
           </p>
 
@@ -64,7 +64,7 @@ const removeFromCart = (id: number) => {
             class="flex justify-center w-full mt-4"
             action="/api/payment/create-checkout-session"
             method="POST"
-            v-if="userStotre.user"
+            v-if="userStore.user"
           >
             <button
               class="outline-dashed rounded-sm dark:hover:bg-slate-700 hover:bg-slate-400 w-4/5"

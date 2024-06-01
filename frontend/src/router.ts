@@ -5,6 +5,7 @@ import ProductPage from "./pages/ProductPage.vue";
 import CategoryPage from "./pages/CategoryPage.vue";
 import AccountPage from "./pages/AccountPage.vue";
 import CartPage from "./pages/CartPage.vue";
+import FavouritesPage from "./pages/FavouritesPage.vue";
 
 const routes = [
   { path: "/", component: Home },
@@ -13,6 +14,7 @@ const routes = [
   { path: "/category/:category", component: CategoryPage },
   { path: "/account", component: AccountPage },
   { path: "/cart", component: CartPage },
+  { path: "/favourites", component: FavouritesPage },
 ];
 
 const router = createRouter({

@@ -6,10 +6,12 @@ import { store } from "../store";
 import useProductStore from "../piniaStores/useProductsStore";
 import useUserStore from "../piniaStores/useUserStore";
 import useCartStore from "../piniaStores/useCartStore";
+import useFavouritesStore from "../piniaStores/useFavouritesStore";
 
-const userStotre = useUserStore();
+const userStore = useUserStore();
 const productsStore = useProductStore();
 const cartStore = useCartStore();
+const favouritesStore = useFavouritesStore();
 
 const props = defineProps({
   category: String,
@@ -18,6 +20,14 @@ const props = defineProps({
 
 const fetchProducts = async () => {
   productsStore.fetchProducts(props.category ?? "");
+};
+
+const addToFavourites = async (id: number) => {
+  favouritesStore.addToFavourites(id);
+};
+
+const addToCart = async (id: number) => {
+  cartStore.addToCart(id);
 };
 
 onMounted(fetchProducts);
@@ -55,13 +65,14 @@ watch(
 
         <div class="flex justify-center">
           <button
-            @click="cartStore.addToCart(product.id)"
+            @click="addToCart(product.id)"
             class="flex justify-center outline-dashed rounded-sm dark:hover:bg-slate-500 hover:bg-slate-400 w-full"
           >
             add to cart
           </button>
           <button
-            v-show="userStotre.user"
+            @click="addToFavourites(product.id)"
+            v-show="userStore.user"
             class="flex justify-center outline-dashed rounded-sm dark:hover:bg-slate-500 hover:bg-slate-400 ml-3 w-2/12"
           >
             ⭐

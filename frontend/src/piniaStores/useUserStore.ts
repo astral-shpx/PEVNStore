@@ -7,7 +7,7 @@ export default defineStore("user-store", () => {
   const email = ref("");
   const password = ref("");
   const message = ref("");
-  // change to userId
+
   const user = ref(null);
 
   const signUp = async () => {
