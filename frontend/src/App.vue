@@ -7,22 +7,16 @@ import { store } from "./store";
 import axios from "axios";
 
 // todo
-// cart
-// remove from cart
-// fix session not saved after login/logout
-// account page styles
+// fix cart not being up to date after log in
 // scroll up animation on page change
 // filters :
-// price checkbox
-// product rating slider
-// category dropdown
 // reviews asc / desc
+// category dropdown
 // load amount radio
-//
+// ===
 // favourites page
-// payments
-// checkout page
 // dark theme switch button
+// aside nav
 
 const route = useRoute();
 const isMenuOpen = ref(false);
