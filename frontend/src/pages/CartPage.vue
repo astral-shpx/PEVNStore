@@ -30,7 +30,7 @@ const removeFromCart = (id: number) => {
     <div class="hidden md:flex justify-start w-1/6 flex-col h-52">
       <AsideNav />
     </div>
-    <div class="flex flex-col justify-center md:w-1/2 w-full p-2">
+    <div class="flex flex-col justify-center lg:w-1/2 w-full p-2">
       <div class="flex flex-wrap justify-center">
         <div v-show="cartStore.cartProducts?.length === 0">Cart is empty</div>
         <div
@@ -38,16 +38,37 @@ const removeFromCart = (id: number) => {
           v-for="cartProduct in cartStore.cartProducts"
         >
           <div
-            class="flex flex-col justify-between mb-4 mx-2 cursor-pointer hover:shadow-lg bg-gray-300 rounded dark:bg-gray-700 h-full max-h-96 p-2"
+            class="flex flex-col justify-between mb-4 mx-2 cursor-pointer hover:shadow-lg bg-gray-300 rounded dark:bg-gray-700 h-full p-2"
           >
             <Product :product="cartProduct" />
 
-            <div class="flex justify-center">
+            <div class="flex justify-center mb-3">
               <button
                 @click="removeFromCart(cartProduct.id)"
                 class="flex justify-center outline-dashed rounded-sm dark:hover:bg-slate-500 hover:bg-slate-400 w-full"
               >
                 remove
+              </button>
+            </div>
+
+            <div class="flex justify-center h-8">
+              <button
+                class="flex justify-center items-center border-2 rounded-md dark:hover:bg-slate-500 hover:bg-slate-400 w-full mr-3"
+              >
+                -
+              </button>
+              <button
+                class="flex justify-center items-center rounded-sm w-full"
+              >
+                {{
+                  cartStore.cart.find((p) => p.product_id === cartProduct.id)
+                    ?.quantity
+                }}
+              </button>
+              <button
+                class="flex justify-center items-center border-2 rounded-md dark:hover:bg-slate-500 hover:bg-slate-400 w-full ml-3"
+              >
+                +
               </button>
             </div>
           </div>

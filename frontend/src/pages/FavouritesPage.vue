@@ -26,7 +26,7 @@ const removeFavourite = (id: number) => {
     <div class="hidden md:flex justify-start w-1/6 flex-col h-52">
       <AsideNav />
     </div>
-    <div class="flex flex-col justify-center md:w-1/2 w-full p-2">
+    <div class="flex flex-col justify-center lg:w-1/2 w-full p-2">
       <div class="flex flex-wrap justify-center" v-if="!userStore.user">
         You must be logged in to view favourites
       </div>
