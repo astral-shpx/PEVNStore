@@ -7,7 +7,8 @@ import { store } from "./store";
 import axios from "axios";
 
 // todo
-// fix cart not being up to date after log in
+// option to change quantity on cart page
+// fix cart not being up to date after log in / log out
 // scroll up animation on page change
 // filters :
 // reviews asc / desc

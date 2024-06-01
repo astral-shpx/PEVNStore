@@ -7,10 +7,12 @@ import Product from "../components/Product.vue";
 const userStotre = useUserStore();
 const cartStore = useCartStore();
 
-console.log(cartStore.cartProducts);
-
 const clearCart = () => {
   cartStore.clearCart();
+};
+
+const removeFromCart = (id: number) => {
+  cartStore.removeFromCart(id);
 };
 </script>
 
@@ -33,7 +35,7 @@ const clearCart = () => {
 
             <div class="flex justify-center">
               <button
-                @click="cartStore.removeFromCart(cartProduct.id)"
+                @click="removeFromCart(cartProduct.id)"
                 class="flex justify-center outline-dashed rounded-sm dark:hover:bg-slate-500 hover:bg-slate-400 w-full"
               >
                 remove
