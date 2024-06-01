@@ -15,6 +15,14 @@ const clearCart = () => {
 const removeFromCart = (id: number) => {
   cartStore.removeFromCart(id);
 };
+
+const increaseQty = (id: number | undefined) => {
+  cartStore.increaseQty(id);
+};
+
+const decreaseQty = (id: number | undefined) => {
+  cartStore.decreaseQty(id);
+};
 </script>
 
 <template>
@@ -53,19 +61,29 @@ const removeFromCart = (id: number) => {
 
             <div class="flex justify-center h-8">
               <button
+                @click="
+                  decreaseQty(
+                    cartStore.cart.find((p) => p.product_id === cartProduct.id)
+                      ?.product_id
+                  )
+                "
                 class="flex justify-center items-center border-2 rounded-md dark:hover:bg-slate-500 hover:bg-slate-400 w-full mr-3"
               >
                 -
               </button>
-              <button
-                class="flex justify-center items-center rounded-sm w-full"
-              >
+              <div class="flex justify-center items-center rounded-sm w-full">
                 {{
                   cartStore.cart.find((p) => p.product_id === cartProduct.id)
                     ?.quantity
                 }}
-              </button>
+              </div>
               <button
+                @click="
+                  increaseQty(
+                    cartStore.cart.find((p) => p.product_id === cartProduct.id)
+                      ?.product_id
+                  )
+                "
                 class="flex justify-center items-center border-2 rounded-md dark:hover:bg-slate-500 hover:bg-slate-400 w-full ml-3"
               >
                 +

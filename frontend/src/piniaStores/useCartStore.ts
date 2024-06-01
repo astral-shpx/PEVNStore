@@ -29,7 +29,7 @@ export default defineStore("cart-store", () => {
       });
       cartProducts.value = resp.data.products;
     } catch (error: any) {
-      console.error("Failed to add to cart:", error);
+      console.error("Failed to fetch cart products:", error);
     }
   };
 
@@ -83,6 +83,41 @@ export default defineStore("cart-store", () => {
     }
   };
 
+  const updateQty = async (productId: number | undefined, newQty: number) => {
+    if (newQty < 1) {
+      return;
+    }
+    if (productId) {
+      try {
+        await axios.put("/api/cart", {
+          product_id: productId,
+          quantity: newQty,
+        });
+
+        cart.value = (await axios.get("/api/cart")).data;
+        await fetchCartProducts();
+      } catch (error: any) {
+        console.error("Failed to update cart:", error);
+      }
+    }
+  };
+
+  const increaseQty = async (productId: number | undefined) => {
+    if (productId) {
+      const index = cart.value.findIndex((i) => i.product_id === productId);
+      const newQty = cart.value[index].quantity + 1;
+      await updateQty(productId, newQty);
+    }
+  };
+
+  const decreaseQty = async (productId: number | undefined) => {
+    if (productId) {
+      const index = cart.value.findIndex((i) => i.product_id === productId);
+      const newQty = cart.value[index].quantity - 1;
+      await updateQty(productId, newQty);
+    }
+  };
+
   onMounted(async () => {
     try {
       cart.value = (await axios.get("/api/cart")).data;
@@ -100,5 +135,7 @@ export default defineStore("cart-store", () => {
     clearCart,
     fetchCartProducts,
     removeFromCart,
+    increaseQty,
+    decreaseQty,
   };
 });

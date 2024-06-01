@@ -7,13 +7,10 @@ import { store } from "./store";
 import axios from "axios";
 
 // todo
-// option to change quantity on cart page
-// filters :
+// filters
 // reviews asc / desc
 // category dropdown
-// load amount radio
-// ===
-// dark theme switch button
+// load amount radio buttons
 
 const route = useRoute();
 const isMenuOpen = ref(false);
