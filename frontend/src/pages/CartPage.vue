@@ -3,6 +3,7 @@ import useCartStore from "../piniaStores/useCartStore";
 import Toaster from "../components/Toaster.vue";
 import useUserStore from "../piniaStores/useUserStore";
 import Product from "../components/Product.vue";
+import AsideNav from "../components/AsideNav.vue";
 
 const userStore = useUserStore();
 const cartStore = useCartStore();
@@ -20,8 +21,8 @@ const removeFromCart = (id: number) => {
   <h1 class="mb-4 flex justify-center">Cart</h1>
 
   <div class="flex justify-center">
-    <aside class="hidden md:flex justify-center w-1/4">aside</aside>
-    <div class="flex flex-col justify-center md:w-3/5 w-full p-2">
+    <AsideNav />
+    <div class="flex flex-col justify-center md:w-1/2 w-full p-2">
       <div class="flex flex-wrap justify-center">
         <div v-show="cartStore.cartProducts?.length === 0">Cart is empty</div>
         <div

@@ -3,6 +3,7 @@ import Toaster from "../components/Toaster.vue";
 import useUserStore from "../piniaStores/useUserStore";
 import Product from "../components/Product.vue";
 import useFavouritesStore from "../piniaStores/useFavouritesStore";
+import AsideNav from "../components/AsideNav.vue";
 
 const userStore = useUserStore();
 const favouritesStore = useFavouritesStore();
@@ -16,8 +17,8 @@ const removeFavourite = (id: number) => {
   <h1 class="mb-4 flex justify-center">Favourites</h1>
 
   <div class="flex justify-center">
-    <aside class="hidden md:flex justify-center w-1/4">aside</aside>
-    <div class="flex flex-col justify-center md:w-3/5 w-full p-2">
+    <AsideNav />
+    <div class="flex flex-col justify-center md:w-1/2 w-full p-2">
       <div class="flex flex-wrap justify-center" v-if="!userStore.user">
         You must be logged in to view favourites
       </div>

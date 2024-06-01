@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { reactive } from "vue";
 import useUserStore from "../piniaStores/useUserStore";
+import AsideNav from "../components/AsideNav.vue";
 
 const userStore = useUserStore();
 
@@ -16,9 +17,26 @@ const logIn = async () => {
 </script>
 
 <template>
+  <h1 class="mb-4 flex justify-center">Account</h1>
   <div class="flex justify-center">
+    <AsideNav />
     <div class="flex flex-col px-2 md:w-1/2 justify-center items-center">
-      <h1>Account</h1>
+      <!-- user info -->
+      <p v-if="userStore.message">{{ userStore.message }}</p>
+
+      <!-- log out button -->
+      <div class="mb-4" v-if="userStore.user">
+        <div class="flex flex-col justify-center w-full items-center">
+          <p class="mb-2">Logged in as {{ userStore.user }}</p>
+
+          <button
+            @click="userStore.logOut"
+            class="outline-dashed rounded-sm dark:hover:bg-slate-700 hover:bg-slate-400 w-2/3"
+          >
+            Log out
+          </button>
+        </div>
+      </div>
 
       <!-- forms -->
       <!-- sign up form -->
@@ -63,23 +81,6 @@ const logIn = async () => {
           </button>
         </div>
       </form>
-
-      <!-- user info -->
-      <p v-if="userStore.message">{{ userStore.message }}</p>
-
-      <!-- log out button -->
-      <div class="" v-if="userStore.user">
-        <div class="flex flex-col justify-center w-full items-center">
-          <p>Logged in as {{ userStore.user }}</p>
-
-          <button
-            @click="userStore.logOut"
-            class="outline-dashed rounded-sm dark:hover:bg-slate-700 hover:bg-slate-400 w-2/3"
-          >
-            Log out
-          </button>
-        </div>
-      </div>
 
       <!-- log in form -->
       <h3>Log in</h3>

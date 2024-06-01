@@ -18,7 +18,7 @@ export default defineStore("user-store", () => {
         password: password.value,
       });
       console.log("Sign up successful:", resp.data);
-      user.value = resp.data.user;
+      user.value = resp.data.user.username;
       message.value = "Sign up successful.";
     } catch (error: any) {
       console.error("Failed to sign up:", error);
@@ -45,7 +45,7 @@ export default defineStore("user-store", () => {
         password: pass,
       });
       console.log("Log in successful:", resp.data);
-      user.value = resp.data.user;
+      user.value = resp.data.user.username;
       message.value = "Log in successful.";
     } catch (error: any) {
       console.error("Failed to log in:", error);
@@ -56,7 +56,7 @@ export default defineStore("user-store", () => {
   onMounted(async () => {
     try {
       const resp = await axios.get("/api/auth/sessionStatus");
-      user.value = resp.data.session;
+      user.value = resp.data.session.passport.user;
       // console.log(resp.data.session);
     } catch (error: any) {
       console.error("Failed call to /api/auth/sessionStatus:", error);
