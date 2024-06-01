@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import ProductsList from "../components/ProductsList.vue";
 import { store } from "../store";
-import { onMounted } from "vue";
+import { onMounted, ref, onBeforeUnmount } from "vue";
 import { useRoute } from "vue-router";
 import Toaster from "../components/Toaster.vue";
 import Pagination from "../components/Pagination.vue";
@@ -11,6 +11,9 @@ import useFiltersStore from "../piniaStores/useFiltersStore";
 const filtersStore = useFiltersStore();
 const route = useRoute();
 
+const scrollableDiv = ref<HTMLDivElement | null>(null);
+const scrollKey = "homeScrollPosition";
+
 const toggleMenu = () => {
   filtersStore.isMenuOpen = !filtersStore.isMenuOpen;
 };
@@ -18,6 +21,16 @@ const toggleMenu = () => {
 onMounted(() => {
   if (route) {
     store.searchQuery = route.params.search as string;
+  }
+  const savedScrollPosition = localStorage.getItem(scrollKey);
+  if (savedScrollPosition !== null && scrollableDiv.value) {
+    scrollableDiv.value.scrollTop = parseInt(savedScrollPosition, 10);
+  }
+});
+
+onBeforeUnmount(() => {
+  if (scrollableDiv.value) {
+    localStorage.setItem(scrollKey, scrollableDiv.value.scrollTop.toString());
   }
 });
 </script>
@@ -38,6 +51,7 @@ onMounted(() => {
         '-translate-x-full': !filtersStore.isMenuOpen,
       }"
       class="fixed left-0 top-44 z-50 transition-transform duration-500 w-4/5 h-3/5 bg-white dark:bg-slate-700 rounded-r-md overflow-scroll overscroll-contain"
+      ref="scrollableDiv"
     >
       <div
         @click="toggleMenu"
