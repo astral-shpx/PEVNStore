@@ -95,10 +95,6 @@ const decreaseQty = (id: number | undefined) => {
 
       <div class="flex flex-wrap justify-center">
         <div class="flex flex-col justify-center w-1/2 md:w-3/5 p-2">
-          <p v-if="!userStore.user">
-            ! You should log in to see your cart and checkout
-          </p>
-
           <div class="flex justify-center w-full mt-4">
             <button
               @click="clearCart"
@@ -122,9 +118,14 @@ const decreaseQty = (id: number | undefined) => {
               Checkout
             </button>
           </form>
-          <div v-else>You must be logged in to checkout.</div>
+          <div v-else class="flex justify-center w-full mt-4">
+            You must be logged in to checkout.
+          </div>
 
-          <div v-show="cartStore.isEmptyResponse">
+          <div
+            v-show="cartStore.isEmptyResponse"
+            class="flex justify-center w-full mt-4"
+          >
             Your cart is empty. Cannot create transaction.
           </div>
         </div>
