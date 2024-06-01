@@ -82,6 +82,7 @@ const clearFilters = () => {
       <input
         type="range"
         @mouseup="updateRangeAbove"
+        @touchend="updateRangeAbove"
         v-model="rating"
         :min="ratingMin"
         :max="ratingMax"
