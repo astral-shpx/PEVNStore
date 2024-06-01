@@ -15,7 +15,7 @@ const typingSearch = () => {
 const submitSearch = () => {
   store.searchQuery = search.value as string;
   productsStore.reset();
-  router.push(`/${store.searchQuery}`);
+  router.push(`/search/${store.searchQuery}`);
   store.showAutocomplete = false;
 };
 

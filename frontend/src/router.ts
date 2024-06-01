@@ -9,7 +9,7 @@ import FavouritesPage from "./pages/FavouritesPage.vue";
 
 const routes = [
   { path: "/", component: Home },
-  { path: "/:search", component: ProductSearchPage },
+  { path: "/search/:search", component: ProductSearchPage },
   { path: "/product/:productId", component: ProductPage },
   { path: "/category/:category", component: CategoryPage },
   { path: "/account", component: AccountPage },

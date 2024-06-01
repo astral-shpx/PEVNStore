@@ -11,14 +11,6 @@ const cartStore = useCartStore();
 const product = ref<Product>();
 
 const addToCart = () => {
-  // to be used in favourites
-  // if (!userStore.user) {
-  //   router.push("/account");
-  // } else {
-  //   if (product.value) {
-  //     cartStore.addToCart(product.value.id);
-  //   }
-  // }
   if (product.value) {
     cartStore.addToCart(product.value.id);
   }

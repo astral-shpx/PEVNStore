@@ -79,6 +79,7 @@ export default defineStore("filters-store", () => {
     filters.maxPrice = undefined;
     filters.ratingAbove = 0;
     filters.category = "";
+    loadAmount.value = loadAmounts.value[0];
   };
 
   watch(filters, async () => {

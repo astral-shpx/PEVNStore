@@ -103,15 +103,6 @@ export default defineStore("products-store", () => {
       products.value = resp.data.products;
       total_products_amount.value = resp.data.count;
 
-      // if (Object.values(filtersStore.filters).every((el) => !el)) {
-      //   router.push({
-      //     query: {
-      //       page: page.value,
-      //       filters: null,
-      //     },
-      //   });
-      // } else {
-
       const stringifiedFilters = Object.values(filtersStore.filters).every(
         (f) => {
           return !f;
@@ -126,7 +117,6 @@ export default defineStore("products-store", () => {
           loadAmount: filtersStore.loadAmount,
         },
       });
-      // }
     } catch (error) {
       console.error("Failed to fetch products:", error);
     } finally {
