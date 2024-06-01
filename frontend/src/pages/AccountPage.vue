@@ -18,8 +18,17 @@ const logIn = async () => {
 
 <template>
   <h1 class="mb-4 flex justify-center">Account</h1>
+
+  <div class="flex justify-center h-full w-full mb-4">
+    <div class="flex md:hidden justify-start flex-col h-full w-1/2">
+      <AsideNav />
+    </div>
+  </div>
+
   <div class="flex justify-center">
-    <AsideNav />
+    <div class="hidden md:flex justify-start w-1/6 flex-col h-52">
+      <AsideNav />
+    </div>
     <div class="flex flex-col px-2 md:w-1/2 justify-center items-center">
       <!-- user info -->
       <p v-if="userStore.message">{{ userStore.message }}</p>
