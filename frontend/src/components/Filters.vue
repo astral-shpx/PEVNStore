@@ -40,19 +40,17 @@ const clearFilters = () => {
       <h3 class="mb-2">Release date</h3>
       <label for="fromDate" class="bg-white dark:bg-slate-700"> From </label>
       <input
-        class="text-slate-800"
+        class="text-slate-800 rounded-sm"
         type="date"
         name="toDate"
-        id=""
         v-model="filters.fromDate"
         @input="updateFromDate"
       />
       <label for="toDate" class="bg-white dark:bg-slate-700"> To </label>
       <input
-        class="text-slate-800"
+        class="text-slate-800 rounded-sm"
         type="date"
         name="fromDate"
-        id=""
         v-model="filters.toDate"
         @input="updateToDate"
       />
@@ -92,7 +90,7 @@ const clearFilters = () => {
     <div class="flex flex-col mb-4">
       <h3 class="mb-2">Category</h3>
       <select
-        class="dark:text-slate-900"
+        class="dark:text-slate-900 rounded-sm"
         v-model="filtersStore.filters.category"
       >
         <option
@@ -108,7 +106,7 @@ const clearFilters = () => {
     <!-- sort by reviews[dropdown] asc / desc -->
     <div class="flex flex-col mb-4">
       <h3 class="mb-2">Sort by</h3>
-      <select class="dark:text-slate-900" v-model="sortBy">
+      <select class="dark:text-slate-900 rounded-sm" v-model="sortBy">
         <option class="mx-2" value="reviews_asc">Reviews (Asc)</option>
         <option class="mx-2" value="reviews_desc">Reviews (Desc)</option>
       </select>
