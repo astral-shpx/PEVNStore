@@ -93,7 +93,18 @@ const clearFilters = () => {
 
     <div class="flex flex-col">
       <h3 class="mb-2">Category</h3>
-      <!-- category dropdown -->
+      <select
+        class="dark:text-slate-900"
+        v-model="filtersStore.filters.category"
+      >
+        <option
+          class="mx-2"
+          :value="catg"
+          v-for="catg in filtersStore.categories"
+        >
+          {{ catg }}
+        </option>
+      </select>
     </div>
 
     <!-- sort by reviews[dropdown] asc / desc -->

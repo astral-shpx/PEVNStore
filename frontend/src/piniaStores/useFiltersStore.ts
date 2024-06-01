@@ -1,7 +1,8 @@
 import { defineStore } from "pinia";
-import { watch, ref, toRaw, reactive } from "vue";
+import { watch, ref, toRaw, reactive, onMounted } from "vue";
 import useProductStore from "../piniaStores/useProductsStore";
 import { useRoute } from "vue-router";
+import axios from "axios";
 
 interface IFilters {
   fromDate: string;
@@ -9,6 +10,7 @@ interface IFilters {
   minPrice: number;
   maxPrice?: number;
   ratingAbove: number;
+  category: string;
 }
 
 interface PriceRange {
@@ -20,6 +22,7 @@ interface PriceRange {
 export default defineStore("filters-store", () => {
   const productsStore = useProductStore();
   const route = useRoute();
+  const categories = ref([]);
 
   const filters = reactive<IFilters>({
     fromDate: "",
@@ -27,6 +30,7 @@ export default defineStore("filters-store", () => {
     minPrice: 0,
     maxPrice: undefined,
     ratingAbove: 0,
+    category: "",
   });
   watch(
     () => route.query.filters,
@@ -39,6 +43,9 @@ export default defineStore("filters-store", () => {
           filters.minPrice = f.minPrice;
           filters.maxPrice = f.maxPrice;
           filters.ratingAbove = f.ratingAbove;
+          console.log(f.category);
+
+          filters.category = f.category;
         } catch (error) {
           console.error("error setting filters", error);
         }
@@ -63,6 +70,7 @@ export default defineStore("filters-store", () => {
     filters.minPrice = 0;
     filters.maxPrice = undefined;
     filters.ratingAbove = 0;
+    filters.category = "";
   };
 
   watch(filters, async () => {
@@ -84,11 +92,26 @@ export default defineStore("filters-store", () => {
     filters.minPrice = smallestMinValue;
     filters.maxPrice = largestMaxValue || undefined;
   });
+
+  const fetchCategories = async () => {
+    try {
+      const resp = await axios.get("/api/products/categories");
+      categories.value = resp.data;
+    } catch (error) {
+      console.error("Failed to fetch categories:", error);
+    }
+  };
+
+  onMounted(() => {
+    fetchCategories();
+  });
+
   return {
     filters,
     priceRanges,
     selectedPriceRanges,
     isMenuOpen,
+    categories,
     reset,
   };
 });
