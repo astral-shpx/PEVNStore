@@ -93,11 +93,12 @@ export default defineStore("filters-store", () => {
 
   // fetch products on changes
   watch(
-    () => [filters, category, orderBy, orderDirection],
+    [() => filters, () => category, () => orderBy, () => orderDirection],
     async () => {
       productsStore.page = 1;
-      await productsStore.fetchProducts(category.value);
-    }
+      await productsStore.fetchProducts();
+    },
+    { immediate: true, deep: true }
   );
 
   watch(selectedPriceRanges, async () => {

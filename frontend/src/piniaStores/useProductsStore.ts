@@ -23,14 +23,6 @@ export default defineStore("products-store", () => {
   );
 
   const load_amount = ref(filtersStore.loadAmount);
-  watch(
-    () => filtersStore.loadAmount,
-    async () => {
-      load_amount.value = filtersStore.loadAmount;
-      await fetchProducts();
-    },
-    { immediate: true }
-  );
 
   const total_products_amount = ref(0);
   const pages_to_show = computed(() => {
@@ -90,13 +82,13 @@ export default defineStore("products-store", () => {
   const fetchProducts = async (category = "") => {
     loading.value = true;
     try {
-      // const cat = category === "" ? filtersStore.category : category;
+      const cat = category === "" ? filtersStore.category : category;
       const resp = await axios.get("/api/products", {
         params: {
           limit: load_amount.value,
           productName: store.searchQuery,
           offset: (page.value - 1) * load_amount.value,
-          category: category,
+          category: cat,
           filters: JSON.stringify(filtersStore.filters),
           orderBy: filtersStore.orderBy,
           orderDirection: filtersStore.orderDirection,
@@ -127,6 +119,15 @@ export default defineStore("products-store", () => {
       loading.value = false;
     }
   };
+
+  watch(
+    () => filtersStore.loadAmount,
+    async () => {
+      load_amount.value = filtersStore.loadAmount;
+      await fetchProducts();
+    },
+    { immediate: true }
+  );
 
   return {
     page,
