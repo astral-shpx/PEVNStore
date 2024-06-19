@@ -2,7 +2,21 @@
 
 # Showcase
 
-...
+## Products list
+
+![ezgif-7-38e7b47843](https://github.com/kizaski/PEVNStore/assets/81563289/428bbd86-91f0-4a6b-a0ac-e27943a25870)
+
+## Add to cart
+
+## Sign up
+
+## Add to favourites
+
+## Filters
+
+## Responsiveness
+
+## Dark theme
 
 # Running with docker compose
 
