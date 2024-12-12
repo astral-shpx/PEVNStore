@@ -13,7 +13,7 @@ export default setSeederFactory(Product, faker => {
   product.product_rating = faker.number.float({
     min: 1,
     max: 5,
-    precision: 0.1
+    multipleOf: 0.1
   });
   product.customer_reviews = faker.number.int({
     min: 0,
